@@ -1,7 +1,7 @@
 # ntc-nautobot-plugin-nornir
 
 A plugin for [Nautobot](https://github.com/nautobot/nautobot), that intends to be a small shim layer between
-[nornir_nautobot](https://github.com/nautobot/nornir_nautobot) and other plugins. The primary abilities that the plugin provides is a native Nornir
+[nornir_nautobot](https://github.com/nautobot/nornir-nautobot) and other plugins. The primary abilities that the plugin provides is a native Nornir
 ORM based inventory and a credential manager.
 
 # Installation
