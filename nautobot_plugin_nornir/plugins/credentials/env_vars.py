@@ -21,7 +21,7 @@ class CredentialsEnvVars(NautobotORMCredentials):
         """Initialize Credentials Class designed to work with Nautobot ORM.
 
         Args:
-            params ([dict], optional): Crednetials Parameters
+            params ([dict], optional): Credentials Parameters
         """
         if not params:
             params = {}

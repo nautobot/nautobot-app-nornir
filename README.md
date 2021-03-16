@@ -1,8 +1,15 @@
 # ntc-nautobot-plugin-nornir
 
 A plugin for [Nautobot](https://github.com/nautobot/nautobot), that intends to be a small shim layer between
-[nornir_nautobot](https://github.com/nautobot/nornir-nautobot) and other plugins. The primary abilities that the plugin provides is a native Nornir
+[nornir-nautobot](https://github.com/nautobot/nornir-nautobot) and other plugins. The primary abilities that the plugin provides is a native Nornir
 ORM based inventory and a credential manager.
+
+![Architecture Overview](./docs/img/architecture-overview.png)
+
+As of the writing of this readme, the only plugin leveraging this plugin is the [golden-config](https://github.com/nautobot/nautobot-plugin-golden-config). However, future plugins are planned, such as the "network importer".
+
+That being said, there is currently little reason to install this plugin by itself, without an enabler, which can be seen represented as the white
+rectangles inside the yellow rectangle in the diagram above. An enabler could be a Plugin, Job, or another piece of code like a Chatops command.
 
 # Installation
 
@@ -13,13 +20,13 @@ pip install nautobot-plugin-nornir
 
 > The plugin is compatible with Nautobot 1.0.0 and higher
  
-Once installed, the plugin needs to be enabled in your `configuration.py`
+Once installed, the plugin needs to be enabled in your `nautobot_config.py`
 ```python
-# In your configuration.py
-PLUGINS = ["nautobot_nornir"]
+# In your nautobot_config.py
+PLUGINS = ["nautobot_plugin_nornir"]
 
 PLUGINS_CONFIG = {
-  "nautobot_nornir": {
+  "nautobot_plugin_nornir": {
     "nornir_settings": {
       "credentials": "nautobot_plugin_nornir.plugins.credentials.env_vars.CredentialsEnvVars",
       "runner": {
@@ -32,22 +39,20 @@ PLUGINS_CONFIG = {
   }
 ```
 
-The plugin behavior can be controlled with the following list of settings
-
 # Inventory
 
 The Nautobot ORM inventory is rather static in nature at this point. The user has the ability to define the `default` data. The native capabilites
 include. 
 
-* Providing an object called `orm` that is a Nautobot `Device` object instance.
-* Provide keys for hostname, name, id, type, stie, role, config_context, obj, and custom_field_data.
+* Providing an object called within the `obj` key that is a Nautobot `Device` object instance.
+* Provide additional keys for hostname, name, id, type, site, role, config_context, and custom_field_data.
 * Provide grouping for global, site, role, type, and manufacturer based on their slug.
-* Provide credentials for napalm and netmiko.
-* Link to the credential class as defined.
+* Provide credentials for NAPALM and Netmiko.
+* Link to the credential class as defined by the `nornir_settings['settings']` definition.
 
 # Credentials
 
-There is a `NautobotORMCredentials` that describes what the object the Nornir inventory is looking for. 
+There is a `NautobotORMCredentials` class that describes what methods a Nautobot Nornir credential class should have.
 
 ```python
 class NautobotORMCredentials:
