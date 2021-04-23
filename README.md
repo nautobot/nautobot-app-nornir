@@ -25,10 +25,10 @@ The plugin is available as a Python package in PyPI and can be installed with `p
 $ pip3 install nautobot-plugin-nornir
 ```
 
-To ensure Device Onboarding plugin is automatically re-installed during future upgrades, create a file named `local_requirements.txt` (or append if it already exists) in the [`NAUTOBOT_ROOT`](https://nautobot.readthedocs.io/en/latest/configuration/optional-settings/#nautobot_root) directory and list the `nautobot-device-onboarding` package:
+To ensure the plugin is automatically re-installed during future upgrades, create a file named `local_requirements.txt` (or append if it already exists) in the [`NAUTOBOT_ROOT`](https://nautobot.readthedocs.io/en/latest/configuration/optional-settings/#nautobot_root) directory and list the `nautobot-plugin-nornir` package:
 
 ```no-highlight
-$ echo nautobot-device-onboarding >> $NAUTOBOT_ROOT/local_requirements.txt
+$ echo nautobot-plugin-nornir >> $NAUTOBOT_ROOT/local_requirements.txt
 ```
 
 > The plugin is compatible with Nautobot 1.0.0 and higher
