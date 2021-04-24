@@ -19,7 +19,7 @@ pip install nautobot-plugin-nornir
 ```
 
 > The plugin is compatible with Nautobot 1.0.0 and higher
- 
+
 Once installed, the plugin needs to be enabled in your `nautobot_config.py`
 ```python
 # In your nautobot_config.py
@@ -42,7 +42,7 @@ PLUGINS_CONFIG = {
 # Inventory
 
 The Nautobot ORM inventory is rather static in nature at this point. The user has the ability to define the `default` data. The native capabilites
-include. 
+include.
 
 * Providing an object called within the `obj` key that is a Nautobot `Device` object instance.
 * Provide additional keys for hostname, name, id, type, site, role, config_context, and custom_field_data.
@@ -100,7 +100,19 @@ class CustomNautobotORMCredentials(NautobotORMCredentials):
 
 You would have to set your `nornir_settings['credentials']` path to your custom class, such as `local_plugin.creds.CustomNautobotORMCredentials`.
 
-Out of the box, users have access to the `nautobot_plugin_nornir.plugins.credentials.env_vars.CredentialsEnvVars` class. This simply leverages the environment variables `NAPALM_USERNAME`, `NAPALM_PASSWORD`, and `DEVICE_SECRET`. 
+Out of the box, users have access to the `nautobot_plugin_nornir.plugins.credentials.env_vars.CredentialsEnvVars` class. This simply leverages the environment variables `NAPALM_USERNAME`, `NAPALM_PASSWORD`, and `DEVICE_SECRET`.
+
+
+If Nautobot is started with service file `/etc/systemd/system/nautobot-worker.service` add the environment variables to this file (under the existing one of NAUTOBOT_ROOR):
+```
+[Service]
+Type=simple
+Environment="NAUTOBOT_ROOT=/opt/nautobot"
+Environment="NAPALM_USERNAME=loginuser"
+Environment="NAPALM_PASSWORD=loginpassword"
+Environment="DEVICE_SECRET=enablepass"
+```
+[PR13 will solve this](https://github.com/nautobot/nautobot-plugin-nornir/issues/13)
 
 # Contributing
 
@@ -114,7 +126,7 @@ The project is following Network to Code software development guideline and is l
 
 # CLI Helper Commands
 
-The project is coming with a CLI helper based on [invoke](http://www.pyinvoke.org/) to help setup the development environment. The commands are listed below in 3 categories `dev environment`, `utility` and `testing`. 
+The project is coming with a CLI helper based on [invoke](http://www.pyinvoke.org/) to help setup the development environment. The commands are listed below in 3 categories `dev environment`, `utility` and `testing`.
 
 Each command can be executed with `invoke <command>`. All commands support the arguments `--nautobot-ver` and `--python-ver` if you want to manually define the version of Python and Nautobot to use. Each command also has its own help `invoke <command> --help`
 
@@ -128,14 +140,14 @@ Each command can be executed with `invoke <command>`. All commands support the a
   stop             Stop Nautobot and its dependencies.
 ```
 
-## Utility 
+## Utility
 ```
   cli              Launch a bash shell inside the running Nautobot container.
   create-user      Create a new user in django (default: admin), will prompt for password.
   makemigrations   Run Make Migration in Django.
   nbshell          Launch a nbshell session.
 ```
-## Testing 
+## Testing
 
 ```
   bandit           Run bandit to validate basic static code security analysis.
