@@ -13,14 +13,28 @@ rectangles inside the yellow rectangle in the diagram above. An enabler could be
 
 # Installation
 
-The plugin is available as a Python package in pypi and can be installed with pip
-```shell
-pip install nautobot-plugin-nornir
+If using the installation pattern from the Nautobot Documentation, you will need sudo to the `nautobot` user before installing so that you install the package into the Nautobot virtual environment.
+
+```no-highlight
+sudo -iu nautobot
+```
+
+The plugin is available as a Python package in PyPI and can be installed with `pip3`.
+
+```no-highlight
+$ pip3 install nautobot-plugin-nornir
+```
+
+To ensure the plugin is automatically re-installed during future upgrades, create a file named `local_requirements.txt` (or append if it already exists) in the [`NAUTOBOT_ROOT`](https://nautobot.readthedocs.io/en/latest/configuration/optional-settings/#nautobot_root) directory and list the `nautobot-plugin-nornir` package:
+
+```no-highlight
+$ echo nautobot-plugin-nornir >> $NAUTOBOT_ROOT/local_requirements.txt
 ```
 
 > The plugin is compatible with Nautobot 1.0.0 and higher
  
 Once installed, the plugin needs to be enabled in your `nautobot_config.py`
+
 ```python
 # In your nautobot_config.py
 PLUGINS = ["nautobot_plugin_nornir"]
@@ -39,6 +53,11 @@ PLUGINS_CONFIG = {
   }
 ```
 
+Finally, as root, restart Nautobot and the Nautobot worker.
+
+```no-highlight
+$ sudo systemctl restart nautobot nautobot-worker
+```
 # Inventory
 
 The Nautobot ORM inventory is rather static in nature at this point. The user has the ability to define the `default` data. The native capabilites
