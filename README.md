@@ -53,6 +53,27 @@ PLUGINS_CONFIG = {
   }
 ```
 
+Alternatively you can use the `CredentialsSettingsVars` class to set the username and password via settings.
+
+```python
+PLUGINS_CONFIG = {
+  "nautobot_plugin_nornir": {
+    "nornir_settings": {
+      "credentials": "nautobot_plugin_nornir.plugins.credentials.settings_vars.CredentialsSettingsVars",
+      "runner": {
+        "plugin": "threaded",
+        "options": {
+            "num_workers": 20,
+        },
+      },
+    },
+    "username": "ntc",
+    "password": "password123",
+    "secret": "password123",
+  }
+}
+```
+
 Finally, as root, restart Nautobot and the Nautobot worker.
 
 ```no-highlight
@@ -119,7 +140,19 @@ class CustomNautobotORMCredentials(NautobotORMCredentials):
 
 You would have to set your `nornir_settings['credentials']` path to your custom class, such as `local_plugin.creds.CustomNautobotORMCredentials`.
 
-Out of the box, users have access to the `nautobot_plugin_nornir.plugins.credentials.env_vars.CredentialsEnvVars` class. This simply leverages the environment variables `NAPALM_USERNAME`, `NAPALM_PASSWORD`, and `DEVICE_SECRET`. 
+Out of the box, users have access to the `nautobot_plugin_nornir.plugins.credentials.settings_vars.CredentialsSettingsVars` and 
+`nautobot_plugin_nornir.plugins.credentials.env_vars.CredentialsEnvVars` class. This `CredentialsEnvVars` class simply leverages the 
+environment variables `NAPALM_USERNAME`, `NAPALM_PASSWORD`, and `DEVICE_SECRET`.
+
+The environment variable must be accessible on the web service. This often means simply exporting the environment variable will not 
+suffice, but instead requiring users to update the `nautobot.service` file, however this will ultimately depend on your own setup.
+
+```
+[Service]
+Environment="NAPALM_USERNAME=ntc"
+Environment="NAPALM_PASSWORD=password123"
+Environment="DEVICE_SECRET=password123"
+```
 
 # Contributing
 

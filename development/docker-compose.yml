@@ -33,7 +33,7 @@ services:
     image: "postgres:13"
     env_file: "dev.env"
     volumes:
-      - "pgdata_nautobot_nornir_plugin:/var/lib/postgresql/data"
+      - "pgdata_nautobot_plugin_nornir:/var/lib/postgresql/data"
   redis:
     image: "redis:6-alpine"
     command:
@@ -42,4 +42,4 @@ services:
       - "redis-server --appendonly yes --requirepass $$REDIS_PASSWORD"  ## $$ because of docker-compose
     env_file: "./dev.env"
 volumes:
-  pgdata_nautobot_nornir_plugin:  # yamllint disable-line rule:empty-values
+  pgdata_nautobot_plugin_nornir:  # yamllint disable-line rule:empty-values

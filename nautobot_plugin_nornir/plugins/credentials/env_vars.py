@@ -1,13 +1,13 @@
-"""Credentials class for environment variables."""
+"""Credentials class for environment variables passwords."""
 import os
-from .nautobot_orm import NautobotORMCredentials
+from .nautobot_orm import MixinNautobotORMCredentials
 
 USERNAME_ENV_VAR_NAME = "NAPALM_USERNAME"  # nosec
 PASSWORD_ENV_VAR_NAME = "NAPALM_PASSWORD"  # nosec
 SECRET_ENV_VAR_NAME = "DEVICE_SECRET"  # nosec
 
 
-class CredentialsEnvVars(NautobotORMCredentials):
+class CredentialsEnvVars(MixinNautobotORMCredentials):
     """Credentials Class designed to work with Nautobot ORM.
 
     This class is the default class that will return the same login and password
@@ -35,16 +35,3 @@ class CredentialsEnvVars(NautobotORMCredentials):
 
         if not self.secret:
             self.secret = self.password
-
-    def get_device_creds(self, device):
-        """Return the credentials for a given device.
-
-        Args:
-            device (dcim.models.Device): Nautobot device object
-
-        Return:
-            username (string):
-            password (string):
-            secret (string):
-        """
-        return (self.username, self.password, self.secret)
