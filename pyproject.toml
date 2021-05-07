@@ -19,7 +19,7 @@ packages = [
 [tool.poetry.dependencies]
 python = "^3.6"
 nornir-nautobot = "^1.0.0"
-nautobot = "^1.0.0-alpha.1"
+nautobot = "^1.0.0"
 
 [tool.poetry.dev-dependencies]
 invoke = "^1.4.1"
@@ -29,6 +29,7 @@ pylint = "^2.5.2"
 pylint-django = "^2.0.15"
 pydocstyle = "^5.0.2"
 flake8 = "^3.8.3"
+django-debug-toolbar = "^3.2.1"
 
 [tool.black]
 line-length = 120

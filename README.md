@@ -67,10 +67,11 @@ PLUGINS_CONFIG = {
         },
       },
     },
-    "usernmae": "ntc",
+    "username": "ntc",
     "password": "password123",
     "secret": "password123",
   }
+}
 ```
 
 Finally, as root, restart Nautobot and the Nautobot worker.
