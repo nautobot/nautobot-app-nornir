@@ -29,3 +29,20 @@ class NautobotORMCredentials:
             string: secret
         """
         return (None, None, None)
+
+
+class MixinNautobotORMCredentials(NautobotORMCredentials):
+    """Abstract Credentials Class mixin, to provide base get_device_creds functionality."""
+
+    def get_device_creds(self, device):
+        """Return the credentials for a given device.
+
+        Args:
+            device (dcim.models.Device): Nautobot device object
+
+        Return:
+            username (string):
+            password (string):
+            secret (string):
+        """
+        return (self.username, self.password, self.secret)  # pylint: disable=no-member
