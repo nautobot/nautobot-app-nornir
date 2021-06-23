@@ -67,18 +67,54 @@ PLUGINS_CONFIG = {
         },
       },
     },
+    "dispatcher_mapping": None,
     "username": "ntc",
     "password": "password123",
     "secret": "password123",
   }
 }
 ```
+The plugin behavior can be controlled with the following list of settings. 
+
+| Key     | Example | Default | Description                          |
+| ------- | ------ | -------- | ------------------------------------- |
+| nornir_settings | {"nornir_settings": { "credentials": "cred_path"}} | N/A | The expected configuration paramters that Nornir uses, see Nornir documentation. |
+| dispatcher_mapping | {"newos": "dispatcher.newos"} | None | A dictionary in which the key is a platform slug and the value is the import path of the dispatcher in string format |
+| username | ntc | N/A | The username when leveraging the `CredentialsSettingsVars` credential provider. |
+| password | password123 | N/A | The password when leveraging the `CredentialsSettingsVars` credential provider. |
+| secret | password123 | N/A | The secret password when leveraging the `CredentialsSettingsVars` credential provider, **placeholder only, not currently functioning**. |
 
 Finally, as root, restart Nautobot and the Nautobot worker.
 
 ```no-highlight
 $ sudo systemctl restart nautobot nautobot-worker
 ```
+
+## Setting `dispatcher_mapping`
+
+The `dispatcher_mapping` configuration option can be set to extend or map the platform slug to a proper nornir class.
+
+```json
+ {
+  "dispatcher_mapping": {
+    "newos": "dispatcher.newos",
+    "ios": "nautobot_nornir.plugins.tasks.dispatcher.cisco_ios.NautobotNornirDriver",
+    "ios_xe": "nautobot_nornir.plugins.tasks.dispatcher.cisco_ios.NautobotNornirDriver",
+    "fortinet": "nautobot_nornir.plugins.tasks.dispatcher.default.NetmikoNautobotNornirDriver",
+  }
+}
+```
+
+The above example demonstrates the following use cases.
+
+* Creating a custom only local dispatcher
+* Mapping a user defined and preffered platform slug name to expected driver (e.g. ios -> cisco_ios)
+* Overloading platform slug keys, by mapping ios and ios_xe to the same class
+* Leveraging the existing "default" Netmiko driver
+
+Plugin developers that leverage the plugin, are recommended to use the `get_dispatcher` function in `nautobot_plugin_nornir.utils` file to provide the ability to
+allow users to define their own mappings as described above.
+
 # Inventory
 
 The Nautobot ORM inventory is rather static in nature at this point. The user has the ability to define the `default` data. The native capabilites
@@ -144,8 +180,11 @@ Out of the box, users have access to the `nautobot_plugin_nornir.plugins.credent
 `nautobot_plugin_nornir.plugins.credentials.env_vars.CredentialsEnvVars` class. This `CredentialsEnvVars` class simply leverages the 
 environment variables `NAPALM_USERNAME`, `NAPALM_PASSWORD`, and `DEVICE_SECRET`.
 
+> Note: DEVICE_SECRET does not currently work.
+
 The environment variable must be accessible on the web service. This often means simply exporting the environment variable will not 
-suffice, but instead requiring users to update the `nautobot.service` file, however this will ultimately depend on your own setup.
+suffice, but instead requiring users to update the `nautobot.service` file, however this will ultimately depend on your own setup. Environment
+variables are distinctively not nautobot configuration parameters (in `naubot_config.py`), if that does not makes sense, expect to see authentication issues.
 
 ```
 [Service]
