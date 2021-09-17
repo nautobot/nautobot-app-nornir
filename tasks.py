@@ -266,6 +266,13 @@ def yamllint(context):
 
 
 @task
+def flake8(context):
+    """Check for PEP8 compliance and other style issues."""
+    command = "flake8 ."
+    run_command(context, command)
+
+
+@task
 def tests(context):
     """Run all tests for this plugin."""
     # Sorted loosely from fastest to slowest
