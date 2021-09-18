@@ -31,9 +31,7 @@ namespace.configure(
             "python_ver": "3.6",
             "local": False,
             "compose_dir": os.path.join(os.path.dirname(__file__), "development"),
-            "compose_files": [
-                "docker-compose.yml",
-            ],
+            "compose_files": ["docker-compose.yml", "../docker-compose.override.yml"],
         }
     }
 )
@@ -73,7 +71,8 @@ def docker_compose(context, command, **kwargs):
     compose_command = f'docker-compose --project-name {context.nautobot_plugin_nornir.project_name} --project-directory "{context.nautobot_plugin_nornir.compose_dir}"'
     for compose_file in context.nautobot_plugin_nornir.compose_files:
         compose_file_path = os.path.join(context.nautobot_plugin_nornir.compose_dir, compose_file)
-        compose_command += f' -f "{compose_file_path}"'
+        if os.path.isfile(compose_file_path):
+            compose_command += f' -f "{compose_file_path}"'
     compose_command += f" {command}"
     print(f'Running docker-compose command "{command}"')
     return context.run(compose_command, env=build_env, **kwargs)
@@ -169,10 +168,14 @@ def cli(context):
         "user": "name of the superuser to create (default: admin)",
     }
 )
-def createsuperuser(context, user="admin"):
-    """Create a new Nautobot superuser account (default: "admin"), will prompt for password."""
-    command = f"nautobot-server createsuperuser --username {user}"
+def create_user(context, user="admin"):
+    """Create a new user in django (default: admin), will prompt for password.
 
+    Args:
+        context (obj): Used to run specific commands
+        user (str): name of the superuser to create
+    """
+    command = f"nautobot-server createsuperuser --username {user}"
     run_command(context, command)
 
 
@@ -255,6 +258,13 @@ def bandit(context):
 
 
 @task
+def flake8(context):
+    """Check for PEP8 compliance and other style issues."""
+    command = "flake8 ."
+    run_command(context, command)
+
+
+@task
 def yamllint(context):
     """Run yamllint to validate formating adheres to NTC defined YAML standards.
 
@@ -284,6 +294,8 @@ def tests(context):
     pydocstyle(context)
     print("Running yamllint...")
     yamllint(context)
+    print("Running flake8...")
+    flake8(context)
     print("Running pylint...")
     pylint(context)
     print("Running unit tests...")

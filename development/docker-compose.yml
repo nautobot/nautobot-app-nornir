@@ -1,37 +1,46 @@
 ---
-x-nautobot-common: &nautobot-common
+x-nautobot-build: &nautobot-build
   build:
     args:
-      python_ver: "${PYTHON_VER}"
+      NAUTOBOT_VER: "${NAUTOBOT_VER}"
+      PYTHON_VER: "${PYTHON_VER}"
     context: "../"
     dockerfile: "development/Dockerfile"
+x-nautobot-base: &nautobot-base
   image: "nautobot-plugin-nornir/nautobot:${NAUTOBOT_VER}-py${PYTHON_VER}"
-  depends_on:
-    - "postgres"
-    - "redis"
   env_file:
-    - "./dev.env"
-  volumes:
-    - "../:/source"
+    - "dev.env"
   tty: true
 
-version: "3"
+version: "3.4"
 services:
   nautobot:
-    <<: *nautobot-common
     command: >
-      sh -c "nautobot-server migrate &&
-             nautobot-server runserver 0.0.0.0:8000"
+      sh -c "nautobot-server migrate && nautobot-server runserver 0.0.0.0:8080 --insecure"
+    volumes:
+      - "./nautobot_config.py:/opt/nautobot/nautobot_config.py"
+      - "../:/source"
     ports:
-      - "8000:8000"
-  worker:
-    <<: *nautobot-common
-    command: "sh -c 'nautobot-server rqworker'"
-    ports:
-      - "8001:8001"
+      - "8080:8080"
+    depends_on:
+      - "postgres"
+      - "redis"
+    <<: *nautobot-build
+    <<: *nautobot-base
+  celery:
+    volumes:
+      - "./nautobot_config.py:/opt/nautobot/nautobot_config.py"
+      - "../:/source"
+    healthcheck:
+      disable: true
+    depends_on:
+      - "nautobot"
+    entrypoint: "nautobot-server celery worker -B -l INFO"
+    <<: *nautobot-base
   postgres:
     image: "postgres:13"
-    env_file: "dev.env"
+    env_file:
+      - "dev.env"
     volumes:
       - "pgdata_nautobot_plugin_nornir:/var/lib/postgresql/data"
   redis:
@@ -39,7 +48,8 @@ services:
     command:
       - "sh"
       - "-c"  # this is to evaluate the $REDIS_PASSWORD from the env
-      - "redis-server --appendonly yes --requirepass $$REDIS_PASSWORD"  ## $$ because of docker-compose
-    env_file: "./dev.env"
+      - "redis-server --appendonly yes --requirepass $$REDIS_PASSWORD"
+    env_file:
+      - "dev.env"
 volumes:
   pgdata_nautobot_plugin_nornir:  # yamllint disable-line rule:empty-values
