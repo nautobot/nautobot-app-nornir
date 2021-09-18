@@ -17,6 +17,7 @@ from nornir.core.inventory import (
 )
 
 from nautobot.dcim.models import Device
+from nornir_nautobot.exceptions import NornirNautobotException
 
 
 def _set_host(data: Dict[str, Any], name: str, groups, host, defaults) -> Host:
@@ -70,6 +71,8 @@ class NautobotORMInventory:
         # Initialize the Credentials Management Object
         # Based on the class name defined in the parameters
         # At creation time, pass the credentials_params dict to the class
+        if isinstance(queryset, QuerySet) and not queryset:
+            raise NornirNautobotException("There was no matching results from the query.")
         self.queryset = queryset
         self.filters = filters
         self.cred_class = import_string(credentials_class)
@@ -83,7 +86,7 @@ class NautobotORMInventory:
             self.credentials_params = {}
 
         # Initialize QuerySet
-        if not self.queryset:
+        if isinstance(self.queryset, QuerySet) and not self.queryset:
             self.queryset = Device.objects.all()
 
         if self.filters:
@@ -159,10 +162,11 @@ class NautobotORMInventory:
                 host["hostname"] = device.name
         host["name"] = device.name
 
-        if device.platform:
-            host["platform"] = device.platform.slug
-            if device.platform.napalm_driver:
-                host["data"]["connection_options"]["napalm"]["platform"] = device.platform.napalm_driver
+        if not device.platform:
+            raise NornirNautobotException(f"Platform missing from device {device.name}")
+        host["platform"] = device.platform.slug
+        if device.platform.napalm_driver:
+            host["data"]["connection_options"]["napalm"]["platform"] = device.platform.napalm_driver
 
         host["data"]["id"] = device.id
         host["data"]["type"] = device.device_type.slug
