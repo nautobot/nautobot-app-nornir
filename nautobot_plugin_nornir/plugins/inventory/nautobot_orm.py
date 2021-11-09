@@ -183,7 +183,8 @@ class NautobotORMInventory:
         # require password for now
         host["password"] = password
 
-        # TODO save secret in connection option
+        # Update to use secret if specified.  Netmiko only for initial implementation.
+        host["data"]["connection_options"]["netmiko"]["extras"]["secret"] = secret
 
         host["groups"] = self.get_host_groups(device=device)
         return host
