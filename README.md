@@ -98,9 +98,9 @@ The `dispatcher_mapping` configuration option can be set to extend or map the pl
  {
   "dispatcher_mapping": {
     "newos": "dispatcher.newos",
-    "ios": "nautobot_nornir.plugins.tasks.dispatcher.cisco_ios.NautobotNornirDriver",
-    "ios_xe": "nautobot_nornir.plugins.tasks.dispatcher.cisco_ios.NautobotNornirDriver",
-    "fortinet": "nautobot_nornir.plugins.tasks.dispatcher.default.NetmikoNautobotNornirDriver",
+    "ios": "nornir_nautobot.plugins.tasks.dispatcher.cisco_ios.NautobotNornirDriver",
+    "ios_xe": "nornir_nautobot.plugins.tasks.dispatcher.cisco_ios.NautobotNornirDriver",
+    "fortinet": "nornir_nautobot.plugins.tasks.dispatcher.default.NetmikoNautobotNornirDriver",
   }
 }
 ```
