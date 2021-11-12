@@ -17,13 +17,13 @@ packages = [
 ]
 
 [tool.poetry.dependencies]
-python = "^3.6"
+python = "^3.6.2"
 nornir-nautobot = "^2.0.0"
 nautobot = ">=1.0.0"
 
 [tool.poetry.dev-dependencies]
 invoke = "^1.4.1"
-black = "^20.8b1"
+black = "^21.10b0"
 bandit = "^1.6.2"
 pylint = "^2.5.2"
 pylint-django = "^2.0.15"
