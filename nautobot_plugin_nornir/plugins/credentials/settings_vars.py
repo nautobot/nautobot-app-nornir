@@ -1,8 +1,7 @@
 """Credentials class for setting credentials."""
 from django.conf import settings
 from .nautobot_orm import MixinNautobotORMCredentials
-
-PLUGIN_SETTINGS = settings.PLUGINS_CONFIG["nautobot_plugin_nornir"]
+from nautobot_plugin_nornir.constants import PLUGIN_CFG
 
 
 class CredentialsSettingsVars(MixinNautobotORMCredentials):
@@ -27,9 +26,9 @@ class CredentialsSettingsVars(MixinNautobotORMCredentials):
         if not isinstance(params, dict):
             raise TypeError("params must be a dictionnary")
 
-        self.username = PLUGIN_SETTINGS.get("username")
-        self.password = PLUGIN_SETTINGS.get("password")
-        self.secret = PLUGIN_SETTINGS.get("secret")
+        self.username = PLUGIN_CFG.get("username")
+        self.password = PLUGIN_CFG.get("password")
+        self.secret = PLUGIN_CFG.get("secret")
 
         if not self.secret:
             self.secret = self.password
