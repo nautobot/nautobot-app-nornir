@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "nautobot-plugin-nornir"
-version = "0.9.4"
+version = "0.9.5"
 description = "Nautobot Nornir plugin."
 authors = ["Network to Code, LLC <opensource@networktocode.com>"]
 
@@ -20,6 +20,7 @@ packages = [
 python = "^3.6.2"
 nornir-nautobot = "^2.0.0"
 nautobot = ">=1.0.0"
+netutils = ">=0.2.4"
 
 [tool.poetry.dev-dependencies]
 invoke = "^1.4.1"
