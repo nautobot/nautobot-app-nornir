@@ -1,5 +1,16 @@
 # Changelog
 
+## v0.9.5 - 2021-11
+
+### Added
+
+- #32 Add device secret support for nautobot pin and updated black pinned version
+- #30 Use .get and return empty dict when getting PLUGIN_CFG in constants.py 
+
+### Fixed
+
+- #31 Correct module names to nornir_nautobot in the dispatcher_mapping section of README.md
+
 ## v0.9.4 - 2021-09
 
 ### Added
