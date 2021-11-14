@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "nautobot-plugin-nornir"
-version = "0.9.5"
+version = "0.9.6"
 description = "Nautobot Nornir plugin."
 authors = ["Network to Code, LLC <opensource@networktocode.com>"]
 
@@ -12,13 +12,23 @@ include = [
 
     "README.md",
 ]
+classifiers = [
+    "Intended Audience :: Developers",
+    "Development Status :: 5 - Production/Stable",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.6",
+    "Programming Language :: Python :: 3.7",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+]
 packages = [
     { include = "nautobot_plugin_nornir" },
 ]
 
 [tool.poetry.dependencies]
 python = "^3.6.2"
-nornir-nautobot = "^2.0.0"
+nornir-nautobot = "^2.2.0"
 nautobot = ">=1.0.0"
 netutils = ">=0.2.4"
 
