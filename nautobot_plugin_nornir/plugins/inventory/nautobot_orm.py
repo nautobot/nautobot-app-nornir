@@ -149,7 +149,7 @@ class NautobotORMInventory:
             "data": {
                 "connection_options": {
                     "netmiko": {"extras": {}},
-                    "napalm": {"extras": {}},
+                    "napalm": {"extras": {"optional_args": {}}},
                 },
             },
         }

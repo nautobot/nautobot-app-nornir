@@ -1,6 +1,6 @@
-"""Plugin declaration for nautbot_nornir_plugin."""
+"""Plugin declaration for nautobot_plugin_nornir."""
 
-__version__ = "0.9.5"
+__version__ = "0.9.6"
 
 from nautobot.extras.plugins import PluginConfig
 
