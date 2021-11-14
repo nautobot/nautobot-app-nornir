@@ -1,5 +1,16 @@
 # Changelog
 
+## v0.9.6 - 2021-11
+
+### Fixed
+
+- #35 Fix bug introduced in secret support, update pinned nornir-nautobot version
+
+### Added
+
+- #35 Testing support for Python 3.10
+
+
 ## v0.9.5 - 2021-11
 
 ### Added
