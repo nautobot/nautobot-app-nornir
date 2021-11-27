@@ -1,12 +1,12 @@
 """Plugin declaration for nautobot_plugin_nornir."""
 
-__version__ = "0.9.6"
+__version__ = "0.9.7"
 
 from nautobot.extras.plugins import PluginConfig
 
 
 class NornirConfig(PluginConfig):
-    """Plugin configuration for the nautobot_nornir plugin."""
+    """Plugin configuration for nautobot_plugin_nornir."""
 
     name = "nautobot_plugin_nornir"
     verbose_name = "Nautobot Plugin for Nornir"
