@@ -1,5 +1,11 @@
 # Changelog
 
+## v0.9.7 - 2021-11
+
+### Fixed
+
+- #37 Fix dev dependencies and loosen Python 3.6 requirements
+
 ## v0.9.6 - 2021-11
 
 ### Fixed
