@@ -5,18 +5,9 @@ from typing import Any, Dict
 
 from django.db.models import QuerySet
 from django.utils.module_loading import import_string
-from nornir.core.inventory import (
-    Inventory,
-    ConnectionOptions,
-    Defaults,
-    Groups,
-    Host,
-    Hosts,
-    Group,
-    ParentGroups,
-)
-
 from nautobot.dcim.models import Device
+from nautobot_plugin_nornir.constants import PLUGIN_CFG
+from nornir.core.inventory import ConnectionOptions, Defaults, Group, Groups, Host, Hosts, Inventory, ParentGroups
 from nornir_nautobot.exceptions import NornirNautobotException
 
 
@@ -148,8 +139,10 @@ class NautobotORMInventory:
         host = {
             "data": {
                 "connection_options": {
-                    "netmiko": {"extras": {}},
-                    "napalm": {"extras": {"optional_args": {}}},
+                    # "netmiko": {"extras": {}},
+                    "netmiko": {"extras": PLUGIN_CFG.get("napalm_extras", {})},
+                    # "napalm": {"extras": {"optional_args": {}}},
+                    "napalm": {"extras": {"optional_args": PLUGIN_CFG.get("netmiko_extras", {})}},
                 },
             },
         }
