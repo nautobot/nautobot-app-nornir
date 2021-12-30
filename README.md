@@ -41,6 +41,8 @@ PLUGINS = ["nautobot_plugin_nornir"]
 
 PLUGINS_CONFIG = {
   "nautobot_plugin_nornir": {
+    "napalm_extras": {},
+    "netmiko_extras": {},
     "nornir_settings": {
       "credentials": "nautobot_plugin_nornir.plugins.credentials.env_vars.CredentialsEnvVars",
       "runner": {
@@ -59,6 +61,8 @@ Alternatively you can use the `CredentialsSettingsVars` class to set the usernam
 PLUGINS_CONFIG = {
   "nautobot_plugin_nornir": {
     "nornir_settings": {
+      "napalm_extras": {},
+      "netmiko_extras": {},
       "credentials": "nautobot_plugin_nornir.plugins.credentials.settings_vars.CredentialsSettingsVars",
       "runner": {
         "plugin": "threaded",
@@ -109,7 +113,7 @@ The `dispatcher_mapping` configuration option can be set to extend or map the pl
 The above example demonstrates the following use cases.
 
 * Creating a custom only local dispatcher
-* Mapping a user defined and preffered platform slug name to expected driver (e.g. ios -> cisco_ios)
+* Mapping a user defined and preferred platform slug name to expected driver (e.g. ios -> cisco_ios)
 * Overloading platform slug keys, by mapping ios and ios_xe to the same class
 * Leveraging the existing "default" Netmiko driver
 
@@ -118,7 +122,7 @@ allow users to define their own mappings as described above.
 
 # Inventory
 
-The Nautobot ORM inventory is rather static in nature at this point. The user has the ability to define the `default` data. The native capabilites
+The Nautobot ORM inventory is rather static in nature at this point. The user has the ability to define the `default` data. The native capabilities
 include. 
 
 * Providing an object called within the `obj` key that is a Nautobot `Device` object instance.

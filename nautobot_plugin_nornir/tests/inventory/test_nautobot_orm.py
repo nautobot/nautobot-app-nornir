@@ -2,7 +2,7 @@
 from unittest import skip
 
 from django.test import TestCase
-from nautobot.dcim.models import Device, Manufacturer, Site, DeviceType, DeviceRole
+from nautobot.dcim.models import Device, DeviceRole, DeviceType, Manufacturer, Site
 from nautobot_plugin_nornir.plugins.inventory.nautobot_orm import NautobotORMInventory
 
 
