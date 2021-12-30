@@ -7,8 +7,7 @@ from django.db.models import QuerySet
 from django.utils.module_loading import import_string
 from nautobot.dcim.models import Device
 from nautobot_plugin_nornir.constants import PLUGIN_CFG
-from nornir.core.inventory import (ConnectionOptions, Defaults, Group, Groups,
-                                   Host, Hosts, Inventory, ParentGroups)
+from nornir.core.inventory import ConnectionOptions, Defaults, Group, Groups, Host, Hosts, Inventory, ParentGroups
 from nornir_nautobot.exceptions import NornirNautobotException
 
 
@@ -137,18 +136,14 @@ class NautobotORMInventory:
         Returns:
             dict: Nornir Host dictionnary
         """
-        print(f"============={PLUGIN_CFG}\n=============")
         host = {
             "data": {
                 "connection_options": {
-                    # "netmiko": {"extras": {}},
-                    "netmiko": {"extras": PLUGIN_CFG.get("napalm_extras", {})},
-                    # "napalm": {"extras": {"optional_args": {}}},
-                    "napalm": {"extras": {"optional_args": PLUGIN_CFG.get("netmiko_extras", {})}},
+                    "netmiko": {"extras": PLUGIN_CFG.get("netmiko_extras", {})},
+                    "napalm": {"extras": {"optional_args": PLUGIN_CFG.get("napalm_extras", {})}},
                 },
             },
         }
-        print(f"=============\nhost\n{host}\n=============")
         if "use_fqdn" in params and params.get("use_fqdn"):
             host["hostname"] = f"{device.name}.{params.get('fqdn')}"
         else:
