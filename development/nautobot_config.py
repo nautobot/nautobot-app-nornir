@@ -131,12 +131,8 @@ PLUGINS = ["nautobot_plugin_nornir"]
 # Each key in the dictionary is the name of an installed plugin and its value is a dictionary of settings.
 PLUGINS_CONFIG = {
     "nautobot_plugin_nornir": {
-        "napalm_extras": {"global_delay_factor": 5},
-        "netmiko_extras": {
-            "global_delay_factor": 5,
-            "banner_timeout": 40,
-            "conn_timeout": 30,
-        },
+        "napalm_extras": {"global_delay_factor": 1},
+        "netmiko_extras": {"global_delay_factor": 1},
         "nornir_settings": {
             "credentials": "nautobot_plugin_nornir.plugins.credentials.env_vars.CredentialsEnvVars",
             "runner": {
