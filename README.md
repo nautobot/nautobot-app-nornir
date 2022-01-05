@@ -183,7 +183,9 @@ Out of the box, users have access to three classes:
 - `nautobot_plugin_nornir.plugins.credentials.env_vars.CredentialsEnvVars`
   - Leverages the environment variables `NAPALM_USERNAME`, `NAPALM_PASSWORD`, and `DEVICE_SECRET`.
 - `nautobot_plugin_nornir.plugins.credentials.nautobot_secrets.CredentialsNautobotSecrets`
-  - Leverages the [Nautobot Secrets Group](https://nautobot.readthedocs.io/en/latest/core-functionality/secrets/#secrets-groups) core functionality.  **It requires the use of `Access Type` of `Generic` to be used when defining the Secrets Group** and expects `Security Type` of Username, Password, and secret to be defined, if the secret is not defined the password will also be set as the secret value. This is to conform with the standard of the other credential classes.
+  - Leverages the [Nautobot Secrets Group](https://nautobot.readthedocs.io/en/latest/core-functionality/secrets/#secrets-groups) core functionality.  **It requires that the Secrets Group contain secrets with "Access Type" of `Generic`** and expects these secrets to have "Secret Type" of `username`, `password`, and optionally `secret`.
+  
+> For any of these classes, if a "secret" value is not defined, the "password" will also be used as the "secret" value.
 
 The environment variable must be accessible on the web service. This often means simply exporting the environment variable will not 
 suffice, but instead requiring users to update the `nautobot.service` file, however this will ultimately depend on your own setup. Environment
