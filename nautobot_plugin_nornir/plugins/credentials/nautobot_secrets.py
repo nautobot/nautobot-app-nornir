@@ -42,5 +42,5 @@ class CredentialsNautobotSecrets(NautobotORMCredentials):
             return (self.username, self.password, self.secret)
         else:
             raise ValueError(
-                "The credential provider for Nautobot Secrets requires a Secret Group to be set on a device."
+                "The credential provider for Nautobot Secrets requires a Secrets Group to be set on a device."
             )
