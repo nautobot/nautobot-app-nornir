@@ -1,12 +1,13 @@
 """Credentials class designed to work with Nautobot Secrets Functionality."""
 
+from nautobot.extras.choices import SecretsGroupAccessTypeChoices, SecretsGroupSecretTypeChoices
 from nautobot.extras.models.secrets import SecretsGroupAssociation
 
 from .nautobot_orm import NautobotORMCredentials
 
 
-class NautobotSecretCredentials(NautobotORMCredentials):
-    """Abstract Credentials Class designed to work with Nautobot Secrets Functionality."""
+class CredentialsNautobotSecrets(NautobotORMCredentials):
+    """Credentials Class designed to work with Nautobot Secrets Functionality."""
 
     def get_device_creds(self, device):
         """Return the credentials for a given device.
@@ -19,10 +20,22 @@ class NautobotSecretCredentials(NautobotORMCredentials):
             password (string):
             secret (string):
         """
-        self.username = device.secrets_group.get_secret_value("Generic", "username", obj=device)
-        self.password = device.secrets_group.get_secret_value("Generic", "password", obj=device)
+        self.username = device.secrets_group.get_secret_value(
+            access_type=SecretsGroupAccessTypeChoices.TYPE_GENERIC,
+            secret_type=SecretsGroupSecretTypeChoices.TYPE_USERNAME,
+            obj=device,
+        )
+        self.password = device.secrets_group.get_secret_value(
+            access_type=SecretsGroupAccessTypeChoices.TYPE_GENERIC,
+            secret_type=SecretsGroupSecretTypeChoices.TYPE_PASSWORD,
+            obj=device,
+        )
         try:
-            self.secret = device.secrets_group.get_secret_value("Generic", "secret", obj=device)
+            self.secret = device.secrets_group.get_secret_value(
+                access_type=SecretsGroupAccessTypeChoices.TYPE_GENERIC,
+                secret_type=SecretsGroupSecretTypeChoices.TYPE_SECRET,
+                obj=device,
+            )
         except SecretsGroupAssociation.DoesNotExist:
             self.secret = self.password
         return (self.username, self.password, self.secret)
