@@ -2,13 +2,13 @@
 
 from nautobot.extras.models.secrets import SecretsGroupAssociation
 
-from .nautobot_orm import MixinNautobotORMCredentials
+from .nautobot_orm import NautobotORMCredentials
 
 
-class NautobotSecretCredentials(MixinNautobotORMCredentials):
+class NautobotSecretCredentials(NautobotORMCredentials):
     """Abstract Credentials Class designed to work with Nautobot Secrets Functionality."""
 
-    def get_device_creds(self, device):  # pylint: disable=unused-argument, no-self-use
+    def get_device_creds(self, device):
         """Return the credentials for a given device.
 
         Args:

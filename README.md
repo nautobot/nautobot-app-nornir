@@ -82,7 +82,7 @@ The plugin behavior can be controlled with the following list of settings.
 | dispatcher_mapping | {"newos": "dispatcher.newos"} | None | A dictionary in which the key is a platform slug and the value is the import path of the dispatcher in string format |
 | username | ntc | N/A | The username when leveraging the `CredentialsSettingsVars` credential provider. |
 | password | password123 | N/A | The password when leveraging the `CredentialsSettingsVars` credential provider. |
-| secret | password123 | N/A | The secret password when leveraging the `CredentialsSettingsVars` credential provider, **placeholder only, not currently functioning**. |
+| secret | password123 | N/A | The secret password when leveraging the `CredentialsSettingsVars` credential provider.|
 
 Finally, as root, restart Nautobot and the Nautobot worker.
 
@@ -176,11 +176,14 @@ class CustomNautobotORMCredentials(NautobotORMCredentials):
 
 You would have to set your `nornir_settings['credentials']` path to your custom class, such as `local_plugin.creds.CustomNautobotORMCredentials`.
 
-Out of the box, users have access to the `nautobot_plugin_nornir.plugins.credentials.settings_vars.CredentialsSettingsVars` and 
-`nautobot_plugin_nornir.plugins.credentials.env_vars.CredentialsEnvVars` class. This `CredentialsEnvVars` class simply leverages the 
-environment variables `NAPALM_USERNAME`, `NAPALM_PASSWORD`, and `DEVICE_SECRET`.
+Out of the box, users have access to three classes:
 
-> Note: DEVICE_SECRET does not currently work.
+- `nautobot_plugin_nornir.plugins.credentials.settings_vars.CredentialsSettingsVars`
+  - Leverages the username, password, secret that is specified in the plugin configuration.
+- `nautobot_plugin_nornir.plugins.credentials.env_vars.CredentialsEnvVars`
+  - Leverages the environment variables `NAPALM_USERNAME`, `NAPALM_PASSWORD`, and `DEVICE_SECRET`.
+- `nautobot_plugin_nornir.plugins.credentials.nautobot_secrets.NautobotSecretCredentials`
+  - Leverages the [Nautobot Secrets Group](https://nautobot.readthedocs.io/en/latest/core-functionality/secrets/#secrets-groups) core functionality.  **It requires the use of `Access Type` of `Generic` to be used when defining the Secrets Group** and expects `Security Type` of Username, Password, and secret to be defined, if the secret is not defined the password will also be set as the secret value. This is to conform with the standard of the other credential classes.
 
 The environment variable must be accessible on the web service. This often means simply exporting the environment variable will not 
 suffice, but instead requiring users to update the `nautobot.service` file, however this will ultimately depend on your own setup. Environment
