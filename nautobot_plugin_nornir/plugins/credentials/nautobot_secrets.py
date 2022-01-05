@@ -20,22 +20,27 @@ class CredentialsNautobotSecrets(NautobotORMCredentials):
             password (string):
             secret (string):
         """
-        self.username = device.secrets_group.get_secret_value(
-            access_type=SecretsGroupAccessTypeChoices.TYPE_GENERIC,
-            secret_type=SecretsGroupSecretTypeChoices.TYPE_USERNAME,
-            obj=device,
-        )
-        self.password = device.secrets_group.get_secret_value(
-            access_type=SecretsGroupAccessTypeChoices.TYPE_GENERIC,
-            secret_type=SecretsGroupSecretTypeChoices.TYPE_PASSWORD,
-            obj=device,
-        )
-        try:
-            self.secret = device.secrets_group.get_secret_value(
+        if device.secrets_group:
+            self.username = device.secrets_group.get_secret_value(
                 access_type=SecretsGroupAccessTypeChoices.TYPE_GENERIC,
-                secret_type=SecretsGroupSecretTypeChoices.TYPE_SECRET,
+                secret_type=SecretsGroupSecretTypeChoices.TYPE_USERNAME,
                 obj=device,
             )
-        except SecretsGroupAssociation.DoesNotExist:
-            self.secret = self.password
-        return (self.username, self.password, self.secret)
+            self.password = device.secrets_group.get_secret_value(
+                access_type=SecretsGroupAccessTypeChoices.TYPE_GENERIC,
+                secret_type=SecretsGroupSecretTypeChoices.TYPE_PASSWORD,
+                obj=device,
+            )
+            try:
+                self.secret = device.secrets_group.get_secret_value(
+                    access_type=SecretsGroupAccessTypeChoices.TYPE_GENERIC,
+                    secret_type=SecretsGroupSecretTypeChoices.TYPE_SECRET,
+                    obj=device,
+                )
+            except SecretsGroupAssociation.DoesNotExist:
+                self.secret = self.password
+            return (self.username, self.password, self.secret)
+        else:
+            raise ValueError(
+                "The credential provider for Nautobot Secrets requires a Secret Group to be set on a device."
+            )
