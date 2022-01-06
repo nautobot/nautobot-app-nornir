@@ -87,8 +87,8 @@ The plugin behavior can be controlled with the following list of settings.
 | username | ntc | N/A | The username when leveraging the `CredentialsSettingsVars` credential provider. |
 | password | password123 | N/A | The password when leveraging the `CredentialsSettingsVars` credential provider. |
 | secret | password123 | N/A | The secret password when leveraging the `CredentialsSettingsVars` credential provider, **placeholder only, not currently functioning**. |
-| netmiko_extras | {"global_delay_factor": 2} | N/A | Netmiko Extras can be used to control Netmiko settings for the connection. E.g. banner_timeout, conn_timeout. |
-| napalm_extras | {"global_delay_factor": 2} | N/A | Napalm `optional_args` can be used to control Napalm settings. Options are listed [here](https://napalm.readthedocs.io/en/latest/support/#list-of-supported-optional-arguments). |
+| netmiko_extras | {"global_delay_factor": 1} | N/A | Netmiko Extras can be used to control Netmiko settings for the connection. E.g. banner_timeout, conn_timeout. |
+| napalm_extras | {"global_delay_factor": 1} | N/A | Napalm `optional_args` can be used to control Napalm settings. Options are listed [here](https://napalm.readthedocs.io/en/latest/support/#list-of-supported-optional-arguments). |
 
 Finally, as root, restart Nautobot and the Nautobot worker.
 
