@@ -6,6 +6,27 @@ from nautobot.extras.models.secrets import SecretsGroupAssociation
 from .nautobot_orm import NautobotORMCredentials
 
 
+def _get_secret_value(secret_type, device_obj):
+    """Get value for a secret based on secret type and device.
+
+    Args:
+        secret_type (SecretsGroupSecretTypeChoices): Type of secret to check.
+        device_obj (dcim.models.Device): Nautobot device object.
+
+    Returns:
+        str: Secret value.
+    """
+    try:
+        value = device_obj.secrets_group.get_secret_value(
+            access_type=SecretsGroupAccessTypeChoices.TYPE_GENERIC,
+            secret_type=secret_type,
+            obj=device_obj,
+        )
+    except SecretsGroupAssociation.DoesNotExist:
+        value = None
+    return value
+
+
 class CredentialsNautobotSecrets(NautobotORMCredentials):
     """Credentials Class designed to work with Nautobot Secrets Functionality."""
 
@@ -21,23 +42,16 @@ class CredentialsNautobotSecrets(NautobotORMCredentials):
             secret (string):
         """
         if device.secrets_group:
-            self.username = device.secrets_group.get_secret_value(
-                access_type=SecretsGroupAccessTypeChoices.TYPE_GENERIC,
-                secret_type=SecretsGroupSecretTypeChoices.TYPE_USERNAME,
-                obj=device,
+            self.username = _get_secret_value(
+                secret_type=SecretsGroupSecretTypeChoices.TYPE_USERNAME, device_obj=device
             )
-            self.password = device.secrets_group.get_secret_value(
-                access_type=SecretsGroupAccessTypeChoices.TYPE_GENERIC,
-                secret_type=SecretsGroupSecretTypeChoices.TYPE_PASSWORD,
-                obj=device,
+            self.password = _get_secret_value(
+                secret_type=SecretsGroupSecretTypeChoices.TYPE_PASSWORD, device_obj=device
             )
-            try:
-                self.secret = device.secrets_group.get_secret_value(
-                    access_type=SecretsGroupAccessTypeChoices.TYPE_GENERIC,
-                    secret_type=SecretsGroupSecretTypeChoices.TYPE_SECRET,
-                    obj=device,
-                )
-            except SecretsGroupAssociation.DoesNotExist:
+            self.secret = _get_secret_value(secret_type=SecretsGroupSecretTypeChoices.TYPE_SECRET, device_obj=device)
+            if not self.password:
+                self.secret = None
+            else:
                 self.secret = self.password
             return (self.username, self.password, self.secret)
         return (None, None, None)
