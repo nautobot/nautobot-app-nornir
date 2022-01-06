@@ -40,7 +40,4 @@ class CredentialsNautobotSecrets(NautobotORMCredentials):
             except SecretsGroupAssociation.DoesNotExist:
                 self.secret = self.password
             return (self.username, self.password, self.secret)
-        else:
-            raise ValueError(
-                "The credential provider for Nautobot Secrets requires a Secret Group to be set on a device."
-            )
+        return (None, None, None)
