@@ -49,9 +49,7 @@ class CredentialsNautobotSecrets(MixinNautobotORMCredentials):
                 secret_type=SecretsGroupSecretTypeChoices.TYPE_PASSWORD, device_obj=device
             )
             self.secret = _get_secret_value(secret_type=SecretsGroupSecretTypeChoices.TYPE_SECRET, device_obj=device)
-            if not self.password:
-                self.secret = None
-            else:
+            if not self.secret:
                 self.secret = self.password
             return (self.username, self.password, self.secret)
         return (None, None, None)
