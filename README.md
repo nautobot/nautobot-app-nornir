@@ -41,8 +41,18 @@ PLUGINS = ["nautobot_plugin_nornir"]
 
 PLUGINS_CONFIG = {
   "nautobot_plugin_nornir": {
-    "napalm_extras": {},
-    "netmiko_extras": {},
+  "connection_options": {
+      "napalm": {
+          "extras": {
+              "optional_args": {"global_delay_factor": 1},
+          },
+      },
+      "netmiko": {
+          "extras": {
+              "global_delay_factor": 1,
+          },
+      },
+  },
     "nornir_settings": {
       "credentials": "nautobot_plugin_nornir.plugins.credentials.env_vars.CredentialsEnvVars",
       "runner": {
@@ -61,8 +71,18 @@ Alternatively you can use the `CredentialsSettingsVars` class to set the usernam
 PLUGINS_CONFIG = {
   "nautobot_plugin_nornir": {
     "nornir_settings": {
-      "napalm_extras": {},
-      "netmiko_extras": {},
+  "connection_options": {
+      "napalm": {
+          "extras": {
+              "optional_args": {"global_delay_factor": 1},
+          },
+      },
+      "netmiko": {
+          "extras": {
+              "global_delay_factor": 1,
+          },
+      },
+  },
       "credentials": "nautobot_plugin_nornir.plugins.credentials.settings_vars.CredentialsSettingsVars",
       "runner": {
         "plugin": "threaded",
