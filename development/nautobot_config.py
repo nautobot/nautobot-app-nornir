@@ -135,9 +135,7 @@ PLUGINS_CONFIG = {
         "connection_options": {
             "napalm": {
                 "extras": {
-                    "optional_args": {
-                        "global_delay_factor": 1
-                    },
+                    "optional_args": {"global_delay_factor": 1},
                 },
             },
             "netmiko": {
