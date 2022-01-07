@@ -41,8 +41,18 @@ PLUGINS = ["nautobot_plugin_nornir"]
 
 PLUGINS_CONFIG = {
   "nautobot_plugin_nornir": {
-    "napalm_extras": {},
-    "netmiko_extras": {},
+  "connection_options": {
+      "napalm": {
+          "extras": {
+              "optional_args": {"global_delay_factor": 1},
+          },
+      },
+      "netmiko": {
+          "extras": {
+              "global_delay_factor": 1,
+          },
+      },
+  },
     "nornir_settings": {
       "credentials": "nautobot_plugin_nornir.plugins.credentials.env_vars.CredentialsEnvVars",
       "runner": {
@@ -61,8 +71,18 @@ Alternatively you can use the `CredentialsSettingsVars` class to set the usernam
 PLUGINS_CONFIG = {
   "nautobot_plugin_nornir": {
     "nornir_settings": {
-      "napalm_extras": {},
-      "netmiko_extras": {},
+  "connection_options": {
+      "napalm": {
+          "extras": {
+              "optional_args": {"global_delay_factor": 1},
+          },
+      },
+      "netmiko": {
+          "extras": {
+              "global_delay_factor": 1,
+          },
+      },
+  },
       "credentials": "nautobot_plugin_nornir.plugins.credentials.settings_vars.CredentialsSettingsVars",
       "runner": {
         "plugin": "threaded",
@@ -87,8 +107,7 @@ The plugin behavior can be controlled with the following list of settings.
 | username | ntc | N/A | The username when leveraging the `CredentialsSettingsVars` credential provider. |
 | password | password123 | N/A | The password when leveraging the `CredentialsSettingsVars` credential provider. |
 | secret | password123 | N/A | The secret password when leveraging the `CredentialsSettingsVars` credential provider, **placeholder only, not currently functioning**. |
-| netmiko_extras | {"global_delay_factor": 1} | N/A | Netmiko Extras can be used to control Netmiko settings for the connection. E.g. banner_timeout, conn_timeout. |
-| napalm_extras | {"global_delay_factor": 1} | N/A | Napalm `optional_args` can be used to control Napalm settings. Options are listed [here](https://napalm.readthedocs.io/en/latest/support/#list-of-supported-optional-arguments). |
+| connection_options | {"netmiko": {"extras": "global_delay_factor": 1}}} | N/A | Connection Options for the given plugin provider in use. |
 
 Finally, as root, restart Nautobot and the Nautobot worker.
 
