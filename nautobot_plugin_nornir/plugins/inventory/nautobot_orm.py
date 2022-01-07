@@ -6,9 +6,18 @@ from typing import Any, Dict
 from django.db.models import QuerySet
 from django.utils.module_loading import import_string
 from nautobot.dcim.models import Device
-from nautobot_plugin_nornir.constants import PLUGIN_CFG
+from nautobot_plugin_nornir.constants import CONNECTION_SECRETS_PATHS, PLUGIN_CFG
 from nornir.core.inventory import ConnectionOptions, Defaults, Group, Groups, Host, Hosts, Inventory, ParentGroups
 from nornir_nautobot.exceptions import NornirNautobotException
+
+
+def _set_dict_key_path(dictionary, key_path, value):
+    *keys, last_key = key_path.split(".")
+    pointer = dictionary
+    for key in keys:
+
+        pointer = pointer.setdefault(key, {})
+    pointer[last_key] = value
 
 
 def _set_host(data: Dict[str, Any], name: str, groups, host, defaults) -> Host:
@@ -136,14 +145,7 @@ class NautobotORMInventory:
         Returns:
             dict: Nornir Host dictionnary
         """
-        host = {
-            "data": {
-                "connection_options": {
-                    "netmiko": {"extras": PLUGIN_CFG.get("netmiko_extras", {})},
-                    "napalm": {"extras": {"optional_args": PLUGIN_CFG.get("napalm_extras", {})}},
-                },
-            },
-        }
+        host = {"data": {}}
         if "use_fqdn" in params and params.get("use_fqdn"):
             host["hostname"] = f"{device.name}.{params.get('fqdn')}"
         else:
@@ -156,9 +158,6 @@ class NautobotORMInventory:
         if not device.platform:
             raise NornirNautobotException(f"Platform missing from device {device.name}")
         host["platform"] = device.platform.slug
-        if device.platform.napalm_driver:
-            host["data"]["connection_options"]["napalm"]["platform"] = device.platform.napalm_driver
-
         host["data"]["id"] = device.id
         host["data"]["type"] = device.device_type.slug
         host["data"]["site"] = device.site.slug
@@ -174,14 +173,30 @@ class NautobotORMInventory:
         # require password for now
         host["password"] = password
 
-        # Use secret if specified.
-        # Netmiko
-        host["data"]["connection_options"]["netmiko"]["extras"]["secret"] = secret
+        if PLUGIN_CFG.get("connection_options"):
+            for nornir_provider, nornir_options in PLUGIN_CFG["connection_options"].items():
+                if nornir_options.get("connection_secret_path"):
+                    secret_path = nornir_options.pop("connection_secret_path")
+                else:
+                    secret_path = CONNECTION_SECRETS_PATHS.get(nornir_provider)
+                _set_dict_key_path(PLUGIN_CFG["connection_options"], secret_path, secret)
+        else:
+            # Still support current pattern
+            host["data"]["connection_options"] = {
+                "netmiko": {"extras": {}},
+                "napalm": {"extras": {"optional_args": {}}},
+            }
+            # Use secret if specified.
+            # Netmiko
+            host["data"]["connection_options"]["netmiko"]["extras"]["secret"] = secret
 
-        # Napalm
-        host["data"]["connection_options"]["napalm"]["extras"]["optional_args"]["secret"] = secret
+            # Napalm
+            host["data"]["connection_options"]["napalm"]["extras"]["optional_args"]["secret"] = secret
 
         host["groups"] = self.get_host_groups(device=device)
+
+        if device.platform.napalm_driver:
+            host["data"]["connection_options"]["napalm"]["platform"] = device.platform.napalm_driver
         return host
 
     @staticmethod

@@ -132,6 +132,20 @@ PLUGINS = ["nautobot_plugin_nornir"]
 PLUGINS_CONFIG = {
     "nautobot_plugin_nornir": {
         "use_config_context": {"secrets": True},
+        "connection_options": {
+            "napalm": {
+                "extras": {
+                    "optional_args": {
+                        "global_delay_factor": 1
+                    },
+                },
+            },
+            "netmiko": {
+                "extras": {
+                    "global_delay_factor": 1,
+                },
+            },
+        },
         "nornir_settings": {
             "credentials": "nautobot_plugin_nornir.plugins.credentials.env_vars.CredentialsEnvVars",
             "runner": {
