@@ -3,7 +3,7 @@
 from nautobot.extras.choices import SecretsGroupAccessTypeChoices, SecretsGroupSecretTypeChoices
 from nautobot.extras.models.secrets import SecretsGroupAssociation
 
-from .nautobot_orm import NautobotORMCredentials
+from .nautobot_orm import MixinNautobotORMCredentials
 
 
 def _get_secret_value(secret_type, device_obj):
@@ -27,7 +27,7 @@ def _get_secret_value(secret_type, device_obj):
     return value
 
 
-class CredentialsNautobotSecrets(NautobotORMCredentials):
+class CredentialsNautobotSecrets(MixinNautobotORMCredentials):
     """Credentials Class designed to work with Nautobot Secrets Functionality."""
 
     def get_device_creds(self, device):
