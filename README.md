@@ -40,62 +40,63 @@ Once installed, the plugin needs to be enabled in your `nautobot_config.py`
 PLUGINS = ["nautobot_plugin_nornir"]
 
 PLUGINS_CONFIG = {
-  "nautobot_plugin_nornir": {
-  "connection_options": {
-      "napalm": {
-          "extras": {
-              "optional_args": {"global_delay_factor": 1},
-          },
-      },
-      "netmiko": {
-          "extras": {
-              "global_delay_factor": 1,
-          },
-      },
-  },
-    "nornir_settings": {
-      "credentials": "nautobot_plugin_nornir.plugins.credentials.env_vars.CredentialsEnvVars",
-      "runner": {
-        "plugin": "threaded",
-        "options": {
-            "num_workers": 20,
+    "nautobot_plugin_nornir": {
+        "connection_options": {
+            "napalm": {
+                "extras": {
+                    "optional_args": {"global_delay_factor": 1},
+                },
+            },
+            "netmiko": {
+                "extras": {
+                    "global_delay_factor": 1,
+                },
+            },
         },
-      },
-    },
-  }
+        "nornir_settings": {
+            "credentials": "nautobot_plugin_nornir.plugins.credentials.env_vars.CredentialsEnvVars",
+            "runner": {
+                "plugin": "threaded",
+                "options": {
+                    "num_workers": 20,
+                },
+            },
+        },
+    }
+}
 ```
 
 Alternatively you can use the `CredentialsSettingsVars` class to set the username and password via settings.
 
 ```python
 PLUGINS_CONFIG = {
-  "nautobot_plugin_nornir": {
-    "nornir_settings": {
-  "connection_options": {
-      "napalm": {
-          "extras": {
-              "optional_args": {"global_delay_factor": 1},
-          },
-      },
-      "netmiko": {
-          "extras": {
-              "global_delay_factor": 1,
-          },
-      },
-  },
-      "credentials": "nautobot_plugin_nornir.plugins.credentials.settings_vars.CredentialsSettingsVars",
-      "runner": {
-        "plugin": "threaded",
-        "options": {
-            "num_workers": 20,
+    "nautobot_plugin_nornir": {
+        "connection_options": {
+            "napalm": {
+                "extras": {
+                    "optional_args": {"global_delay_factor": 1},
+                },
+            },
+            "netmiko": {
+                "extras": {
+                    "global_delay_factor": 1,
+                },
+            },
         },
-      },
-    },
-    "dispatcher_mapping": None,
-    "username": "ntc",
-    "password": "password123",
-    "secret": "password123",
-  }
+        "nornir_settings": {
+            "credentials": "nautobot_plugin_nornir.plugins.credentials.settings_vars.CredentialsSettingsVars",
+            "runner": {
+                "plugin": "threaded",
+                "options": {
+                    "num_workers": 20,
+                },
+            },
+        },
+        "dispatcher_mapping": None,
+        "username": "ntc",
+        "password": "password123",
+        "secret": "password123",
+    }
 }
 ```
 The plugin behavior can be controlled with the following list of settings. 
