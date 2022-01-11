@@ -184,13 +184,13 @@ Out of the box, users have access to three classes:
 - `nautobot_plugin_nornir.plugins.credentials.env_vars.CredentialsEnvVars`
   - Leverages the environment variables `NAPALM_USERNAME`, `NAPALM_PASSWORD`, and `DEVICE_SECRET`.
 - `nautobot_plugin_nornir.plugins.credentials.nautobot_secrets.CredentialsNautobotSecrets`
-  - Leverages the [Nautobot Secrets Group](https://nautobot.readthedocs.io/en/latest/core-functionality/secrets/#secrets-groups) core functionality.  **The default assumes Secrets Group contain secrets with "Access Type" of `Generic`** and expects these secrets to have "Secret Type" of `username`, `password`, and optionally `secret`. This is configurable via the plugin configuration parameter `use_config_context` which if enabled it will pull `['nautobot_plugin_nornir']['secret_access_type']` from each devices config_context.
+  - Leverages the [Nautobot Secrets Group](https://nautobot.readthedocs.io/en/latest/core-functionality/secrets/#secrets-groups) core functionality.  **The default assumes Secrets Group contain secrets with "Access Type" of `Generic`** and expects these secrets to have "Secret Type" of `username`, `password`, and optionally `secret`. The "Access Type" is configurable via the plugin configuration parameter `use_config_context`, which if enabled changes the plugin functionality to pull `['nautobot_plugin_nornir']['secret_access_type']` from each devices config_context.
 
   - Enabling the use of Config Context:
   ```python
   PLUGINS_CONFIG = {
   "nautobot_plugin_nornir": {
-    "use_config_context": True,  # <===
+    "use_config_context": True,  # <--
     "nornir_settings": {
       "credentials": "nautobot_plugin_nornir.plugins.credentials.nautobot_secrets.CredentialsNautobotSecrets",
       "runner": {
@@ -204,10 +204,10 @@ Out of the box, users have access to three classes:
   }
   ```
 
-  - Config Context Data would be:
+  - Config Context Example:
   ```yaml
   nautobot_plugin_nornir:
-    secret_access_type: SSH
+    secret_access_type: SSH  # "GENERIC", "CONSOLE", "GNMI", "HTTP", "NETCONF", "REST", "RESTCONF", "SNMP", "SSH"
   ```
 
 > For any of these classes, if a "secret" value is not defined, the "password" will also be used as the "secret" value.

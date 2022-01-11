@@ -1,7 +1,6 @@
 """Credentials class designed to work with Nautobot Secrets Functionality."""
 
-from nautobot.extras.choices import (SecretsGroupAccessTypeChoices,
-                                     SecretsGroupSecretTypeChoices)
+from nautobot.extras.choices import SecretsGroupAccessTypeChoices, SecretsGroupSecretTypeChoices
 from nautobot.extras.models.secrets import SecretsGroupAssociation
 from nautobot_plugin_nornir.constants import PLUGIN_CFG
 
