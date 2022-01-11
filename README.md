@@ -83,6 +83,7 @@ The plugin behavior can be controlled with the following list of settings.
 | username | ntc | N/A | The username when leveraging the `CredentialsSettingsVars` credential provider. |
 | password | password123 | N/A | The password when leveraging the `CredentialsSettingsVars` credential provider. |
 | secret | password123 | N/A | The secret password when leveraging the `CredentialsSettingsVars` credential provider.|
+| use_config_context | False | Whether to pull Secret Access Type from Config Context.|
 
 Finally, as root, restart Nautobot and the Nautobot worker.
 
@@ -183,8 +184,32 @@ Out of the box, users have access to three classes:
 - `nautobot_plugin_nornir.plugins.credentials.env_vars.CredentialsEnvVars`
   - Leverages the environment variables `NAPALM_USERNAME`, `NAPALM_PASSWORD`, and `DEVICE_SECRET`.
 - `nautobot_plugin_nornir.plugins.credentials.nautobot_secrets.CredentialsNautobotSecrets`
-  - Leverages the [Nautobot Secrets Group](https://nautobot.readthedocs.io/en/latest/core-functionality/secrets/#secrets-groups) core functionality.  **It requires that the Secrets Group contain secrets with "Access Type" of `Generic`** and expects these secrets to have "Secret Type" of `username`, `password`, and optionally `secret`.
-  
+  - Leverages the [Nautobot Secrets Group](https://nautobot.readthedocs.io/en/latest/core-functionality/secrets/#secrets-groups) core functionality.  **The default assumes Secrets Group contain secrets with "Access Type" of `Generic`** and expects these secrets to have "Secret Type" of `username`, `password`, and optionally `secret`. This is configurable via the plugin configuration parameter `use_config_context` which if enabled it will pull `['nautobot_plugin_nornir']['secret_access_type']` from each devices config_context.
+
+  - Enabling the use of Config Context:
+  ```python
+  PLUGINS_CONFIG = {
+  "nautobot_plugin_nornir": {
+    "use_config_context": True,  # <===
+    "nornir_settings": {
+      "credentials": "nautobot_plugin_nornir.plugins.credentials.nautobot_secrets.CredentialsNautobotSecrets",
+      "runner": {
+        "plugin": "threaded",
+        "options": {
+            "num_workers": 20,
+        },
+      },
+    }
+  }
+  }
+  ```
+
+  - Config Context Data would be:
+  ```yaml
+  nautobot_plugin_nornir:
+    secret_access_type: SSH
+  ```
+
 > For any of these classes, if a "secret" value is not defined, the "password" will also be used as the "secret" value.
 
 The environment variable must be accessible on the web service. This often means simply exporting the environment variable will not 
