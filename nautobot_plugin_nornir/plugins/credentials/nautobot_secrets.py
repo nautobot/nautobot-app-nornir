@@ -1,6 +1,7 @@
 """Credentials class designed to work with Nautobot Secrets Functionality."""
 
-from nautobot.extras.choices import SecretsGroupAccessTypeChoices, SecretsGroupSecretTypeChoices
+from nautobot.extras.choices import (SecretsGroupAccessTypeChoices,
+                                     SecretsGroupSecretTypeChoices)
 from nautobot.extras.models.secrets import SecretsGroupAssociation
 from nautobot_plugin_nornir.constants import PLUGIN_CFG
 
@@ -17,7 +18,7 @@ def _get_secret_value(secret_type, device_obj):
     Returns:
         str: Secret value.
     """
-    if PLUGIN_CFG["use_config_context"]:
+    if PLUGIN_CFG.get("use_config_context"):
         access_type_str = device_obj.get_config_context()["nautobot_plugin_nornir"]["secret_access_type"].upper()
         access_type = getattr(SecretsGroupAccessTypeChoices, f"TYPE_{access_type_str}")
     else:
