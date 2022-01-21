@@ -181,7 +181,7 @@ class NautobotORMInventory:
                 if nornir_options.get("connection_secret_path"):
                     secret_path = nornir_options.pop("connection_secret_path")
                 elif CONNECTION_SECRETS_PATHS.get(nornir_provider):
-                    secret_path = CONNECTION_SECRETS_PATHS["nornir_provider"]
+                    secret_path = CONNECTION_SECRETS_PATHS[nornir_provider]
                 else:
                     continue
                 _set_dict_key_path(conn_options, secret_path, secret)
