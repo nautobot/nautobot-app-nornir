@@ -6,8 +6,10 @@ from typing import Any, Dict
 from django.db.models import QuerySet
 from django.utils.module_loading import import_string
 from nautobot.dcim.models import Device
-from nautobot_plugin_nornir.constants import CONNECTION_SECRETS_PATHS, PLUGIN_CFG
-from nornir.core.inventory import ConnectionOptions, Defaults, Group, Groups, Host, Hosts, Inventory, ParentGroups
+from nautobot_plugin_nornir.constants import (CONNECTION_SECRETS_PATHS,
+                                              PLUGIN_CFG)
+from nornir.core.inventory import (ConnectionOptions, Defaults, Group, Groups,
+                                   Host, Hosts, Inventory, ParentGroups)
 from nornir_nautobot.exceptions import NornirNautobotException
 
 
@@ -173,15 +175,16 @@ class NautobotORMInventory:
         # require password for now
         host["password"] = password
 
-        if PLUGIN_CFG.get("connection_options"):
-            for nornir_provider, nornir_options in PLUGIN_CFG["connection_options"].items():
+        if PLUGIN_CFG.get("use_config_context"):
+            conn_options = device.get_config_context()["nautobot_plugin_nornir"]["connection_options"]
+            for nornir_provider, nornir_options in conn_options.items():
                 if nornir_options.get("connection_secret_path"):
                     secret_path = nornir_options.pop("connection_secret_path")
                 elif CONNECTION_SECRETS_PATHS.get(nornir_provider):
                     secret_path = CONNECTION_SECRETS_PATHS["nornir_provider"]
                 else:
                     continue
-                _set_dict_key_path(PLUGIN_CFG["connection_options"], secret_path, secret)
+                _set_dict_key_path(conn_options, secret_path, secret)
         else:
             # Supporting, but not documenting, and will be deprecated in nautobot-plugin-nornir 2.X
             host["data"]["connection_options"] = {
