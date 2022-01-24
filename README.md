@@ -82,7 +82,8 @@ The plugin behavior can be controlled with the following list of settings.
 | dispatcher_mapping | {"newos": "dispatcher.newos"} | None | A dictionary in which the key is a platform slug and the value is the import path of the dispatcher in string format |
 | username | ntc | N/A | The username when leveraging the `CredentialsSettingsVars` credential provider. |
 | password | password123 | N/A | The password when leveraging the `CredentialsSettingsVars` credential provider. |
-| secret | password123 | N/A | The secret password when leveraging the `CredentialsSettingsVars` credential provider, **placeholder only, not currently functioning**. |
+| secret | password123 | N/A | The secret password when leveraging the `CredentialsSettingsVars` credential provider.|
+| use_config_context | {"secrets": False} | Whether to pull Secret Access Type from Config Context.|
 
 Finally, as root, restart Nautobot and the Nautobot worker.
 
@@ -176,11 +177,50 @@ class CustomNautobotORMCredentials(NautobotORMCredentials):
 
 You would have to set your `nornir_settings['credentials']` path to your custom class, such as `local_plugin.creds.CustomNautobotORMCredentials`.
 
-Out of the box, users have access to the `nautobot_plugin_nornir.plugins.credentials.settings_vars.CredentialsSettingsVars` and 
-`nautobot_plugin_nornir.plugins.credentials.env_vars.CredentialsEnvVars` class. This `CredentialsEnvVars` class simply leverages the 
-environment variables `NAPALM_USERNAME`, `NAPALM_PASSWORD`, and `DEVICE_SECRET`.
+Out of the box, users have access to three classes:
 
-> Note: DEVICE_SECRET does not currently work.
+- `nautobot_plugin_nornir.plugins.credentials.settings_vars.CredentialsSettingsVars`
+  - Leverages the username, password, secret that is specified in the plugin configuration.
+- `nautobot_plugin_nornir.plugins.credentials.env_vars.CredentialsEnvVars`
+  - Leverages the environment variables `NAPALM_USERNAME`, `NAPALM_PASSWORD`, and `DEVICE_SECRET`.
+- `nautobot_plugin_nornir.plugins.credentials.nautobot_secrets.CredentialsNautobotSecrets`
+  - Leverages the [Nautobot Secrets Group](https://nautobot.readthedocs.io/en/latest/core-functionality/secrets/#secrets-groups) core functionality.  **The default assumes Secrets Group contain secrets with "Access Type" of `Generic`** and expects these secrets to have "Secret Type" of `username`, `password`, and optionally `secret`. The "Access Type" is configurable via the plugin configuration parameter `use_config_context`, which if enabled changes the plugin functionality to pull `device_obj.get_config_context()['nautobot_plugin_nornir']['secret_access_type']` from each devices config_context. Which is the config context dictionary `nautobot_plugin_nornir` and the subkey of `secret_access_type`.
+
+  - Enabling the use of Config Context:
+  ```python
+  PLUGINS_CONFIG = {
+  "nautobot_plugin_nornir": {
+    "use_config_context": {"secrets": True},
+    "nornir_settings": {
+      "credentials": "nautobot_plugin_nornir.plugins.credentials.nautobot_secrets.CredentialsNautobotSecrets",
+      # ...
+    }
+  }
+  }
+  ```
+
+  - Local Device Config Context:
+  ```yaml
+  ---
+  nautobot_plugin_nornir:
+    secret_access_type: SSH  # "GENERIC", "CONSOLE", "GNMI", "HTTP", "NETCONF", "REST", "RESTCONF", "SNMP", "SSH"
+  ```
+  
+  - Device Type Config Context:
+  ```yaml
+  ---
+  _metadata:
+    name: spine
+    weight: 1000
+    description: Group Definitions for device type SPINE
+    is_active: true
+    device-roles:
+      - slug: spine
+  nautobot_plugin_nornir:
+    secret_access_type: SSH
+  ```
+
+> For any of these classes, if a "secret" value is not defined, the "password" will also be used as the "secret" value.
 
 The environment variable must be accessible on the web service. This often means simply exporting the environment variable will not 
 suffice, but instead requiring users to update the `nautobot.service` file, however this will ultimately depend on your own setup. Environment
