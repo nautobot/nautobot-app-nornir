@@ -17,7 +17,7 @@ def _get_secret_value(secret_type, device_obj):
     Returns:
         str: Secret value.
     """
-    if PLUGIN_CFG.get("use_config_context").get("secrets"):
+    if PLUGIN_CFG.get("use_config_context", {}).get("secrets"):
         access_type_str = device_obj.get_config_context()["nautobot_plugin_nornir"]["secret_access_type"].upper()
         access_type = getattr(SecretsGroupAccessTypeChoices, f"TYPE_{access_type_str}")
     else:
