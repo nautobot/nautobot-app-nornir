@@ -41,6 +41,7 @@ PLUGINS = ["nautobot_plugin_nornir"]
 
 PLUGINS_CONFIG = {
     "nautobot_plugin_nornir": {
+        "use_config_context": {"connection_options": True},
         "connection_options": {
             "napalm": {
                 "extras": {
@@ -71,27 +72,7 @@ Alternatively you can use the `CredentialsSettingsVars` class to set the usernam
 ```python
 PLUGINS_CONFIG = {
     "nautobot_plugin_nornir": {
-        "connection_options": {
-            "napalm": {
-                "extras": {
-                    "optional_args": {"global_delay_factor": 1},
-                },
-            },
-            "netmiko": {
-                "extras": {
-                    "global_delay_factor": 1,
-                },
-            },
-        },
-        "nornir_settings": {
-            "credentials": "nautobot_plugin_nornir.plugins.credentials.settings_vars.CredentialsSettingsVars",
-            "runner": {
-                "plugin": "threaded",
-                "options": {
-                    "num_workers": 20,
-                },
-            },
-        },
+        # ...
         "dispatcher_mapping": None,
         "username": "ntc",
         "password": "password123",
