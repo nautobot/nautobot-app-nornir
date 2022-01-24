@@ -192,7 +192,7 @@ class NautobotORMInventory:
                     secret_path = CONNECTION_SECRETS_PATHS[nornir_provider]
                 else:
                     continue
-                _set_dict_key_path(PLUGIN_CFG["connection_options"], secret_path, secret)
+                _set_dict_key_path(conn_options, secret_path, secret)
         else:
             # Supporting, but not documenting, and will be deprecated in nautobot-plugin-nornir 2.X
             host["data"]["connection_options"] = {
@@ -207,6 +207,7 @@ class NautobotORMInventory:
             host["data"]["connection_options"]["napalm"]["extras"]["optional_args"]["secret"] = secret
 
         host["groups"] = self.get_host_groups(device=device)
+        print(host["data"]["connection_options"])
 
         if device.platform.napalm_driver:
             if not host["data"]["connection_options"].get("napalm"):
