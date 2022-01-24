@@ -6,10 +6,8 @@ from typing import Any, Dict
 from django.db.models import QuerySet
 from django.utils.module_loading import import_string
 from nautobot.dcim.models import Device
-from nautobot_plugin_nornir.constants import (CONNECTION_SECRETS_PATHS,
-                                              PLUGIN_CFG)
-from nornir.core.inventory import (ConnectionOptions, Defaults, Group, Groups,
-                                   Host, Hosts, Inventory, ParentGroups)
+from nautobot_plugin_nornir.constants import CONNECTION_SECRETS_PATHS, PLUGIN_CFG
+from nornir.core.inventory import ConnectionOptions, Defaults, Group, Groups, Host, Hosts, Inventory, ParentGroups
 from nornir_nautobot.exceptions import NornirNautobotException
 
 
@@ -182,13 +180,17 @@ class NautobotORMInventory:
                 print(f"global options: {conn_options}")
                 # Get connection_options from device config_context.
                 if PLUGIN_CFG.get("use_config_context", {}).get("connection_options"):
-                    config_context_options = device.get_config_context().get("nautobot_plugin_nornir", {}).get("connection_options", {})
+                    config_context_options = (
+                        device.get_config_context().get("nautobot_plugin_nornir", {}).get("connection_options", {})
+                    )
                     print(f"config contet options {config_context_options}")
                     # Merge connection_options global --> config_context.
                     conn_options = {**conn_options, **config_context_options}
                     print(f"merged conn options {conn_options}")
             else:
-                conn_options = device.get_config_context().get("nautobot_plugin_nornir", {}).get("connection_options", {})
+                conn_options = (
+                    device.get_config_context().get("nautobot_plugin_nornir", {}).get("connection_options", {})
+                )
             print(f"after else {conn_options}")
             # {'napalm': {'extras': {'optional_args': {'global_delay_factor': 1}}}, 'netmiko': {'extras': {'global_delay_factor': 1}}
             for nornir_provider, nornir_options in conn_options.items():

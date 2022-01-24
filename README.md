@@ -41,7 +41,7 @@ PLUGINS = ["nautobot_plugin_nornir"]
 
 PLUGINS_CONFIG = {
     "nautobot_plugin_nornir": {
-        "use_config_context": {"connection_options": True},
+        "use_config_context": {"secrets", False, "connection_options": True},
         "connection_options": {
             "napalm": {
                 "extras": {
@@ -89,7 +89,7 @@ The plugin behavior can be controlled with the following list of settings.
 | username | ntc | N/A | The username when leveraging the `CredentialsSettingsVars` credential provider. |
 | password | password123 | N/A | The password when leveraging the `CredentialsSettingsVars` credential provider. |
 | secret | password123 | N/A | The secret password when leveraging the `CredentialsSettingsVars` credential provider.|
-| use_config_context | {"secrets": False} | Whether to pull Secret Access Type from Config Context.|
+| use_config_context | {"secrets": False, "connection_options": False} | Whether to pull Secret Access Type from Config Context.|
 
 Finally, as root, restart Nautobot and the Nautobot worker.
 
@@ -196,7 +196,7 @@ Out of the box, users have access to three classes:
   ```python
   PLUGINS_CONFIG = {
   "nautobot_plugin_nornir": {
-    "use_config_context": {"secrets": True},
+    "use_config_context": {"secrets": True, "connection_options": False},
     "nornir_settings": {
       "credentials": "nautobot_plugin_nornir.plugins.credentials.nautobot_secrets.CredentialsNautobotSecrets",
       # ...
