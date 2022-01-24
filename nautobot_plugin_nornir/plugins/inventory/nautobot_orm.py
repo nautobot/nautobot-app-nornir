@@ -177,13 +177,17 @@ class NautobotORMInventory:
             # Get global connection_options first.
             if PLUGIN_CFG.get("connection_options"):
                 conn_options = PLUGIN_CFG.get("connection_options")
+                print(f"global options: {conn_options}")
                 # Get connection_options from device config_context.
                 if PLUGIN_CFG.get("use_config_context", {}).get("connection_options"):
                     config_context_options = device.get_config_context()["nautobot_plugin_nornir"]["connection_options"]
+                    print(f"config contet options {config_context_options}")
                     # Merge connection_options global --> config_context.
                     conn_options = conn_options.update(config_context_options)
+                    print(f"merged conn options {conn_options}")
             else:
                 conn_options = device.get_config_context()["nautobot_plugin_nornir"]["connection_options"]
+            print(f"after else {conn_options}")
             for nornir_provider, nornir_options in conn_options:
                 if nornir_options.get("connection_secret_path"):
                     secret_path = nornir_options.pop("connection_secret_path")
