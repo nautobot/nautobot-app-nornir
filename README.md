@@ -193,12 +193,7 @@ Out of the box, users have access to three classes:
     "use_config_context": {"secrets": True},
     "nornir_settings": {
       "credentials": "nautobot_plugin_nornir.plugins.credentials.nautobot_secrets.CredentialsNautobotSecrets",
-      "runner": {
-        "plugin": "threaded",
-        "options": {
-            "num_workers": 20,
-        },
-      },
+      # ...
     }
   }
   }
