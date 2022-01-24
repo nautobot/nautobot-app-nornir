@@ -188,7 +188,8 @@ class NautobotORMInventory:
             else:
                 conn_options = device.get_config_context()["nautobot_plugin_nornir"]["connection_options"]
             print(f"after else {conn_options}")
-            for nornir_provider, nornir_options in conn_options:
+            # {'napalm': {'extras': {'optional_args': {'global_delay_factor': 1}}}, 'netmiko': {'extras': {'global_delay_factor': 1}}
+            for nornir_provider, nornir_options in conn_options.items():
                 if nornir_options.get("connection_secret_path"):
                     secret_path = nornir_options.pop("connection_secret_path")
                 elif CONNECTION_SECRETS_PATHS.get(nornir_provider):
