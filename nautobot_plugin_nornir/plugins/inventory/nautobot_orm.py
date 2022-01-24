@@ -183,7 +183,7 @@ class NautobotORMInventory:
                     config_context_options = device.get_config_context()["nautobot_plugin_nornir"]["connection_options"]
                     print(f"config contet options {config_context_options}")
                     # Merge connection_options global --> config_context.
-                    conn_options = conn_options.update(config_context_options)
+                    conn_options = {**conn_options, **config_context_options}
                     print(f"merged conn options {conn_options}")
             else:
                 conn_options = device.get_config_context()["nautobot_plugin_nornir"]["connection_options"]
