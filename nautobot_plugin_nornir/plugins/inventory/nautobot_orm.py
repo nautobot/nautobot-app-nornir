@@ -173,42 +173,39 @@ class NautobotORMInventory:
         # require password for now
         host["password"] = password
 
-        if PLUGIN_CFG.get("connection_options") or PLUGIN_CFG.get("use_config_context", {}).get("connection_options"):
-            # Get global connection_options first.
-            if PLUGIN_CFG.get("connection_options"):
-                conn_options = PLUGIN_CFG.get("connection_options")
-                # Get connection_options from device config_context.
-                if PLUGIN_CFG.get("use_config_context", {}).get("connection_options"):
-                    config_context_options = (
-                        device.get_config_context().get("nautobot_plugin_nornir", {}).get("connection_options", {})
-                    )
-                    # Merge connection_options global --> config_context.
-                    conn_options = {**conn_options, **config_context_options}
-            else:
-                conn_options = (
-                    device.get_config_context().get("nautobot_plugin_nornir", {}).get("connection_options", {})
-                )
-            for nornir_provider, nornir_options in conn_options.items():
+        """
+        Steps to reconcile the connection options
+        1. Check for Global Option in plugin config
+            a. If global options exist, check for plugin config config_config extras set to True
+                a. If True, merge options together where config_context is preferred.
+            b. if set to False only return global options
+        2. If global doesn't exist, check for config_context extras set to True
+            a. grab options from CC data for dev-obj
+            b. if none set, (default dict struct should be added)
+        3. If no global, and no config_context
+            a. default dict struct should be added
+        """
+
+        def build_out_secret_paths(connection_options):
+            for nornir_provider, nornir_options in connection_options.items():
+                # Offers extensibility to nornir plugins not listed in constants.py under CONNECTION_SECRETS_PATHS.
                 if nornir_options.get("connection_secret_path"):
                     secret_path = nornir_options.pop("connection_secret_path")
                 elif CONNECTION_SECRETS_PATHS.get(nornir_provider):
                     secret_path = CONNECTION_SECRETS_PATHS[nornir_provider]
                 else:
                     continue
-                _set_dict_key_path(conn_options, secret_path, secret)
-            host["data"]["connection_options"] = conn_options
-        else:
-            # Supporting, but not documenting, and will be deprecated in nautobot-plugin-nornir 2.X
-            host["data"]["connection_options"] = {
-                "netmiko": {"extras": {}},
-                "napalm": {"extras": {"optional_args": {}}},
-            }
-            # Use secret if specified.
-            # Netmiko
-            host["data"]["connection_options"]["netmiko"]["extras"]["secret"] = secret
+                _set_dict_key_path(connection_options, secret_path, secret)
 
-            # Napalm
-            host["data"]["connection_options"]["napalm"]["extras"]["optional_args"]["secret"] = secret
+        global_options = PLUGIN_CFG.get("connection_options", {"netmiko": {}, "napalm": {}})
+        if PLUGIN_CFG.get("use_config_context", {}).get("connection_options"):
+            config_context_options = (
+                device.get_config_context().get("nautobot_plugin_nornir", {}).get("connection_options", {})
+            )
+            conn_options = build_out_secret_paths({**global_options, **config_context_options})
+        else:
+            conn_options = build_out_secret_paths(global_options)
+        host["data"]["connection_options"] = conn_options
 
         host["groups"] = self.get_host_groups(device=device)
 
