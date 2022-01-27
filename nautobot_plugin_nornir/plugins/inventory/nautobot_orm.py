@@ -6,8 +6,10 @@ from typing import Any, Dict
 from django.db.models import QuerySet
 from django.utils.module_loading import import_string
 from nautobot.dcim.models import Device
-from nautobot_plugin_nornir.constants import CONNECTION_SECRETS_PATHS, PLUGIN_CFG
-from nornir.core.inventory import ConnectionOptions, Defaults, Group, Groups, Host, Hosts, Inventory, ParentGroups
+from nautobot_plugin_nornir.constants import (CONNECTION_SECRETS_PATHS,
+                                              PLUGIN_CFG)
+from nornir.core.inventory import (ConnectionOptions, Defaults, Group, Groups,
+                                   Host, Hosts, Inventory, ParentGroups)
 from nornir_nautobot.exceptions import NornirNautobotException
 
 
@@ -29,7 +31,7 @@ def _build_out_secret_paths(connection_options, device_secret):
             secret_path = CONNECTION_SECRETS_PATHS[nornir_provider]
         else:
             continue
-        _set_dict_key_path(connection_options, secret_path, device_secret)
+        return _set_dict_key_path(connection_options, secret_path, device_secret)
 
 
 def _set_host(data: Dict[str, Any], name: str, groups, host, defaults) -> Host:
