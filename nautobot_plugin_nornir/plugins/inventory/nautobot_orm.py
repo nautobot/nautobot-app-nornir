@@ -186,13 +186,16 @@ class NautobotORMInventory:
         host["password"] = password
 
         global_options = PLUGIN_CFG.get("connection_options", {"netmiko": {}, "napalm": {}, "scrapli": {}})
+        print(f"GLOBAL_OPTIONS:\n{global_options}")
         if PLUGIN_CFG.get("use_config_context", {}).get("connection_options"):
             config_context_options = (
                 device.get_config_context().get("nautobot_plugin_nornir", {}).get("connection_options", {})
             )
             conn_options = _build_out_secret_paths({**global_options, **config_context_options}, secret)
+            print(f"conn options from if:\n{conn_options}")
         else:
             conn_options = _build_out_secret_paths(global_options, secret)
+            print(f"conn options from else:\n{conn_options}")
         host["data"]["connection_options"] = conn_options
 
         print(f'DEBUG CONN OPTIONS\n {host["data"]["connection_options"]}')
