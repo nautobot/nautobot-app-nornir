@@ -6,10 +6,8 @@ from typing import Any, Dict
 from django.db.models import QuerySet
 from django.utils.module_loading import import_string
 from nautobot.dcim.models import Device
-from nautobot_plugin_nornir.constants import (CONNECTION_SECRETS_PATHS,
-                                              PLUGIN_CFG)
-from nornir.core.inventory import (ConnectionOptions, Defaults, Group, Groups,
-                                   Host, Hosts, Inventory, ParentGroups)
+from nautobot_plugin_nornir.constants import CONNECTION_SECRETS_PATHS, PLUGIN_CFG
+from nornir.core.inventory import ConnectionOptions, Defaults, Group, Groups, Host, Hosts, Inventory, ParentGroups
 from nornir_nautobot.exceptions import NornirNautobotException
 
 
@@ -17,7 +15,6 @@ def _set_dict_key_path(dictionary, key_path, value):
     *keys, last_key = key_path.split(".")
     pointer = dictionary
     for key in keys:
-
         pointer = pointer.setdefault(key, {})
     pointer[last_key] = value
 
@@ -31,7 +28,7 @@ def _build_out_secret_paths(connection_options, device_secret):
             secret_path = CONNECTION_SECRETS_PATHS[nornir_provider]
         else:
             continue
-        return _set_dict_key_path(connection_options, secret_path, device_secret)
+        _set_dict_key_path(connection_options, secret_path, device_secret)
 
 
 def _set_host(data: Dict[str, Any], name: str, groups, host, defaults) -> Host:
@@ -193,11 +190,12 @@ class NautobotORMInventory:
             config_context_options = (
                 device.get_config_context().get("nautobot_plugin_nornir", {}).get("connection_options", {})
             )
-            conn_options = _build_out_secret_paths({**global_options, **config_context_options}, secret)
+            conn_options = {**global_options, **config_context_options}
             print(f"conn options from if:\n{conn_options}")
         else:
-            conn_options = _build_out_secret_paths(global_options, secret)
+            conn_options = global_options
             print(f"conn options from else:\n{conn_options}")
+        _build_out_secret_paths(conn_options, secret)
         host["data"]["connection_options"] = conn_options
 
         print(f'DEBUG CONN OPTIONS\n {host["data"]["connection_options"]}')
