@@ -195,6 +195,7 @@ class NautobotORMInventory:
             conn_options = _build_out_secret_paths(global_options, secret)
         host["data"]["connection_options"] = conn_options
 
+        print(f'DEBUG CONN OPTIONS\n {host["data"]["connection_options"]}')
         host["groups"] = self.get_host_groups(device=device)
 
         if device.platform.napalm_driver:
