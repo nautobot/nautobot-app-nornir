@@ -93,7 +93,18 @@ The plugin behavior can be controlled with the following list of settings.
 | connection_options | N/A | {"netmiko": {"extras": {"global_delay_factor": 1}}} | Set Nornir connection options globally to be used with **all** connections.
 | use_config_context | {"secrets": True, "connection_options": True} | {"secrets": False, "connection_options": False} | Whether to pull Secret Access Type, and/or Connection Options from Config Context.|
 
-> By default the device secret connection option path will be set for connections using: Napalm, Netmiko, and Scrapli.  If an additional path needs to be registered it can be done by setting it inside the config context data.  See below for an example.
+
+The plugin behavior can be extended further with [config context](https://nautobot.readthedocs.io/en/stable/models/extras/gitrepository/#configuration-contexts) data. The plugin currently implements two options: Nornir connection options, and secrets.  The supported settings are listed below.
+
+The root key for this plugin is `nautobot_plugin_nornir`.
+
+| Key     | Description                          |
+| ------- | ------------------------------------ |
+| connection_options | Dictionary representation of a Nornir Plugins connection options. |
+| connection_secret_path | Dotted expression of the dictionary path where a device secret should be stored for a given Nornir Plugin. |
+
+
+By default the device secret connection option path will be set for connections using: Napalm, Netmiko, and Scrapli.  If an additional path needs to be registered it can be done by setting it inside the config context data.  See below for an example.
 
 ```yaml
 ---
