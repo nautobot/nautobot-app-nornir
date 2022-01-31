@@ -40,38 +40,45 @@ Once installed, the plugin needs to be enabled in your `nautobot_config.py`
 PLUGINS = ["nautobot_plugin_nornir"]
 
 PLUGINS_CONFIG = {
-  "nautobot_plugin_nornir": {
-    "nornir_settings": {
-      "credentials": "nautobot_plugin_nornir.plugins.credentials.env_vars.CredentialsEnvVars",
-      "runner": {
-        "plugin": "threaded",
-        "options": {
-            "num_workers": 20,
+    "nautobot_plugin_nornir": {
+        "use_config_context": {"secrets", False, "connection_options": True},
+        # Optionally set global connection options.
+        "connection_options": {
+            "napalm": {
+                "extras": {
+                    "optional_args": {"global_delay_factor": 1},
+                },
+            },
+            "netmiko": {
+                "extras": {
+                    "global_delay_factor": 1,
+                },
+            },
         },
-      },
-    },
-  }
+        "nornir_settings": {
+            "credentials": "nautobot_plugin_nornir.plugins.credentials.env_vars.CredentialsEnvVars",
+            "runner": {
+                "plugin": "threaded",
+                "options": {
+                    "num_workers": 20,
+                },
+            },
+        },
+    }
+}
 ```
 
 Alternatively you can use the `CredentialsSettingsVars` class to set the username and password via settings.
 
 ```python
 PLUGINS_CONFIG = {
-  "nautobot_plugin_nornir": {
-    "nornir_settings": {
-      "credentials": "nautobot_plugin_nornir.plugins.credentials.settings_vars.CredentialsSettingsVars",
-      "runner": {
-        "plugin": "threaded",
-        "options": {
-            "num_workers": 20,
-        },
-      },
-    },
-    "dispatcher_mapping": None,
-    "username": "ntc",
-    "password": "password123",
-    "secret": "password123",
-  }
+    "nautobot_plugin_nornir": {
+        # ...
+        "dispatcher_mapping": None,
+        "username": "ntc",
+        "password": "password123",
+        "secret": "password123",
+    }
 }
 ```
 The plugin behavior can be controlled with the following list of settings. 
@@ -83,7 +90,35 @@ The plugin behavior can be controlled with the following list of settings.
 | username | ntc | N/A | The username when leveraging the `CredentialsSettingsVars` credential provider. |
 | password | password123 | N/A | The password when leveraging the `CredentialsSettingsVars` credential provider. |
 | secret | password123 | N/A | The secret password when leveraging the `CredentialsSettingsVars` credential provider.|
-| use_config_context | {"secrets": False} | Whether to pull Secret Access Type from Config Context.|
+| connection_options | N/A | {"netmiko": {"extras": {"global_delay_factor": 1}}} | Set Nornir connection options globally to be used with **all** connections.
+| use_config_context | {"secrets": True, "connection_options": True} | {"secrets": False, "connection_options": False} | Whether to pull Secret Access Type, and/or Connection Options from Config Context.|
+
+
+The plugin behavior can be extended further with [config context](https://nautobot.readthedocs.io/en/stable/models/extras/gitrepository/#configuration-contexts) data. The plugin currently implements two options: Nornir connection options, and secrets.  The supported settings are listed below.
+
+The root key for this plugin is `nautobot_plugin_nornir`.
+
+| Key     | Description                          |
+| ------- | ------------------------------------ |
+| connection_options | Dictionary representation of a Nornir Plugins connection options. |
+| connection_secret_path | Dotted expression of the dictionary path where a device secret should be stored for a given Nornir Plugin. |
+| secret_access_type | Type of Secret Access Type to use. Examples. "GENERIC", "CONSOLE", "GNMI", "HTTP", "NETCONF", "REST", "RESTCONF", "SNMP", "SSH"|
+
+By default the device secret connection option path will be set for connections using: Napalm, Netmiko, and Scrapli.  If an additional path needs to be registered it can be done by setting it inside the config context data.  See below for an example.
+
+```yaml
+---
+_metadata:
+  name: spine
+  weight: 1000
+  description: Group Definitions for device type SPINE
+  is_active: true
+  device-roles:
+    - slug: spine
+nautobot_plugin_nornir:
+  pluginx:
+    connection_secret_path: "pluginx.extras.secret"
+```
 
 Finally, as root, restart Nautobot and the Nautobot worker.
 
@@ -109,7 +144,7 @@ The `dispatcher_mapping` configuration option can be set to extend or map the pl
 The above example demonstrates the following use cases.
 
 * Creating a custom only local dispatcher
-* Mapping a user defined and preffered platform slug name to expected driver (e.g. ios -> cisco_ios)
+* Mapping a user defined and preferred platform slug name to expected driver (e.g. ios -> cisco_ios)
 * Overloading platform slug keys, by mapping ios and ios_xe to the same class
 * Leveraging the existing "default" Netmiko driver
 
@@ -118,7 +153,7 @@ allow users to define their own mappings as described above.
 
 # Inventory
 
-The Nautobot ORM inventory is rather static in nature at this point. The user has the ability to define the `default` data. The native capabilites
+The Nautobot ORM inventory is rather static in nature at this point. The user has the ability to define the `default` data. The native capabilities
 include. 
 
 * Providing an object called within the `obj` key that is a Nautobot `Device` object instance.
@@ -126,6 +161,53 @@ include.
 * Provide grouping for global, site, role, type, and manufacturer based on their slug.
 * Provide credentials for NAPALM and Netmiko.
 * Link to the credential class as defined by the `nornir_settings['settings']` definition.
+
+  - Enabling the use of Config Context:
+  ```python
+  PLUGINS_CONFIG = {
+  "nautobot_plugin_nornir": {
+    "use_config_context": {"connection_options": True},
+    "nornir_settings": {
+      "credentials": "nautobot_plugin_nornir.plugins.credentials.nautobot_secrets.CredentialsNautobotSecrets",
+      # ...
+    }
+  }
+  }
+  ```
+
+  - Local Device Config Context:
+    ```json
+    {"nautobot_plugin_nornir": {
+            "connection_options": {
+                "napalm": {
+                    "extras": {
+                        "optional_args": {
+                            "global_delay_factor": 5
+                        }
+                    }
+                }
+            }
+        }
+    }
+  ```
+  
+  - Device Type Config Context:
+  ```yaml
+  ---
+  _metadata:
+    name: spine
+    weight: 1000
+    description: Group Definitions for device type SPINE
+    is_active: true
+    device-roles:
+      - slug: spine
+  nautobot_plugin_nornir:
+    connection_options:
+      napalm:
+        extras:
+          optional_args:
+            global_delay_factor: 5
+  ```
 
 # Credentials
 
@@ -200,10 +282,8 @@ Out of the box, users have access to three classes:
   ```
 
   - Local Device Config Context:
-  ```yaml
-  ---
-  nautobot_plugin_nornir:
-    secret_access_type: SSH  # "GENERIC", "CONSOLE", "GNMI", "HTTP", "NETCONF", "REST", "RESTCONF", "SNMP", "SSH"
+  ```json
+  {"nautobot_plugin_nornir": {"secret_access_type": "SSH"}}
   ```
   
   - Device Type Config Context:

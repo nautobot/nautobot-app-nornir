@@ -5,19 +5,30 @@ from typing import Any, Dict
 
 from django.db.models import QuerySet
 from django.utils.module_loading import import_string
-from nornir.core.inventory import (
-    Inventory,
-    ConnectionOptions,
-    Defaults,
-    Groups,
-    Host,
-    Hosts,
-    Group,
-    ParentGroups,
-)
-
 from nautobot.dcim.models import Device
+from nautobot_plugin_nornir.constants import CONNECTION_SECRETS_PATHS, PLUGIN_CFG
+from nornir.core.inventory import ConnectionOptions, Defaults, Group, Groups, Host, Hosts, Inventory, ParentGroups
 from nornir_nautobot.exceptions import NornirNautobotException
+
+
+def _set_dict_key_path(dictionary, key_path, value):
+    *keys, last_key = key_path.split(".")
+    pointer = dictionary
+    for key in keys:
+        pointer = pointer.setdefault(key, {})
+    pointer[last_key] = value
+
+
+def _build_out_secret_paths(connection_options, device_secret):
+    for nornir_provider, nornir_options in connection_options.items():
+        # Offers extensibility to nornir plugins not listed in constants.py under CONNECTION_SECRETS_PATHS.
+        if nornir_options.get("connection_secret_path"):
+            secret_path = nornir_options.pop("connection_secret_path")
+        elif CONNECTION_SECRETS_PATHS.get(nornir_provider):
+            secret_path = CONNECTION_SECRETS_PATHS[nornir_provider]
+        else:
+            continue
+        _set_dict_key_path(connection_options, secret_path, device_secret)
 
 
 def _set_host(data: Dict[str, Any], name: str, groups, host, defaults) -> Host:
@@ -145,14 +156,7 @@ class NautobotORMInventory:
         Returns:
             dict: Nornir Host dictionnary
         """
-        host = {
-            "data": {
-                "connection_options": {
-                    "netmiko": {"extras": {}},
-                    "napalm": {"extras": {"optional_args": {}}},
-                },
-            },
-        }
+        host = {"data": {}}
         if "use_fqdn" in params and params.get("use_fqdn"):
             host["hostname"] = f"{device.name}.{params.get('fqdn')}"
         else:
@@ -165,9 +169,6 @@ class NautobotORMInventory:
         if not device.platform:
             raise NornirNautobotException(f"Platform missing from device {device.name}")
         host["platform"] = device.platform.slug
-        if device.platform.napalm_driver:
-            host["data"]["connection_options"]["napalm"]["platform"] = device.platform.napalm_driver
-
         host["data"]["id"] = device.id
         host["data"]["type"] = device.device_type.slug
         host["data"]["site"] = device.site.slug
@@ -183,14 +184,24 @@ class NautobotORMInventory:
         # require password for now
         host["password"] = password
 
-        # Use secret if specified.
-        # Netmiko
-        host["data"]["connection_options"]["netmiko"]["extras"]["secret"] = secret
+        global_options = PLUGIN_CFG.get("connection_options", {"netmiko": {}, "napalm": {}, "scrapli": {}})
+        if PLUGIN_CFG.get("use_config_context", {}).get("connection_options"):
+            config_context_options = (
+                device.get_config_context().get("nautobot_plugin_nornir", {}).get("connection_options", {})
+            )
+            conn_options = {**global_options, **config_context_options}
+        else:
+            conn_options = global_options
 
-        # Napalm
-        host["data"]["connection_options"]["napalm"]["extras"]["optional_args"]["secret"] = secret
+        _build_out_secret_paths(conn_options, secret)
 
+        host["data"]["connection_options"] = conn_options
         host["groups"] = self.get_host_groups(device=device)
+
+        if device.platform.napalm_driver:
+            if not host["data"]["connection_options"].get("napalm"):
+                host["data"]["connection_options"]["napalm"] = {}
+            host["data"]["connection_options"]["napalm"]["platform"] = device.platform.napalm_driver
         return host
 
     @staticmethod
