@@ -102,7 +102,7 @@ The root key for this plugin is `nautobot_plugin_nornir`.
 | ------- | ------------------------------------ |
 | connection_options | Dictionary representation of a Nornir Plugins connection options. |
 | connection_secret_path | Dotted expression of the dictionary path where a device secret should be stored for a given Nornir Plugin. |
-
+| secret_access_type | Type of Secret Access Type to use. Examples. "GENERIC", "CONSOLE", "GNMI", "HTTP", "NETCONF", "REST", "RESTCONF", "SNMP", "SSH"|
 
 By default the device secret connection option path will be set for connections using: Napalm, Netmiko, and Scrapli.  If an additional path needs to be registered it can be done by setting it inside the config context data.  See below for an example.
 
