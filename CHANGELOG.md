@@ -1,5 +1,17 @@
 # Changelog
 
+## v1.0.0 - 2021-02
+
+### Changed
+
+- #46 Update Dependencies.
+- #48 Make consistent default NORNIR_SETTINGS.
+
+### Added
+
+- #45 Add napalm/netmiko extras support to plugin config.
+- #49 Add provider class for Nautobot Secrets Functionality.
+
 ## v0.9.7 - 2021-11
 
 ### Fixed
