@@ -4,11 +4,13 @@
 
 ### Changed
 
+- #43 Update postgres Docker tag to v14.
 - #46 Update Dependencies.
 - #48 Make consistent default NORNIR_SETTINGS.
 
 ### Added
 
+- #41 Configure Renovate.
 - #45 Add napalm/netmiko extras support to plugin config.
 - #49 Add provider class for Nautobot Secrets Functionality.
 
