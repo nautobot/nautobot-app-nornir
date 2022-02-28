@@ -37,8 +37,19 @@ services:
       - "nautobot"
     entrypoint: "nautobot-server celery worker -B -l INFO"
     <<: *nautobot-base
+  celery_beat:
+    volumes:
+      - "./nautobot_config.py:/opt/nautobot/nautobot_config.py"
+      - "../:/source"
+    healthcheck:
+      disable: true
+    depends_on:
+      - "nautobot"
+      - "redis"
+    entrypoint: "nautobot-server celery beat -l INFO"
+    <<: *nautobot-base
   postgres:
-    image: "postgres:13"
+    image: "postgres:14"
     env_file:
       - "dev.env"
     volumes:

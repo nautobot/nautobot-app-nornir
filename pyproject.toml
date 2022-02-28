@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "nautobot-plugin-nornir"
-version = "0.9.7"
+version = "1.0.0"
 description = "Nautobot Nornir plugin."
 authors = ["Network to Code, LLC <opensource@networktocode.com>"]
 
@@ -20,7 +20,6 @@ classifiers = [
     "Programming Language :: Python :: 3.7",
     "Programming Language :: Python :: 3.8",
     "Programming Language :: Python :: 3.9",
-    "Programming Language :: Python :: 3.10",
 ]
 packages = [
     { include = "nautobot_plugin_nornir" },
@@ -29,8 +28,8 @@ packages = [
 [tool.poetry.dependencies]
 python = "^3.6"
 nornir-nautobot = "^2.2.0"
-nautobot = ">=1.0.0"
-netutils = ">=0.2.5"
+nautobot = ">=1.2.0"
+netutils = ">=1.0.0"
 
 [tool.poetry.dev-dependencies]
 bandit = "*"
@@ -43,7 +42,7 @@ pydocstyle = "*"
 pylint = "*"
 pylint-django = "*"
 yamllint = "*"
-Markdown = "3.3.4" # temp pin for https://github.com/Python-Markdown/markdown/issues/1195
+Markdown = {version="*", python="^3.6.2"}
 
 [tool.black]
 line-length = 120

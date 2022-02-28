@@ -7,7 +7,6 @@ import sys
 from nautobot.core.settings import *  # noqa: F403
 from nautobot.core.settings_funcs import parse_redis_connection
 
-
 #
 # Misc. settings
 #
@@ -132,6 +131,19 @@ PLUGINS = ["nautobot_plugin_nornir"]
 # Each key in the dictionary is the name of an installed plugin and its value is a dictionary of settings.
 PLUGINS_CONFIG = {
     "nautobot_plugin_nornir": {
+        "use_config_context": {"use_config_context": {"secrets": True, "connection_options": True}},
+        "connection_options": {
+            "napalm": {
+                "extras": {
+                    "optional_args": {"global_delay_factor": 1},
+                },
+            },
+            "netmiko": {
+                "extras": {
+                    "global_delay_factor": 1,
+                },
+            },
+        },
         "nornir_settings": {
             "credentials": "nautobot_plugin_nornir.plugins.credentials.env_vars.CredentialsEnvVars",
             "runner": {
