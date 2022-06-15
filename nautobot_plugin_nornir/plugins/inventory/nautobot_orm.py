@@ -7,7 +7,16 @@ from django.db.models import QuerySet
 from django.utils.module_loading import import_string
 from nautobot.dcim.models import Device
 from nautobot_plugin_nornir.constants import CONNECTION_SECRETS_PATHS, PLUGIN_CFG
-from nornir.core.inventory import ConnectionOptions, Defaults, Group, Groups, Host, Hosts, Inventory, ParentGroups
+from nornir.core.inventory import (
+    ConnectionOptions,
+    Defaults,
+    Group,
+    Groups,
+    Host,
+    Hosts,
+    Inventory,
+    ParentGroups,
+)
 from nornir_nautobot.exceptions import NornirNautobotException
 
 
@@ -86,7 +95,12 @@ class NautobotORMInventory:
             raise NornirNautobotException("There was no matching results from the query.")
         self.queryset = queryset
         self.filters = filters
-        self.cred_class = import_string(credentials_class)
+        if isinstance(credentials_class, str):
+            self.cred_class = import_string(credentials_class)
+        else:
+            raise NornirNautobotException(
+                f"A credentials class path string is required, but got {credentials_class}. See https://github.com/nautobot/nautobot-plugin-nornir#credentials for details."
+            )
         self.credentials_params = credentials_params
         self.params = params
         self.defaults = defaults or {}
