@@ -77,7 +77,7 @@ PLUGINS_CONFIG = {
             "credentials": "nautobot_plugin_nornir.plugins.credentials.settings_vars.CredentialsSettingsVars",
         # ...
         "dispatcher_mapping": None,
-        # username, password, secret defined in PLUGIN_CONFIG is only used with the credentials path provided above.
+        # username, password, secret defined in PLUGIN_CONFIG is only used with the credentials path `CredentialsSettingsVars` as seen above.
         "username": "ntc",
         "password": "password123",
         "secret": "password123",
