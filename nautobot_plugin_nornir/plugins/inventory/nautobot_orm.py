@@ -99,7 +99,7 @@ class NautobotORMInventory:
             self.cred_class = import_string(credentials_class)
         else:
             raise NornirNautobotException(
-                f"A credentials class path string is required, but got {credentials_class}. See https://github.com/nautobot/nautobot-plugin-nornir#credentials for details."
+                f"A valid credentials class path (as defined by Django's import_string function) is required, but got {credentials_class} which is not importable. See https://github.com/nautobot/nautobot-plugin-nornir#credentials for details."
             )
         self.credentials_params = credentials_params
         self.params = params
