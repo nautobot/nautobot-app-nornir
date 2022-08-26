@@ -279,13 +279,19 @@ Out of the box, users have access to three classes:
         "password": "password123",
         "secret": "password123",
     }
-}
+  }
   ```
 
 - `nautobot_plugin_nornir.plugins.credentials.env_vars.CredentialsEnvVars`
+
   - Leverages the environment variables `NAPALM_USERNAME`, `NAPALM_PASSWORD`, and `DEVICE_SECRET`.
+
+
 - `nautobot_plugin_nornir.plugins.credentials.nautobot_secrets.CredentialsNautobotSecrets`
-  - Leverages the [Nautobot Secrets Group](https://nautobot.readthedocs.io/en/latest/core-functionality/secrets/#secrets-groups) core functionality.  **The default assumes Secrets Group contain secrets with "Access Type" of `Generic`** and expects these secrets to have "Secret Type" of `username`, `password`, and optionally `secret`. The "Access Type" is configurable via the plugin configuration parameter `use_config_context`, which if enabled changes the plugin functionality to pull `device_obj.get_config_context()['nautobot_plugin_nornir']['secret_access_type']` from each devices config_context. Which is the config context dictionary `nautobot_plugin_nornir` and the subkey of `secret_access_type`.
+
+  - Leverages the [Nautobot Secrets Group](https://nautobot.readthedocs.io/en/latest/core-functionality/secrets/#secrets-groups) core functionality.
+  
+**The default assumes Secrets Group contain secrets with "Access Type" of `Generic`** and expects these secrets to have "Secret Type" of `username`, `password`, and optionally `secret`. The "Access Type" is configurable via the plugin configuration parameter `use_config_context`, which if enabled changes the plugin functionality to pull `device_obj.get_config_context()['nautobot_plugin_nornir']['secret_access_type']` from each devices config_context. Which is the config context dictionary `nautobot_plugin_nornir` and the subkey of `secret_access_type`.
 
   - Enabling the use of Config Context:
 
