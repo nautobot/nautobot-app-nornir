@@ -27,7 +27,7 @@ class CredentialsEnvVars(MixinNautobotORMCredentials):
             params = {}
 
         if not isinstance(params, dict):
-            raise TypeError("params must be a dictionnary")
+            raise TypeError("params must be a dictionary")
 
         self.username = os.getenv(params.get("username", USERNAME_ENV_VAR_NAME))
         self.password = os.getenv(params.get("password", PASSWORD_ENV_VAR_NAME))
