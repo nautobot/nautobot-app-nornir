@@ -1,12 +1,11 @@
 """Inventory Plugin for Nornir designed to work with Nautobot ORM."""
-# pylint: disable=unsupported-assignment-operation,unsubscriptable-object,no-member
+# pylint: disable=unsupported-assignment-operation,unsubscriptable-object,no-member,duplicate-code
 
 from typing import Any, Dict
 
 from django.db.models import QuerySet
 from django.utils.module_loading import import_string
-from nautobot.dcim.models import Device
-from nautobot_plugin_nornir.constants import CONNECTION_SECRETS_PATHS, PLUGIN_CFG
+
 from nornir.core.inventory import (
     ConnectionOptions,
     Defaults,
@@ -18,6 +17,10 @@ from nornir.core.inventory import (
     ParentGroups,
 )
 from nornir_nautobot.exceptions import NornirNautobotException
+
+from nautobot.dcim.models import Device
+
+from nautobot_plugin_nornir.constants import CONNECTION_SECRETS_PATHS, PLUGIN_CFG
 
 
 def _set_dict_key_path(dictionary, key_path, value):
@@ -168,7 +171,7 @@ class NautobotORMInventory:
 
 
         Returns:
-            dict: Nornir Host dictionnary
+            dict: Nornir Host dictionary
         """
         host = {"data": {}}
         if "use_fqdn" in params and params.get("use_fqdn"):
@@ -181,7 +184,7 @@ class NautobotORMInventory:
         host["name"] = device.name
 
         if not device.platform:
-            raise NornirNautobotException(f"Platform missing from device {device.name}")
+            raise NornirNautobotException(f"Platform missing from device {device.name}, preemptively failed.")
         host["platform"] = device.platform.slug
         host["data"]["id"] = device.id
         host["data"]["type"] = device.device_type.slug

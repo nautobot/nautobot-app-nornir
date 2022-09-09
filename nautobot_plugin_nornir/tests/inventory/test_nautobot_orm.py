@@ -33,22 +33,22 @@ class NautobotORMInventoryTests(TestCase):
 
     @staticmethod
     @skip("Starter skip")
-    def test_init_default():
+    def test_init_default(self):
         """Ensure inventory is working properly with default settings."""
         inv = NautobotORMInventory()
-        assert len(inv.hosts) == 2  # pylint: disable=no-member
+        self.assertEqual(len(inv.hosts), 2)
 
     @staticmethod
     @skip("Starter skip")
-    def test_init_queryset():
+    def test_init_queryset(self):
         """Ensure the inventory is working properly when a queryset is provided."""
         queryset = Device.objects.filter(name="device1")
         inv = NautobotORMInventory(queryset=queryset)
-        assert len(inv.hosts) == 1  # pylint: disable=no-member
+        self.assertEqual(len(inv.hosts), 1)
 
     @staticmethod
     @skip("Starter skip")
-    def test_init_filters():
+    def test_init_filters(self):
         """Ensure the inventory is working properly when a filters dict is provided."""
         inv = NautobotORMInventory(filters=dict(name="device1"))
-        assert len(inv.hosts) == 1  # pylint: disable=no-member
+        self.assertEqual(len(inv.hosts), 1)

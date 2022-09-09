@@ -1,4 +1,5 @@
 """Credentials class designed to work with Nautobot Secrets Functionality."""
+# pylint: disable=attribute-defined-outside-init
 
 from nautobot.extras.choices import SecretsGroupAccessTypeChoices, SecretsGroupSecretTypeChoices
 from nautobot.extras.models.secrets import SecretsGroupAssociation
