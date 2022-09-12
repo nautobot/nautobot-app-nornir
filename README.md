@@ -3,7 +3,7 @@
 <!-- TODO: Swap links to not relative once live -->
 
 <p align="center">
-  <img src="./images/icon-NautobotPluginNornir.png" class="logo" height="200px">
+  <img src="https://raw.githubusercontent.com/nautobot/nautobot-plugin-nornir/develop/docs/images/icon-NautobotPluginNornir.png" class="logo" height="200px">
   <br>
   <a href="https://github.com/nautobot/nautobot-plugin-nornir/actions"><img src="https://github.com/nautobot/nautobot-plugin-nornir/actions/workflows/ci.yml/badge.svg?branch=main"></a>
   <a href="https://docs.nautobot.com/projects/nautobot-plugin-nornir/en/latest"><img src="https://readthedocs.org/projects/nautobot-plugin-nornir/badge/"></a>
@@ -17,7 +17,7 @@
 
 A plugin for [Nautobot](https://github.com/nautobot/nautobot), that intends to be a small shim layer between [nornir-nautobot](https://github.com/nautobot/nornir-nautobot) and other plugins. The primary abilities that the plugin provides is a native Nornir ORM based inventory and a credential manager.
 
-![Architecture Overview](./images/architecture-overview.png)
+![Architecture Overview](https://raw.githubusercontent.com/nautobot/nautobot-plugin-nornir/develop/docs/images/architecture-overview.png)
 
 As of the writing of this readme, the only plugin leveraging this plugin is the [golden-config](https://github.com/nautobot/nautobot-plugin-golden-config). However, future plugins are planned, such as the "network importer".
 
@@ -27,7 +27,7 @@ That being said, there is currently little reason to install this plugin by itse
 
 As previously mentioned, the plugin is mostly a shim layer, here is an example of how Nautobot Golden Config uses a Nornir Job.
 
-![Backup Job](./images/nornir-backup-job.png)
+![Backup Job](https://raw.githubusercontent.com/nautobot/nautobot-plugin-nornir/develop/docs/images/nornir-backup-job.png)
 
 ## Try it out!
 
@@ -39,11 +39,11 @@ This App is installed in the Nautobot Community Sandbox found over at [demo.naut
 
 Full web-based HTML documentation for this app can be found over on the [Nautobot Docs](https://docs.nautobot.com) website:
 
-- [User Guide](user/app_overview) - Overview, Using the App, Getting Started.
-- [Administrator Guide](admin/admin_install/) - How to Install, Configure, Upgrade, or Uninstall the App.
-- [Developer Guide](dev/dev_contributing/) - Extending the App, Code Reference, Contribution Guide.
-- [Release Notes / Changelog](admin/release_notes/).
-- [Frequently Asked Questions](user/app_faq/).
+- [User Guide](./docs/user/app_overview.md) - Overview, Using the App, Getting Started.
+- [Administrator Guide](./docs/admin/admin_install.md) - How to Install, Configure, Upgrade, or Uninstall the App.
+- [Developer Guide](./docs/dev/dev_contributing.md) - Extending the App, Code Reference, Contribution Guide.
+- [Release Notes / Changelog](./docs/admin/release_notes/).
+- [Frequently Asked Questions](./docs/user/app_faq.md).
 
 
 <!-- 
