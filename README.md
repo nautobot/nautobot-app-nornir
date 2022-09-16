@@ -1,12 +1,10 @@
 # Nautobot Plugin Nornir
 
-<!-- TODO: Swap links to not relative once live -->
-
 <p align="center">
   <img src="https://raw.githubusercontent.com/nautobot/nautobot-plugin-nornir/develop/docs/images/icon-NautobotPluginNornir.png" class="logo" height="200px">
   <br>
   <a href="https://github.com/nautobot/nautobot-plugin-nornir/actions"><img src="https://github.com/nautobot/nautobot-plugin-nornir/actions/workflows/ci.yml/badge.svg?branch=main"></a>
-  <a href="https://docs.nautobot.com/projects/nautobot-plugin-nornir/en/latest"><img src="https://readthedocs.org/projects/nautobot-plugin-nornir/badge/"></a>
+  <a href="https://docs.nautobot.com/projects/plugin-nornir/en/latest"><img src="https://readthedocs.org/projects/nautobot-plugin-nornir/badge/"></a>
   <a href="https://pypi.org/project/nautobot-plugin-nornir/"><img src="https://img.shields.io/pypi/v/nautobot-plugin-nornir"></a>
   <a href="https://pypi.org/project/nautobot-plugin-nornir/"><img src="https://img.shields.io/pypi/dm/nautobot-plugin-nornir"></a>
   <br>
@@ -39,30 +37,20 @@ This App is installed in the Nautobot Community Sandbox found over at [demo.naut
 
 Full web-based HTML documentation for this app can be found over on the [Nautobot Docs](https://docs.nautobot.com) website:
 
-- [User Guide](./docs/user/app_overview.md) - Overview, Using the App, Getting Started.
-- [Administrator Guide](./docs/admin/admin_install.md) - How to Install, Configure, Upgrade, or Uninstall the App.
-- [Developer Guide](./docs/dev/dev_contributing.md) - Extending the App, Code Reference, Contribution Guide.
-- [Release Notes / Changelog](./docs/admin/release_notes/).
-- [Frequently Asked Questions](./docs/user/app_faq.md).
-
-
-<!-- 
-TODO: Swap once going live with docs
-- [User Guide](https://docs.nautobot.com/projects/nautobot-plugin-nornir/en/latest/user/app_overview/) - Overview, Using the App, Getting Started.
-- [Administrator Guide](https://docs.nautobot.com/projects/nautobot-plugin-nornir/en/latest/admin/admin_install/) - How to Install, Configure, Upgrade, or Uninstall the App.
-- [Developer Guide](https://docs.nautobot.com/projects/nautobot-plugin-nornir/en/latest/dev/dev_contributing/) - Extending the App, Code Reference, Contribution Guide.
-- [Release Notes / Changelog](https://docs.nautobot.com/projects/nautobot-plugin-nornir/en/latest/admin/release_notes/).
-- [Frequently Asked Questions](https://docs.nautobot.com/projects/nautobot-plugin-nornir/en/latest/user/app_faq/).
--->
+- [User Guide](https://docs.nautobot.com/projects/plugin-nornir/en/latest/user/app_overview/) - Overview, Using the App, Getting Started.
+- [Administrator Guide](https://docs.nautobot.com/projects/plugin-nornir/en/latest/admin/admin_install/) - How to Install, Configure, Upgrade, or Uninstall the App.
+- [Developer Guide](https://docs.nautobot.com/projects/plugin-nornir/en/latest/dev/dev_contributing/) - Extending the App, Code Reference, Contribution Guide.
+- [Release Notes / Changelog](https://docs.nautobot.com/projects/plugin-nornir/en/latest/admin/release_notes/).
+- [Frequently Asked Questions](https://docs.nautobot.com/projects/plugin-nornir/en/latest/user/app_faq/).
 
 ### Contributing to the Docs
 
 You can find all the Markdown source for the App documentation under the [docs](https://github.com/nautobot/nautobot-plugin-nornir/tree/develop/docs) folder in this repository. For simple edits, a Markdown capable editor is sufficient - clone the repository and edit away.
 
-If you need to view the fully generated documentation site, you can build it with [mkdocs](https://www.mkdocs.org/). A container hosting the docs will be started using the invoke commands (details in the [Development Environment Guide](https://docs.nautobot.com/projects/nautobot-plugin-nornir/en/latest/dev/dev_environment/#docker-development-environment)) on [http://localhost:8001](http://localhost:8001). As your changes are saved, the live docs will be automatically reloaded.
+If you need to view the fully generated documentation site, you can build it with [mkdocs](https://www.mkdocs.org/). A container hosting the docs will be started using the invoke commands (details in the [Development Environment Guide](https://docs.nautobot.com/projects/plugin-nornir/en/latest/dev/dev_environment/#docker-development-environment)) on [http://localhost:8001](http://localhost:8001). As your changes are saved, the live docs will be automatically reloaded.
 
 Any PRs with fixes or improvements are very welcome!
 
 ## Questions
 
-For any questions or comments, please check the [FAQ](https://docs.nautobot.com/projects/nautobot-plugin-nornir/en/latest/user/app_faq/) first. Feel free to also swing by the [Network to Code Slack](https://networktocode.slack.com/) (channel `#nautobot`), sign up [here](http://slack.networktocode.com/) if you don't have an account.
+For any questions or comments, please check the [FAQ](https://docs.nautobot.com/projects/plugin-nornir/en/latest/user/app_faq/) first. Feel free to also swing by the [Network to Code Slack](https://networktocode.slack.com/) (channel `#nautobot`), sign up [here](http://slack.networktocode.com/) if you don't have an account.
