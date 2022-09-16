@@ -35,7 +35,7 @@ This App is installed in the Nautobot Community Sandbox found over at [demo.naut
 
 ## Documentation
 
-Full web-based HTML documentation for this app can be found over on the [Nautobot Docs](https://docs.nautobot.com) website:
+Full web-based HTML documentation for this app can be found over on the [Nautobot Docs](https://docs.nautobot.com/projects/plugin-nornir/en/latest/) website:
 
 - [User Guide](https://docs.nautobot.com/projects/plugin-nornir/en/latest/user/app_overview/) - Overview, Using the App, Getting Started.
 - [Administrator Guide](https://docs.nautobot.com/projects/plugin-nornir/en/latest/admin/admin_install/) - How to Install, Configure, Upgrade, or Uninstall the App.
