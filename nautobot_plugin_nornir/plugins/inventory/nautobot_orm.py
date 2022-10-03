@@ -171,7 +171,7 @@ class NautobotORMInventory:
 
 
         Returns:
-            dict: Nornir Host dictionary
+            (dict): Nornir Host dictionary
         """
         host = {"data": {}}
         if "use_fqdn" in params and params.get("use_fqdn"):
@@ -229,7 +229,7 @@ class NautobotORMInventory:
             device (dcim.models.Device): Device obj
 
         Returns:
-            list: List of group names the device should be part of
+            (list): List of group names the device should be part of
         """
         groups = [
             "global",
