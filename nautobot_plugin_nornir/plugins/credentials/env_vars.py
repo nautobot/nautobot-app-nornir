@@ -12,9 +12,6 @@ class CredentialsEnvVars(MixinNautobotORMCredentials):
 
     This class is the default class that will return the same login and password
     for all devices based on the values of the environment variables
-
-    Args:
-        NautobotORMCredentials ([type]): [description]
     """
 
     def __init__(self, params=None):

@@ -9,9 +9,6 @@ class CredentialsSettingsVars(MixinNautobotORMCredentials):
 
     This class will return the same login and password for all devices based on the values
     within your settings.
-
-    Args:
-        NautobotORMCredentials ([type]): [description]
     """
 
     def __init__(self, params=None):
