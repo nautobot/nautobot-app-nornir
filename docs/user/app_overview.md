@@ -4,7 +4,7 @@
 
 A plugin for [Nautobot](https://github.com/nautobot/nautobot), that intends to be a small shim layer between [nornir-nautobot](https://github.com/nautobot/nornir-nautobot) and other plugins. The primary abilities that the plugin provides is a native Nornir ORM based inventory and a credential manager.
 
-![Architecture Overview](../../images/architecture-overview.png)
+![Architecture Overview](../images/architecture-overview.png)
 
 As of the writing of this readme, the only plugin leveraging this plugin is the [golden-config](https://github.com/nautobot/nautobot-plugin-golden-config). However, future plugins are planned, such as the "network importer".
 
