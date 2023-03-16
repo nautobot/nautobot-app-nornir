@@ -15,7 +15,7 @@ class NornirConfig(PluginConfig):
     """Plugin configuration for nautobot_plugin_nornir."""
 
     name = "nautobot_plugin_nornir"
-    verbose_name = "Nornir for Nautobot"
+    verbose_name = "Nautobot Plugin for Nornir"
     version = __version__
     author = "Network to Code, LLC"
     description = "Nautobot App that provides a shim layer to simplify using Nornir within other Nautobot Apps and Nautobot Jobs"
