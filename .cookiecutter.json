@@ -1,0 +1,26 @@
+{
+  "cookiecutter": {
+    "codeowner_github_usernames": "@smith-ntc",
+    "full_name": "Network to Code, LLC",
+    "email": "info@networktocode.com",
+    "github_org": "nautobot",
+    "plugin_name": "nautobot_plugin_nornir",
+    "verbose_name": "Nautobot Nornir Plugin",
+    "plugin_slug": "nautobot-plugin-nornir",
+    "project_slug": "nautobot-plugin-nornir",
+    "repo_url": "https://github.com/nautobot/nautobot-plugin-nornir",
+    "base_url": "plugin-nornir",
+    "min_nautobot_version": "1.4.0",
+    "max_nautobot_version": "1.9999",
+    "nautobot_version": "latest",
+    "camel_name": "NautobotPluginNornir",
+    "project_short_description": "Nautobot Nornir Plugin",
+    "version": "0.1.0",
+    "model_class_name": "None",
+    "open_source_license": "Apache-2.0",
+    "docs_base_url": "https://docs.nautobot.com",
+    "docs_app_url": "https://docs.nautobot.com/projects/plugin-nornir/en/latest",
+    "_template": "/opt/ntc/networktocode-llc/cookiecutter-ntc/nautobot-plugin",
+    "_output_dir": "/opt/ntc/baked"
+  }
+}

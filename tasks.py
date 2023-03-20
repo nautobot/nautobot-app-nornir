@@ -89,12 +89,26 @@ def docker_compose(context, command, **kwargs):
         "NAUTOBOT_VER": context.nautobot_plugin_nornir.nautobot_ver,
         "PYTHON_VER": context.nautobot_plugin_nornir.python_ver,
     }
-    compose_command = f'docker-compose --project-name {context.nautobot_plugin_nornir.project_name} --project-directory "{context.nautobot_plugin_nornir.compose_dir}"'
+    compose_command_tokens = [
+        "docker-compose",
+        f"--project-name {context.nautobot_plugin_nornir.project_name}",
+        f'--project-directory "{context.nautobot_plugin_nornir.compose_dir}"',
+    ]
+
     for compose_file in context.nautobot_plugin_nornir.compose_files:
         compose_file_path = os.path.join(context.nautobot_plugin_nornir.compose_dir, compose_file)
-        compose_command += f' -f "{compose_file_path}"'
-    compose_command += f" {command}"
+        compose_command_tokens.append(f' -f "{compose_file_path}"')
+
+    compose_command_tokens.append(command)
+
+    # If `service` was passed as a kwarg, add it to the end.
+    service = kwargs.pop("service", None)
+    if service is not None:
+        compose_command_tokens.append(service)
+
     print(f'Running docker-compose command "{command}"')
+    compose_command = " ".join(compose_command_tokens)
+
     return context.run(compose_command, env=build_env, **kwargs)
 
 
@@ -153,11 +167,11 @@ def debug(context):
     docker_compose(context, "up")
 
 
-@task
-def start(context):
+@task(help={"service": "If specified, only affect this service."})
+def start(context, service=None):
     """Start Nautobot and its dependencies in detached mode."""
     print("Starting Nautobot in detached mode...")
-    docker_compose(context, "up --detach")
+    docker_compose(context, "up --detach", service=service)
 
 
 @task
@@ -269,7 +283,8 @@ def migrate(context):
 
 @task(help={})
 def post_upgrade(context):
-    """Performs Nautobot common post-upgrade operations using a single entrypoint.
+    """
+    Performs Nautobot common post-upgrade operations using a single entrypoint.
 
     This will run the following management commands with default settings, in order:
 
@@ -294,10 +309,10 @@ def docs(context):
     command = "mkdocs serve -v"
 
     if is_truthy(context.nautobot_plugin_nornir.local):
-        print("Serving Documentation...")
+        print(">>> Serving Documentation at http://localhost:8001")
         run_command(context, command)
     else:
-        print("Only used when developing locally (i.e. context.nautobot_plugin_nornir.local=True)!")
+        start(context, servics="docs")
 
 
 # ------------------------------------------------------------------------------
@@ -323,7 +338,7 @@ def black(context, autoformat=False):
 @task
 def flake8(context):
     """Check for PEP8 compliance and other style issues."""
-    command = "flake8 ."
+    command = "flake8 . --config .flake8"
     run_command(context, command)
 
 
