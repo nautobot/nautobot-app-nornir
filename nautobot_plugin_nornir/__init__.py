@@ -21,8 +21,8 @@ class NornirConfig(PluginConfig):
     description = "A plugin/library for using Nornir within Nautobot."
     base_url = "plugin-nornir"
     required_settings = []
-    # min_version = "0"
-    # max_version = "100"
+    min_version = "1.4.0"
+    max_version = "1.9999"
     default_settings = {}
     caching_config = {}
 
