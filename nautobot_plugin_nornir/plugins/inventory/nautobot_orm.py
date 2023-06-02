@@ -2,6 +2,7 @@
 # pylint: disable=unsupported-assignment-operation,unsubscriptable-object,no-member,duplicate-code
 
 from typing import Any, Dict
+from copy import deepcopy
 
 from django.db.models import QuerySet
 from django.utils.module_loading import import_string
@@ -212,7 +213,7 @@ class NautobotORMInventory:
 
         _build_out_secret_paths(conn_options, secret)
 
-        host["data"]["connection_options"] = conn_options
+        host["data"]["connection_options"] = deepcopy(conn_options)
         host["groups"] = self.get_host_groups(device=device)
 
         if device.platform.napalm_driver:
