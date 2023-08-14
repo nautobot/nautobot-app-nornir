@@ -37,7 +37,8 @@ invoke = "*"
 ipython = "*"
 pydocstyle = "*"
 pylint = "*"
-pylint-django = "*"
+# pylint-django = "*"
+pylint-nautobot = "*"
 pytest = "*"
 yamllint = "*"
 Markdown = "*"
@@ -54,6 +55,9 @@ mkdocstrings-python = "0.7.1"
 
 [tool.poetry.extras]
 nautobot = ["nautobot"]
+
+[tool.poetry.group.dev.dependencies]
+pylint-nautobot = "^0.2.0"
 
 [tool.black]
 line-length = 120
@@ -80,12 +84,18 @@ exclude = '''
 
 [tool.pylint.master]
 # Include the pylint_django plugin to avoid spurious warnings about Django patterns
-load-plugins="pylint_django"
+# load-plugins="pylint_django"
+load-plugins="pylint_nautobot"
 ignore=".venv"
 
 [tool.pylint.basic]
 # No docstrings required for private methods (Pylint default), or for test_ functions, or for inner Meta classes.
 no-docstring-rgx="^(_|test_|Meta$)"
+
+[tool.pylint-nautobot]
+supported_nautobot_versions = [
+    "2"
+]
 
 [tool.pylint.messages_control]
 # Line length is enforced by Black, so pylint doesn't need to check it.
