@@ -17,11 +17,11 @@ packages = [
 ]
 
 [tool.poetry.dependencies]
-python = "^3.7"
+python = ">=3.8,<3.11"
 # Required for Python 3.7 for now. See: https://stackoverflow.com/a/73932581/194311
 importlib-metadata = "4.13.0"
 # Used for local development
-nautobot = { version = "^1.4.0", optional = true }
+nautobot = { version = "v2.0.0-beta.2", optional = true }
 nornir-nautobot = "^2.2.0"
 netutils = ">=1.0.0"
 
@@ -94,6 +94,7 @@ no-docstring-rgx="^(_|test_|Meta$)"
 
 [tool.pylint-nautobot]
 supported_nautobot_versions = [
+    "1",
     "2"
 ]
 

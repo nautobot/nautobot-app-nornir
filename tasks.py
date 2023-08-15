@@ -38,9 +38,9 @@ namespace = Collection("nautobot_plugin_nornir")
 namespace.configure(
     {
         "nautobot_plugin_nornir": {
-            "nautobot_ver": "latest",
+            "nautobot_ver": "2.0.0-beta.2",
             "project_name": "nautobot_plugin_nornir",
-            "python_ver": "3.8",
+            "python_ver": "3.10",
             "local": False,
             "compose_dir": os.path.join(os.path.dirname(__file__), "development"),
             "compose_files": [
