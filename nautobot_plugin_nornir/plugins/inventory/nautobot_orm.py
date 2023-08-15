@@ -125,10 +125,10 @@ class NautobotORMInventory:
             self.params = {}
 
         self.queryset = self.queryset.select_related(
-            "device_role",
+            "role",
             "device_type",
             "device_type__manufacturer",
-            "site",
+            "location",
             "platform",
             "tenant",
         )
@@ -189,8 +189,8 @@ class NautobotORMInventory:
         host["platform"] = device.platform.slug
         host["data"]["id"] = device.id
         host["data"]["type"] = device.device_type.slug
-        host["data"]["site"] = device.site.slug
-        host["data"]["role"] = device.device_role.slug
+        host["data"]["location"] = device.location.slug
+        host["data"]["role"] = device.role.slug
         host["data"]["config_context"] = dict(device.get_config_context())
         host["data"]["custom_field_data"] = device.custom_field_data
         host["data"]["obj"] = device
@@ -234,8 +234,8 @@ class NautobotORMInventory:
         """
         groups = [
             "global",
-            f"site__{device.site.slug}",
-            f"role__{device.device_role.slug}",
+            f"location__{device.location.slug}",
+            f"role__{device.role.slug}",
             f"type__{device.device_type.slug}",
             f"manufacturer__{device.device_type.manufacturer.slug}",
         ]

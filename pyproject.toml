@@ -37,7 +37,7 @@ invoke = "*"
 ipython = "*"
 pydocstyle = "*"
 pylint = "*"
-# pylint-django = "*"
+pylint-django = "*"
 pylint-nautobot = "*"
 pytest = "*"
 yamllint = "*"
@@ -85,7 +85,7 @@ exclude = '''
 [tool.pylint.master]
 # Include the pylint_django plugin to avoid spurious warnings about Django patterns
 # load-plugins="pylint_django"
-load-plugins="pylint_nautobot"
+load-plugins="pylint_django, pylint_nautobot"
 ignore=".venv"
 
 [tool.pylint.basic]
@@ -94,7 +94,6 @@ no-docstring-rgx="^(_|test_|Meta$)"
 
 [tool.pylint-nautobot]
 supported_nautobot_versions = [
-    "1",
     "2"
 ]
 

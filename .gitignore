@@ -3,6 +3,7 @@ nautobot_backup.dump
 .creds.env
 packages/
 docker-compose.override.yml
+static/
 
 # Ansible Retry Files
 *.retry
