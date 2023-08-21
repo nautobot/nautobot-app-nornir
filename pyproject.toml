@@ -101,7 +101,9 @@ supported_nautobot_versions = [
 # Line length is enforced by Black, so pylint doesn't need to check it.
 # Pylint and Black disagree about how to format multi-line arrays; Black wins.
 disable = """,
-    line-too-long
+    line-too-long,
+    unused-argument,
+    no-member
     """
 
 [tool.pylint.miscellaneous]

@@ -4,7 +4,7 @@
 class NautobotORMCredentials:
     """Abstract Credentials Class designed to work with Nautobot ORM."""
 
-    def get_device_creds(self, device):  # pylint: disable=unused-argument, no-self-use
+    def get_device_creds(self, device):
         """Return the credentials for a given device.
 
         Args:
@@ -17,7 +17,7 @@ class NautobotORMCredentials:
         """
         return (None, None, None)
 
-    def get_group_creds(self, group_name):  # pylint: disable=unused-argument, no-self-use
+    def get_group_creds(self, group_name):
         """Return the credentials for a given group.
 
         Args:
