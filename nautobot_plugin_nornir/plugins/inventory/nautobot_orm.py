@@ -186,11 +186,11 @@ class NautobotORMInventory:
 
         if not device.platform:
             raise NornirNautobotException(f"Platform missing from device {device.name}, preemptively failed.")
-        host["platform"] = device.platform.slug
+        host["platform"] = device.platform.network_driver
         host["data"]["id"] = device.id
-        host["data"]["type"] = device.device_type.slug
-        host["data"]["location"] = device.location.slug
-        host["data"]["role"] = device.role.slug
+        host["data"]["type"] = device.device_type.model
+        host["data"]["location"] = device.location.name
+        host["data"]["role"] = device.role.name
         host["data"]["config_context"] = dict(device.get_config_context())
         host["data"]["custom_field_data"] = device.custom_field_data
         host["data"]["obj"] = device
@@ -234,16 +234,16 @@ class NautobotORMInventory:
         """
         groups = [
             "global",
-            f"location__{device.location.slug}",
-            f"role__{device.role.slug}",
-            f"type__{device.device_type.slug}",
-            f"manufacturer__{device.device_type.manufacturer.slug}",
+            f"location__{device.location.name}",
+            f"role__{device.role.name}",
+            f"type__{device.device_type.model}",
+            f"manufacturer__{device.device_type.manufacturer.name}",
         ]
 
         if device.platform:
-            groups.append(f"platform__{device.platform.slug}")
+            groups.append(f"platform__{device.platform.network_driver}")
 
         if device.tenant:
-            groups.append(f"tenant__{device.tenant.slug}")
+            groups.append(f"tenant__{device.tenant.name}")
 
         return groups
