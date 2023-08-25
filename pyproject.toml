@@ -22,7 +22,7 @@ python = "^3.7"
 importlib-metadata = "4.13.0"
 # Used for local development
 nautobot = { version = "^1.4.0", optional = true }
-nornir-nautobot = "^2.2.0"
+nornir-nautobot = "^2.6.0"
 netutils = ">=1.0.0"
 
 [tool.poetry.dev-dependencies]
