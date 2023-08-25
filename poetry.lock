@@ -28,6 +28,29 @@ files = [
 ]
 
 [[package]]
+name = "anyio"
+version = "3.7.1"
+description = "High level compatibility layer for multiple asynchronous event loop implementations"
+category = "main"
+optional = false
+python-versions = ">=3.7"
+files = [
+    {file = "anyio-3.7.1-py3-none-any.whl", hash = "sha256:91dee416e570e92c64041bd18b900d1d6fa78dff7048769ce5ac5ddad004fbb5"},
+    {file = "anyio-3.7.1.tar.gz", hash = "sha256:44a3c9aba0f5defa43261a8b3efb97891f2bd7d804e0e1f56419befa1adfc780"},
+]
+
+[package.dependencies]
+exceptiongroup = {version = "*", markers = "python_version < \"3.11\""}
+idna = ">=2.8"
+sniffio = ">=1.1"
+typing-extensions = {version = "*", markers = "python_version < \"3.8\""}
+
+[package.extras]
+doc = ["Sphinx", "packaging", "sphinx-autodoc-typehints (>=1.2.0)", "sphinx-rtd-theme (>=1.2.2)", "sphinxcontrib-jquery"]
+test = ["anyio[trio]", "coverage[toml] (>=4.5)", "hypothesis (>=4.0)", "mock (>=4)", "psutil (>=5.9)", "pytest (>=7.0)", "pytest-mock (>=3.6.1)", "trustme", "uvloop (>=0.17)"]
+trio = ["trio (<0.22)"]
+
+[[package]]
 name = "appnope"
 version = "0.1.3"
 description = "Disable App Nap on macOS >= 10.9"
@@ -1188,6 +1211,21 @@ uritemplate = ">=3.0.0"
 validation = ["swagger-spec-validator (>=2.1.0)"]
 
 [[package]]
+name = "exceptiongroup"
+version = "1.1.3"
+description = "Backport of PEP 654 (exception groups)"
+category = "main"
+optional = false
+python-versions = ">=3.7"
+files = [
+    {file = "exceptiongroup-1.1.3-py3-none-any.whl", hash = "sha256:343280667a4585d195ca1cf9cef84a4e178c4b6cf2274caef9859782b567d5e3"},
+    {file = "exceptiongroup-1.1.3.tar.gz", hash = "sha256:097acd85d473d75af5bb98e41b61ff7fe35efe6675e4f9370ec6ec5126d160e9"},
+]
+
+[package.extras]
+test = ["pytest (>=6)"]
+
+[[package]]
 name = "flake8"
 version = "3.9.2"
 description = "the modular source code checker: pep8 pyflakes and co"
@@ -1392,6 +1430,67 @@ cached-property = {version = "*", markers = "python_version < \"3.8\""}
 
 [package.extras]
 async = ["aiofiles (>=0.7,<1.0)"]
+
+[[package]]
+name = "h11"
+version = "0.14.0"
+description = "A pure-Python, bring-your-own-I/O implementation of HTTP/1.1"
+category = "main"
+optional = false
+python-versions = ">=3.7"
+files = [
+    {file = "h11-0.14.0-py3-none-any.whl", hash = "sha256:e3fe4ac4b851c468cc8363d500db52c2ead036020723024a109d37346efaa761"},
+    {file = "h11-0.14.0.tar.gz", hash = "sha256:8f19fbbe99e72420ff35c00b27a34cb9937e902a8b810e2c88300c6f0a3b699d"},
+]
+
+[package.dependencies]
+typing-extensions = {version = "*", markers = "python_version < \"3.8\""}
+
+[[package]]
+name = "httpcore"
+version = "0.17.3"
+description = "A minimal low-level HTTP client."
+category = "main"
+optional = false
+python-versions = ">=3.7"
+files = [
+    {file = "httpcore-0.17.3-py3-none-any.whl", hash = "sha256:c2789b767ddddfa2a5782e3199b2b7f6894540b17b16ec26b2c4d8e103510b87"},
+    {file = "httpcore-0.17.3.tar.gz", hash = "sha256:a6f30213335e34c1ade7be6ec7c47f19f50c56db36abef1a9dfa3815b1cb3888"},
+]
+
+[package.dependencies]
+anyio = ">=3.0,<5.0"
+certifi = "*"
+h11 = ">=0.13,<0.15"
+sniffio = ">=1.0.0,<2.0.0"
+
+[package.extras]
+http2 = ["h2 (>=3,<5)"]
+socks = ["socksio (>=1.0.0,<2.0.0)"]
+
+[[package]]
+name = "httpx"
+version = "0.24.1"
+description = "The next generation HTTP client."
+category = "main"
+optional = false
+python-versions = ">=3.7"
+files = [
+    {file = "httpx-0.24.1-py3-none-any.whl", hash = "sha256:06781eb9ac53cde990577af654bd990a4949de37a28bdb4a230d434f3a30b9bd"},
+    {file = "httpx-0.24.1.tar.gz", hash = "sha256:5853a43053df830c20f8110c5e69fe44d035d850b2dfe795e196f00fdb774bdd"},
+]
+
+[package.dependencies]
+certifi = "*"
+httpcore = ">=0.15.0,<0.18.0"
+idna = "*"
+sniffio = "*"
+
+[package.extras]
+brotli = ["brotli", "brotlicffi"]
+cli = ["click (>=8.0.0,<9.0.0)", "pygments (>=2.0.0,<3.0.0)", "rich (>=10,<14)"]
+http2 = ["h2 (>=3,<5)"]
+socks = ["socksio (>=1.0.0,<2.0.0)"]
 
 [[package]]
 name = "idna"
@@ -2247,14 +2346,14 @@ nornir = ">=3,<4"
 
 [[package]]
 name = "nornir-napalm"
-version = "0.3.0"
+version = "0.4.0"
 description = "NAPALM's plugins for nornir"
 category = "main"
 optional = false
 python-versions = ">=3.7,<4.0"
 files = [
-    {file = "nornir_napalm-0.3.0-py3-none-any.whl", hash = "sha256:f7dbf050af9da72101bcf47a3315b1400e9df4951cec172ae9ad509bc3a2ae7b"},
-    {file = "nornir_napalm-0.3.0.tar.gz", hash = "sha256:d6ed3bf2e2f23c4ab2256476afd354babbdfc3673726240100e70525b8b88df4"},
+    {file = "nornir_napalm-0.4.0-py3-none-any.whl", hash = "sha256:20a41499aecf9c4e41181b18a73b2ee3ab7763824645ac0eb80abb3973a5f17e"},
+    {file = "nornir_napalm-0.4.0.tar.gz", hash = "sha256:84e0711ccbdf24bdb228042ab530bf688d6b2b8f12c65fa3cb73499c6974a9de"},
 ]
 
 [package.dependencies]
@@ -2263,36 +2362,40 @@ nornir = ">=3,<4"
 
 [[package]]
 name = "nornir-nautobot"
-version = "2.2.2"
+version = "2.6.0"
 description = "Nornir Nautobot"
 category = "main"
 optional = false
-python-versions = ">=3.6,<4.0"
+python-versions = ">=3.7,<4.0"
 files = [
-    {file = "nornir-nautobot-2.2.2.tar.gz", hash = "sha256:66a9392cde082ca39eb77176fe6d6b0f9497daa41437464998c12ad6619b2504"},
-    {file = "nornir_nautobot-2.2.2-py3-none-any.whl", hash = "sha256:13168d5a54e84348ef592f4ed8323e9be93884dd05d172372162d3672908acf8"},
+    {file = "nornir_nautobot-2.6.0-py3-none-any.whl", hash = "sha256:7a325488775e56fefcb925d21134be7f6f177c5088cd16ec400f0789f723ccbf"},
+    {file = "nornir_nautobot-2.6.0.tar.gz", hash = "sha256:dbe7bc9d941b8337d3048e2cbfb5e2a9bea2774f38e5a50f2a3a04cda2213767"},
 ]
 
 [package.dependencies]
+httpx = ">=0.24.1,<0.25.0"
 netutils = ">=1,<2"
 nornir = ">=3.0.0,<4.0.0"
 nornir-jinja2 = ">=0,<1"
-nornir-napalm = ">=0,<1"
-nornir-netmiko = ">=0,<1"
+nornir-napalm = ">=0.4.0,<1.0.0"
+nornir-netmiko = ">=1,<2"
 nornir-utils = ">=0,<1"
 pynautobot = ">=1.0.1,<2.0.0"
 requests = ">=2.25.1,<3.0.0"
 
+[package.extras]
+mikrotik-driver = ["routeros-api (>=0.17.0,<0.18.0)"]
+
 [[package]]
 name = "nornir-netmiko"
-version = "0.2.0"
+version = "1.0.0"
 description = "Netmiko's plugins for Nornir"
 category = "main"
 optional = false
 python-versions = ">=3.7,<4.0"
 files = [
-    {file = "nornir_netmiko-0.2.0-py3-none-any.whl", hash = "sha256:6960e7ae0b0566a46750634ec7ab3b3a081e09afb554f593bc547bb9383d41b1"},
-    {file = "nornir_netmiko-0.2.0.tar.gz", hash = "sha256:78c93b11ef21a8dd55689b82e47149061ab653cc7fe641e43886c847d171f486"},
+    {file = "nornir_netmiko-1.0.0-py3-none-any.whl", hash = "sha256:5ffcbecae3d2c374e0cbee8e3cf2ed5937e3effee73ad3c5195d6b3572dc7a56"},
+    {file = "nornir_netmiko-1.0.0.tar.gz", hash = "sha256:842810f929c27d158e45a837e4d57acde1a699ab29f3dab86d78037eddc17469"},
 ]
 
 [package.dependencies]
@@ -3451,6 +3554,18 @@ files = [
 ]
 
 [[package]]
+name = "sniffio"
+version = "1.3.0"
+description = "Sniff out which async library your code is running under"
+category = "main"
+optional = false
+python-versions = ">=3.7"
+files = [
+    {file = "sniffio-1.3.0-py3-none-any.whl", hash = "sha256:eecefdce1e5bbfb7ad2eeaabf7c1eeb404d7757c379bd1f7e5cce9d8bf425384"},
+    {file = "sniffio-1.3.0.tar.gz", hash = "sha256:e60305c5e5d314f5389259b7f22aaa33d8f7dee49763119234af3755c55b9101"},
+]
+
+[[package]]
 name = "snowballstemmer"
 version = "2.2.0"
 description = "This package provides 29 stemmers for 28 languages generated from Snowball algorithms."
@@ -3960,4 +4075,4 @@ nautobot = ["nautobot"]
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.7"
-content-hash = "e1263f4bee2e0dc1030d84645ad05b16c455c37c74983cff39925ccbae30dd87"
+content-hash = "7629b40948e82205af5c2c5ca312e04aa977ffe9e0a0bfdd01fdd8efcb600fc6"
