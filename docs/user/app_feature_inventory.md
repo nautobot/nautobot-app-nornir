@@ -23,8 +23,8 @@ PLUGINS_CONFIG = {
 
 Local Device Config Context:
 
-```python
-PLUGINS_CONFIG = {
+```json
+{
     "nautobot_plugin_nornir": {
         "connection_options": {
             "napalm": {
