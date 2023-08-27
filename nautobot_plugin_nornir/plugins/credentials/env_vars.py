@@ -12,9 +12,6 @@ class CredentialsEnvVars(MixinNautobotORMCredentials):
 
     This class is the default class that will return the same login and password
     for all devices based on the values of the environment variables
-
-    Args:
-        NautobotORMCredentials ([type]): [description]
     """
 
     def __init__(self, params=None):
@@ -27,7 +24,7 @@ class CredentialsEnvVars(MixinNautobotORMCredentials):
             params = {}
 
         if not isinstance(params, dict):
-            raise TypeError("params must be a dictionnary")
+            raise TypeError("params must be a dictionary")
 
         self.username = os.getenv(params.get("username", USERNAME_ENV_VAR_NAME))
         self.password = os.getenv(params.get("password", PASSWORD_ENV_VAR_NAME))

@@ -1,14 +1,27 @@
 """Inventory Plugin for Nornir designed to work with Nautobot ORM."""
-# pylint: disable=unsupported-assignment-operation,unsubscriptable-object,no-member
+# pylint: disable=unsupported-assignment-operation,unsubscriptable-object,no-member,duplicate-code
 
 from typing import Any, Dict
+from copy import deepcopy
 
 from django.db.models import QuerySet
 from django.utils.module_loading import import_string
-from nautobot.dcim.models import Device
-from nautobot_plugin_nornir.constants import CONNECTION_SECRETS_PATHS, PLUGIN_CFG
-from nornir.core.inventory import ConnectionOptions, Defaults, Group, Groups, Host, Hosts, Inventory, ParentGroups
+
+from nornir.core.inventory import (
+    ConnectionOptions,
+    Defaults,
+    Group,
+    Groups,
+    Host,
+    Hosts,
+    Inventory,
+    ParentGroups,
+)
 from nornir_nautobot.exceptions import NornirNautobotException
+
+from nautobot.dcim.models import Device
+
+from nautobot_plugin_nornir.constants import CONNECTION_SECRETS_PATHS, PLUGIN_CFG
 
 
 def _set_dict_key_path(dictionary, key_path, value):
@@ -86,7 +99,12 @@ class NautobotORMInventory:
             raise NornirNautobotException("There was no matching results from the query.")
         self.queryset = queryset
         self.filters = filters
-        self.cred_class = import_string(credentials_class)
+        if isinstance(credentials_class, str):
+            self.cred_class = import_string(credentials_class)
+        else:
+            raise NornirNautobotException(
+                f"A valid credentials class path (as defined by Django's import_string function) is required, but got {credentials_class} which is not importable. See https://github.com/nautobot/nautobot-plugin-nornir#credentials for details."
+            )
         self.credentials_params = credentials_params
         self.params = params
         self.defaults = defaults or {}
@@ -154,7 +172,7 @@ class NautobotORMInventory:
 
 
         Returns:
-            dict: Nornir Host dictionnary
+            (dict): Nornir Host dictionary
         """
         host = {"data": {}}
         if "use_fqdn" in params and params.get("use_fqdn"):
@@ -167,7 +185,7 @@ class NautobotORMInventory:
         host["name"] = device.name
 
         if not device.platform:
-            raise NornirNautobotException(f"Platform missing from device {device.name}")
+            raise NornirNautobotException(f"Platform missing from device {device.name}, preemptively failed.")
         host["platform"] = device.platform.slug
         host["data"]["id"] = device.id
         host["data"]["type"] = device.device_type.slug
@@ -195,7 +213,7 @@ class NautobotORMInventory:
 
         _build_out_secret_paths(conn_options, secret)
 
-        host["data"]["connection_options"] = conn_options
+        host["data"]["connection_options"] = deepcopy(conn_options)
         host["groups"] = self.get_host_groups(device=device)
 
         if device.platform.napalm_driver:
@@ -212,7 +230,7 @@ class NautobotORMInventory:
             device (dcim.models.Device): Device obj
 
         Returns:
-            list: List of group names the device should be part of
+            (list): List of group names the device should be part of
         """
         groups = [
             "global",

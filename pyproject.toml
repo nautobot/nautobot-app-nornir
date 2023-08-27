@@ -1,52 +1,76 @@
 [tool.poetry]
 name = "nautobot-plugin-nornir"
-version = "1.0.0"
+version = "1.0.1"
 description = "Nautobot Nornir plugin."
-authors = ["Network to Code, LLC <opensource@networktocode.com>"]
-
+authors = ["Network to Code, LLC <info@networktocode.com>"]
+license = "Apache-2.0"
 readme = "README.md"
 homepage = "https://github.com/nautobot/nautobot-plugin-nornir"
 repository = "https://github.com/nautobot/nautobot-plugin-nornir"
 keywords = ["nautobot", "nautobot-plugin"]
 include = [
-
+    "LICENSE",
     "README.md",
 ]
 classifiers = [
     "Intended Audience :: Developers",
     "Development Status :: 5 - Production/Stable",
     "Programming Language :: Python :: 3",
-    "Programming Language :: Python :: 3.6",
     "Programming Language :: Python :: 3.7",
     "Programming Language :: Python :: 3.8",
     "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
 ]
 packages = [
     { include = "nautobot_plugin_nornir" },
 ]
 
+[tool.poetry.urls]
+"Changelog" = "https://docs.nautobot.com/projects/plugin-nornir/en/latest/admin/release_notes/"
+"Bug Tracker" = "https://github.com/nautobot/nautobot-plugin-nornir/issues"
+
 [tool.poetry.dependencies]
-python = "^3.6"
-nornir-nautobot = "^2.2.0"
-nautobot = ">=1.2.0"
+python = "^3.7"
+# Required for Python 3.7 for now. See: https://stackoverflow.com/a/73932581/194311
+importlib-metadata = "4.13.0"
+# Used for local development
+nautobot = { version = "^1.4.0", optional = true }
+nornir-nautobot = "^2.6.0"
 netutils = ">=1.0.0"
 
-[tool.poetry.dev-dependencies]
+[tool.poetry.group.dev.dependencies]
 bandit = "*"
-black = {version="^21.10b0", python="^3.6.2"}
+black = "*"
 coverage = "*"
 django-debug-toolbar = "*"
-flake8 = "*"
+# we need to pin flake8 because of package dependencies that cause it to downgrade and
+# therefore cause issues with linting since older versions do not take .flake8 as config
+flake8 = "^3.9.2"
 invoke = "*"
+ipython = "*"
 pydocstyle = "*"
 pylint = "*"
 pylint-django = "*"
+pytest = "*"
 yamllint = "*"
-Markdown = {version="*", python="^3.6.2"}
+Markdown = "*"
+toml = "*"
+# Rendering docs to HTML
+mkdocs = "1.3.1"
+# Material for MkDocs theme
+mkdocs-material = "8.4.2"
+# Render custom markdown for version added/changed/remove notes
+mkdocs-version-annotations = "1.0.0"
+# Automatic documentation from sources, for MkDocs
+mkdocstrings = "0.19"
+mkdocstrings-python = "0.7.1"
+
+[tool.poetry.extras]
+nautobot = ["nautobot"]
 
 [tool.black]
 line-length = 120
-target-version = ['py36']
+target-version = ['py37']
 include = '\.pyi?$'
 exclude = '''
 (
@@ -66,19 +90,11 @@ exclude = '''
                      # the root of the project
 )
 '''
-[build-system]
-requires = ["poetry>=0.12"]
-build-backend = "poetry.masonry.api"
 
 [tool.pylint.master]
 # Include the pylint_django plugin to avoid spurious warnings about Django patterns
 load-plugins="pylint_django"
-
-# Don't cache data for later comparisons
-persistent="no"
-
-# Don't raise alarms if args/kwargs has an issue, as may be required, just as a decorator
-ignored-argument-names="args|kwargs"
+ignore=".venv"
 
 [tool.pylint.basic]
 # No docstrings required for private methods (Pylint default), or for test_ functions, or for inner Meta classes.
@@ -88,10 +104,7 @@ no-docstring-rgx="^(_|test_|Meta$)"
 # Line length is enforced by Black, so pylint doesn't need to check it.
 # Pylint and Black disagree about how to format multi-line arrays; Black wins.
 disable = """,
-    line-too-long,
-    bad-continuation,
-    too-few-public-methods,
-    duplicate-code,
+    line-too-long
     """
 
 [tool.pylint.miscellaneous]
@@ -100,3 +113,25 @@ notes = """,
     FIXME,
     XXX,
     """
+
+[tool.pydocstyle]
+convention = "google"
+inherit = false
+match = "(?!__init__).*\\.py"
+match-dir = "(?!tests|migrations|development)[^\\.].*"
+# D212 is enabled by default in google convention, and complains if we have a docstring like:
+# """
+# My docstring is on the line after the opening quotes instead of on the same line as them.
+# """
+# We've discussed and concluded that we consider this to be a valid style choice.
+add_ignore = "D212"
+
+[build-system]
+requires = ["poetry_core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.pytest.ini_options]
+testpaths = [
+    "tests"
+]
+addopts = "-vv --doctest-modules"

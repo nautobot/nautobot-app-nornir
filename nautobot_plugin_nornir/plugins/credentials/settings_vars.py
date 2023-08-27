@@ -1,7 +1,7 @@
 """Credentials class for setting credentials."""
-from django.conf import settings
-from .nautobot_orm import MixinNautobotORMCredentials
+# pylint: disable=duplicate-code
 from nautobot_plugin_nornir.constants import PLUGIN_CFG
+from nautobot_plugin_nornir.plugins.credentials.nautobot_orm import MixinNautobotORMCredentials
 
 
 class CredentialsSettingsVars(MixinNautobotORMCredentials):
@@ -9,9 +9,6 @@ class CredentialsSettingsVars(MixinNautobotORMCredentials):
 
     This class will return the same login and password for all devices based on the values
     within your settings.
-
-    Args:
-        NautobotORMCredentials ([type]): [description]
     """
 
     def __init__(self, params=None):
@@ -24,7 +21,7 @@ class CredentialsSettingsVars(MixinNautobotORMCredentials):
             params = {}
 
         if not isinstance(params, dict):
-            raise TypeError("params must be a dictionnary")
+            raise TypeError("params must be a dictionary")
 
         self.username = PLUGIN_CFG.get("username")
         self.password = PLUGIN_CFG.get("password")
