@@ -115,7 +115,7 @@ class NautobotORMInventory:
             self.credentials_params = {}
 
         # Initialize QuerySet
-        if isinstance(self.queryset, QuerySet) and not self.queryset:
+        if not isinstance(self.queryset, QuerySet):
             self.queryset = Device.objects.all()
 
         if self.filters:
