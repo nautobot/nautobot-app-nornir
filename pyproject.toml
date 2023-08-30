@@ -30,11 +30,11 @@ packages = [
 "Bug Tracker" = "https://github.com/nautobot/nautobot-plugin-nornir/issues"
 
 [tool.poetry.dependencies]
-python = "^3.7"
+python = ">=3.8,<3.12"
 # Required for Python 3.7 for now. See: https://stackoverflow.com/a/73932581/194311
 importlib-metadata = "4.13.0"
 # Used for local development
-nautobot = { version = "2.0.0-rc.1", optional = true }
+nautobot = { version = "2.0.0-rc.2", optional = true }
 nornir-nautobot = "^2.2.0"
 netutils = ">=1.0.0"
 
