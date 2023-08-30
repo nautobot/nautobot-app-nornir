@@ -6,10 +6,10 @@ There is currently no user/operator defined grouping or inventory. The implement
 
 ```python
 "global",
-f"site__{device.site.slug}",
-f"role__{device.device_role.slug}",
-f"type__{device.device_type.slug}",
-f"manufacturer__{device.device_type.manufacturer.slug}",
+f"location__{device.location.name}",
+f"role__{device.device_role.name}",
+f"type__{device.device_type.model}",
+f"manufacturer__{device.device_type.manufacturer.name}",
 ```
 
 _Why is the plugin installed as nautobot_plugin_nornir and not nautobot_nornir?_

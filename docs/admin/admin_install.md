@@ -74,7 +74,7 @@ The plugin behavior can be controlled with the following list of settings.
 | Key                    | Example | Default | Description |
 | ---------------------- | ------- | ------- | ----------- |
 | nornir_settings        | {"nornir_settings": { "credentials": "cred_path"}} | N/A | The expected configuration paramters that Nornir uses, see Nornir documentation. |
-| dispatcher_mapping     | {"newos": "dispatcher.newos"} | None | A dictionary in which the key is a platform slug and the value is the import path of the dispatcher in string format |
+| dispatcher_mapping     | {"newos": "dispatcher.newos"} | None | A dictionary in which the key is a platform network_driver and the value is the import path of the dispatcher in string format |
 | username               | ntc | N/A | The username when leveraging the `CredentialsSettingsVars` credential provider. |
 | password               | password123 | N/A | The password when leveraging the `CredentialsSettingsVars` credential provider. |
 | secret                 | password123 | N/A | The secret password when leveraging the `CredentialsSettingsVars` credential provider.|
