@@ -450,8 +450,8 @@ def tests(context, failfast=False):
     yamllint(context)
     print("Running pylint...")
     pylint(context)
-    # print("Running mkdocs...")  # TODO enable when fixed
-    # build_and_check_docs(context)
+    print("Running mkdocs...")
+    build_and_check_docs(context)
     print("Running unit tests...")
     unittest(context, failfast=failfast)
     print("All tests have passed!")
