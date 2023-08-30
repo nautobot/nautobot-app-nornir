@@ -53,7 +53,13 @@ class NautobotORMInventoryTests(TestCase):
         inv = NautobotORMInventory(queryset=queryset).load()
         self.assertEqual(len(inv.hosts), 1)
 
-    def test_init_filters(self):
+    def test_init_filters_device(self):
         """Ensure the inventory is working properly when a filters dict is provided."""
         inv = NautobotORMInventory(filters={"name": "device1"}).load()
         self.assertEqual(len(inv.hosts), 1)
+
+    def test_hosts_platform(self):
+        """Ensure platform is assigned to hosts."""
+        inv = NautobotORMInventory().load()
+        self.assertEqual(inv.hosts["device1"]["connection_options"]["napalm"]["platform"], self.platform.napalm_driver)
+        self.assertEqual(inv.hosts["device2"]["connection_options"]["napalm"]["platform"], self.platform.napalm_driver)
