@@ -83,7 +83,7 @@ jobs:
     strategy:
       fail-fast: true
       matrix:
-        python-version: ["3.8"]
+        python-version: ["3.11"]
         nautobot-version: ["2.0.0-rc.2"]
     env:
       INVOKE_NAUTOBOT_PLUGIN_NORNIR_PYTHON_VER: "${{ matrix.python-version }}"
@@ -123,10 +123,19 @@ jobs:
         python-version: ["3.8", "3.9", "3.10", "3.11"]
         db-backend: ["postgresql"]
         nautobot-version: ["2.0.0-rc.2"]
+        # The include is a method to limit the amount of jobs ran. This essentially
+        # means that in addition to standard postgres and stable, also the lowest
+        # supported version and with mysql
         include:
-          - python-version: "3.10"
+          - python-version: "3.11"
+            db-backend: "postgresql"
+            nautobot-version: "2.0.0-rc.2"
+          - python-version: "3.8"
             db-backend: "mysql"
             nautobot-version: "2.0.0-rc.2"
+          - python-version: "3.11"
+            db-backend: "mysql"
+            nautobot-version: "latest"
     runs-on: "ubuntu-20.04"
     env:
       INVOKE_NAUTOBOT_PLUGIN_NORNIR_PYTHON_VER: "${{ matrix.python-version }}"
@@ -172,17 +181,13 @@ jobs:
       - name: "Set up Python"
         uses: "actions/setup-python@v2"
         with:
-          python-version: "3.9"
+          python-version: "3.11"
       - name: "Install Python Packages"
         run: "pip install poetry"
       - name: "Set env"
         run: "echo RELEASE_VERSION=${GITHUB_REF:10} >> $GITHUB_ENV"
       - name: "Run Poetry Version"
         run: "poetry version $RELEASE_VERSION"
-      - name: "Install Dependencies (needed for mkdocs)"
-        run: "poetry install"
-      - name: "Build Documentation"
-        run: "poetry run mkdocs build --no-directory-urls --strict"
       - name: "Run Poetry Build"
         run: "poetry build"
       - name: "Upload binaries to release"
@@ -205,17 +210,13 @@ jobs:
       - name: "Set up Python"
         uses: "actions/setup-python@v2"
         with:
-          python-version: "3.9"
+          python-version: "3.11"
       - name: "Install Python Packages"
         run: "pip install poetry"
       - name: "Set env"
         run: "echo RELEASE_VERSION=${GITHUB_REF:10} >> $GITHUB_ENV"
       - name: "Run Poetry Version"
         run: "poetry version $RELEASE_VERSION"
-      - name: "Install Dependencies (needed for mkdocs)"
-        run: "poetry install"
-      - name: "Build Documentation"
-        run: "poetry run mkdocs build --no-directory-urls --strict"
       - name: "Run Poetry Build"
         run: "poetry build"
       - name: "Push to PyPI"
@@ -229,7 +230,7 @@ jobs:
       - "publish_pypi"
     runs-on: "ubuntu-20.04"
     env:
-      SLACK_WEBHOOK_URL: "${{ secrets.SLACK_WEBHOOK_URL }}"
+      SLACK_WEBHOOK_URL: "${{ '{{ secrets.SLACK_WEBHOOK_URL }}' }}"
       SLACK_MESSAGE: >-
         *NOTIFICATION: NEW-RELEASE-PUBLISHED*\n
         Repository: <${{ github.server_url }}/${{ github.repository }}|${{ github.repository }}>\n
@@ -239,12 +240,11 @@ jobs:
       - name: "Send a notification to Slack"
         # ENVs cannot be used directly in job.if. This is a workaround to check
         # if SLACK_WEBHOOK_URL is present.
-        if: "env.SLACK_WEBHOOK_URL != ''"
+        if: "${{ env.SLACK_WEBHOOK_URL != '' }}"
         uses: "slackapi/slack-github-action@v1.17.0"
         with:
           payload: |
             {
-              "text": "${{ env.SLACK_MESSAGE }}",
               "blocks": [
                 {
                   "type": "section",

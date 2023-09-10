@@ -16,10 +16,10 @@ classifiers = [
     "Intended Audience :: Developers",
     "Development Status :: 5 - Production/Stable",
     "Programming Language :: Python :: 3",
-    "Programming Language :: Python :: 3.7",
     "Programming Language :: Python :: 3.8",
     "Programming Language :: Python :: 3.9",
     "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
 ]
 packages = [
     { include = "nautobot_plugin_nornir" },
@@ -35,7 +35,7 @@ python = ">=3.8,<3.12"
 importlib-metadata = "4.13.0"
 # Used for local development
 nautobot = { version = "2.0.0-rc.2", optional = true }
-nornir-nautobot = "^2.2.0"
+nornir-nautobot = { git = "https://github.com/nautobot/nornir-nautobot.git", branch = "next-2.0" }  # TODO: Point to 2.x version
 netutils = ">=1.0.0"
 
 [tool.poetry.group.dev.dependencies]
@@ -51,6 +51,7 @@ ipython = "*"
 pydocstyle = "*"
 pylint = "*"
 pylint-django = "*"
+pylint-nautobot = { git = "https://github.com/nautobot/pylint-nautobot.git", branch = "develop" }  # TODO: Point to 2.x version
 pytest = "*"
 yamllint = "*"
 Markdown = "*"
@@ -92,7 +93,7 @@ exclude = '''
 
 [tool.pylint.master]
 # Include the pylint_django plugin to avoid spurious warnings about Django patterns
-load-plugins="pylint_django"
+load-plugins="pylint_django,pylint_nautobot"
 ignore=".venv"
 
 [tool.pylint.basic]
@@ -134,3 +135,5 @@ testpaths = [
     "tests"
 ]
 addopts = "-vv --doctest-modules"
+[tool.pylint-nautobot]
+supported_nautobot_versions = ["2"]

@@ -47,24 +47,24 @@ def _build_out_secret_paths(connection_options, device_secret):
 def _set_host(data: Dict[str, Any], name: str, groups, host, defaults) -> Host:
     connection_option = {}
     for key, value in data.get("connection_options", {}).items():
-        connection_option[key] = ConnectionOptions(
-            hostname=value.get("hostname"),
-            port=value.get("port"),
-            username=value.get("username"),
-            password=value.get("password"),
-            platform=value.get("platform"),
-            extras=value.get("extras"),
-        )
+        # We do not set hostname as it must be unique and platform is set from network_driver_mappings
+        driver_options = {}
+        driver_options["hostname"] = value.get("hostname")
+        driver_options["username"] = value.get("username")
+        driver_options["port"] = value.get("port")
+        driver_options["extras"] = value.get("extras")
+        driver_options["configuration"] = value.get("configuration")
+        connection_option[key] = ConnectionOptions(driver_options)
     return Host(
         name=name,
         hostname=host["hostname"],
         username=host["username"],
         password=host["password"],
         platform=host["platform"],
-        data=data,
-        groups=groups,
-        defaults=defaults,
-        connection_options=connection_option,
+        data=deepcopy(data),
+        groups=deepcopy(groups),
+        defaults=deepcopy(defaults),
+        connection_options=deepcopy(connection_option),
     )
 
 
@@ -96,14 +96,14 @@ class NautobotORMInventory:
         # Based on the class name defined in the parameters
         # At creation time, pass the credentials_params dict to the class
         if isinstance(queryset, QuerySet) and not queryset:
-            raise NornirNautobotException("There was no matching results from the query.")
+            raise NornirNautobotException("E2001: There was no matching results from the query.")
         self.queryset = queryset
         self.filters = filters
         if isinstance(credentials_class, str):
             self.cred_class = import_string(credentials_class)
         else:
             raise NornirNautobotException(
-                f"A valid credentials class path (as defined by Django's import_string function) is required, but got {credentials_class} which is not importable. See https://github.com/nautobot/nautobot-plugin-nornir#credentials for details."
+                f"E2002: A valid credentials class path (as defined by Django's import_string function) is required, but got {credentials_class} which is not importable. See https://github.com/nautobot/nautobot-plugin-nornir#credentials for details."
             )
         self.credentials_params = credentials_params
         self.params = params
@@ -185,7 +185,7 @@ class NautobotORMInventory:
         host["name"] = device.name
 
         if not device.platform:
-            raise NornirNautobotException(f"Platform missing from device {device.name}, preemptively failed.")
+            raise NornirNautobotException(f"E2003: Platform missing from device {device.name}, preemptively failed.")
         host["platform"] = device.platform.network_driver
         host["data"]["id"] = device.id
         host["data"]["type"] = device.device_type.model
@@ -195,6 +195,10 @@ class NautobotORMInventory:
         host["data"]["custom_field_data"] = device.custom_field_data
         host["data"]["obj"] = device
 
+        for driver, value in device.platform.network_driver_mappings.items():
+            if value:
+                host["data"][f"{driver}_driver"] = value
+
         username, password, secret = cred.get_device_creds(device=device)  # pylint:disable=unused-variable
 
         # require username for now
@@ -202,7 +206,7 @@ class NautobotORMInventory:
         # require password for now
         host["password"] = password
 
-        global_options = PLUGIN_CFG.get("connection_options", {"netmiko": {}, "napalm": {}, "scrapli": {}})
+        global_options = PLUGIN_CFG.get("connection_options", {"netmiko": {}, "napalm": {}, "scrapli": {}, "pytnc": {}})
         if PLUGIN_CFG.get("use_config_context", {}).get("connection_options"):
             config_context_options = (
                 device.get_config_context().get("nautobot_plugin_nornir", {}).get("connection_options", {})
@@ -216,10 +220,13 @@ class NautobotORMInventory:
         host["data"]["connection_options"] = deepcopy(conn_options)
         host["groups"] = self.get_host_groups(device=device)
 
-        if device.platform.napalm_driver:
-            if not host["data"]["connection_options"].get("napalm"):
-                host["data"]["connection_options"]["napalm"] = {}
-            host["data"]["connection_options"]["napalm"]["platform"] = device.platform.napalm_driver
+        for driver in ["napalm", "netmiko", "scrapli", "pyntc"]:
+            if not device.platform.network_driver_mappings.get(driver):
+                continue
+            if not host["data"]["connection_options"].get(driver):
+                host["data"]["connection_options"][driver] = {}
+            host["data"]["connection_options"][driver]["platform"] = device.platform.network_driver_mappings[driver]
+
         return host
 
     @staticmethod
