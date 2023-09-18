@@ -1,11 +1,11 @@
 # Building Your Development Environment
 
-## Quickstart
+## Quickstart Guide
 
 The development environment can be used in two ways:
 
-1. `Recommended` All services are spun up using Docker and a local mount so you can develop locally, but Nautobot is spun up within the Docker container.
-2. With a local poetry environment if you wish to develop outside of Docker with the caveat of using external services provided by Docker for PostgresQL and Redis.
+1. **(Recommended)** All services, including Nautobot, are spun up using Docker containers and a volume mount so you can develop locally.
+2. With a local Poetry environment if you wish to develop outside of Docker, with the caveat of using external services provided by Docker for the database (PostgreSQL by default, MySQL optionally) and Redis services.
 
 This is a quick reference guide if you're already familiar with the development environment provided, which you can read more about later in this document.
 
@@ -14,8 +14,8 @@ This is a quick reference guide if you're already familiar with the development 
 The [Invoke](http://www.pyinvoke.org/) library is used to provide some helper commands based on the environment. There are a few configuration parameters which can be passed to Invoke to override the default configuration:
 
 - `nautobot_ver`: the version of Nautobot to use as a base for any built docker containers (default: latest)
-- `project_name`: the default docker compose project name (default: `nautobot_plugin_nornir`)
-- `python_ver`: the version of Python to use as a base for any built docker containers (default: 3.8)
+- `project_name`: the default docker compose project name (default: `nautobot-plugin-nornir`)
+- `python_ver`: the version of Python to use as a base for any built docker containers (default: 3.11)
 - `local`: a boolean flag indicating if invoke tasks should be run on the host or inside the docker containers (default: False, commands will be run in docker containers)
 - `compose_dir`: the full path to a directory containing the project compose files
 - `compose_files`: a list of compose files applied in order (see [Multiple Compose files](https://docs.docker.com/compose/extends/#multiple-compose-files) for more information)
@@ -66,7 +66,7 @@ Run the following commands:
 ```shell
 poetry shell
 poetry install --extras nautobot
-export $(cat development/dev.env | xargs)
+export $(cat development/development.env | xargs)
 export $(cat development/creds.env | xargs)
 invoke start && sleep 5
 nautobot-server migrate
@@ -101,9 +101,6 @@ The project features a CLI helper based on [Invoke](https://www.pyinvoke.org/) t
 
 Each command can be executed with `invoke <command>`. All commands support the arguments `--nautobot-ver` and `--python-ver` if you want to manually define the version of Python and Nautobot to use. Each command also has its own help `invoke <command> --help`
 
-!!! note
-    To run the mysql (mariadb) development environment, set the environment variable as such `export NAUTOBOT_USE_MYSQL=1`.
-
 #### Local Development Environment
 
 ```
@@ -135,7 +132,6 @@ Each command can be executed with `invoke <command>`. All commands support the a
   tests            Run all tests for this plugin.
   unittest         Run Django unit tests for the plugin.
 ```
-
 
 ## Project Overview
 
@@ -185,7 +181,7 @@ The first thing you need to do is build the necessary Docker image for Nautobot 
 #14 exporting layers
 #14 exporting layers 1.2s done
 #14 writing image sha256:2d524bc1665327faa0d34001b0a9d2ccf450612bf8feeb969312e96a2d3e3503 done
-#14 naming to docker.io/nautobot-plugin-nornir/nautobot:latest-py3.7 done
+#14 naming to docker.io/nautobot-plugin-nornir/nautobot:latest-py3.11 done
 ```
 
 ### Invoke - Starting the Development Environment
@@ -216,9 +212,9 @@ This will start all of the Docker containers used for hosting Nautobot. You shou
 ```bash
 ➜ docker ps
 ****CONTAINER ID   IMAGE                            COMMAND                  CREATED          STATUS          PORTS                                       NAMES
-ee90fbfabd77   nautobot-plugin-nornir/nautobot:latest-py3.7   "nautobot-server rqw…"   16 seconds ago   Up 13 seconds                                               nautobot_plugin_nornir_worker_1
-b8adb781d013   nautobot-plugin-nornir/nautobot:latest-py3.7   "/docker-entrypoint.…"   20 seconds ago   Up 15 seconds   0.0.0.0:8080->8080/tcp, :::8080->8080/tcp   nautobot_plugin_nornir_nautobot_1
-d64ebd60675d   nautobot-plugin-nornir/nautobot:latest-py3.7   "mkdocs serve -v -a …"   25 seconds ago   Up 18 seconds   0.0.0.0:8001->8080/tcp, :::8001->8080/tcp   nautobot_plugin_nornir_docs_1
+ee90fbfabd77   nautobot-plugin-nornir/nautobot:latest-py3.11  "nautobot-server rqw…"   16 seconds ago   Up 13 seconds                                               nautobot_plugin_nornir_worker_1
+b8adb781d013   nautobot-plugin-nornir/nautobot:latest-py3.11  "/docker-entrypoint.…"   20 seconds ago   Up 15 seconds   0.0.0.0:8080->8080/tcp, :::8080->8080/tcp   nautobot_plugin_nornir_nautobot_1
+d64ebd60675d   nautobot-plugin-nornir/nautobot:latest-py3.11  "mkdocs serve -v -a …"   25 seconds ago   Up 18 seconds   0.0.0.0:8001->8080/tcp, :::8001->8080/tcp   nautobot_plugin_nornir_docs_1
 e72d63129b36   postgres:13-alpine               "docker-entrypoint.s…"   25 seconds ago   Up 19 seconds   0.0.0.0:5432->5432/tcp, :::5432->5432/tcp   nautobot_plugin_nornir_postgres_1
 96c6ff66997c   redis:6-alpine                   "docker-entrypoint.s…"   25 seconds ago   Up 21 seconds   0.0.0.0:6379->6379/tcp, :::6379->6379/tcp   nautobot_plugin_nornir_redis_1
 ```
@@ -319,6 +315,9 @@ When trying to debug an issue, one helpful thing you can look at are the logs wi
 !!! note
 	The `-f` tag will keep the logs open, and output them in realtime as they are generated.
 
+!!! info
+    Want to limit the log output even further? Use the `--tail <#>` command line argument in conjunction with `-f`.
+
 So for example, our plugin is named `nautobot-plugin-nornir`, the command would most likely be `docker logs nautobot_plugin_nornir_nautobot_1 -f`. You can find the name of all running containers via `docker ps`.
 
 If you want to view the logs specific to the worker container, simply use the name of that container instead.
@@ -394,14 +393,14 @@ namespace.configure(
     {
         "nautobot_plugin_nornir": {
             ...
-            "python_ver": "3.7",
+            "python_ver": "3.11",
 	    ...
         }
     }
 )
 ```
 
-Or set the `INVOKE_NAUTOBOT_GOLDEN_CONFIG_PYTHON_VER` variable.
+Or set the `INVOKE_NAUTOBOT_PLUGIN_NORNIR_PYTHON_VER` variable.
 
 ### Updating Nautobot Version
 
@@ -413,7 +412,7 @@ namespace.configure(
     {
         "nautobot_plugin_nornir": {
             ...
-            "nautobot_ver": "1.0.2",
+            "nautobot_ver": "1.4.0",
 	    ...
         }
     }

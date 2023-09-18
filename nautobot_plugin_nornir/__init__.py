@@ -1,26 +1,20 @@
 """Plugin declaration for nautobot_plugin_nornir."""
 # Metadata is inherited from Nautobot. If not including Nautobot in the environment, this should be added
-try:
-    from importlib import metadata
-except ImportError:
-    # Python version < 3.8
-    import importlib_metadata as metadata
+from importlib import metadata
 
 __version__ = metadata.version(__name__)
 
-from nautobot.extras.plugins import PluginConfig
+from nautobot.extras.plugins import NautobotAppConfig
 
 
-class NornirConfig(PluginConfig):
-    """Plugin configuration for nautobot_plugin_nornir."""
+class NautobotPluginNornirConfig(NautobotAppConfig):
+    """Plugin configuration for the nautobot_plugin_nornir plugin."""
 
     name = "nautobot_plugin_nornir"
-    verbose_name = "Nautobot Plugin for Nornir"
+    verbose_name = "Nautobot Nornir Plugin"
     version = __version__
     author = "Network to Code, LLC"
-    description = (
-        "Nautobot App that provides a shim layer to simplify using Nornir within other Nautobot Apps and Nautobot Jobs"
-    )
+    description = "Nautobot Nornir Plugin."
     base_url = "plugin-nornir"
     required_settings = []
     min_version = "1.4.0"
@@ -29,4 +23,4 @@ class NornirConfig(PluginConfig):
     caching_config = {}
 
 
-config = NornirConfig  # pylint:disable=invalid-name
+config = NautobotPluginNornirConfig  # pylint:disable=invalid-name

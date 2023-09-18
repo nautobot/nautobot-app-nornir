@@ -1,1 +1,1 @@
-"""Unit tests for nautobot_plugin_nornir."""
+"""Unit tests for nautobot_plugin_nornir plugin."""
