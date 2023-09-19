@@ -6,11 +6,11 @@
 # -------------------------------------------------------------------------------------
 # !!! USE CAUTION WHEN MODIFYING LINES BELOW
 
-# Accepts a desired Nautobot version as build argument, default to 2.0.0-rc.2
-ARG NAUTOBOT_VER="2.0.0-rc.2"
+# Accepts a desired Nautobot version as build argument, default to 1.4.0
+ARG NAUTOBOT_VER="1.4.0"
 
-# Accepts a desired Python version as build argument, default to 3.8
-ARG PYTHON_VER="3.8"
+# Accepts a desired Python version as build argument, default to 3.11
+ARG PYTHON_VER="3.11"
 
 # Retrieve published development image of Nautobot base which should include most CI dependencies
 FROM ghcr.io/nautobot/nautobot-dev:${NAUTOBOT_VER}-py${PYTHON_VER}
@@ -26,14 +26,13 @@ ENV NAUTOBOT_ROOT ${NAUTOBOT_ROOT}
 # and CI and local development may have a newer version of Poetry
 # Since this is only used for development and we don't ship this container, pinning Poetry back is not expressly necessary
 # We also don't need virtual environments in container
-ARG POETRY_VERSION=1.5.1
-RUN curl -sSL https://install.python-poetry.org | python3 - && \
+RUN which poetry || curl -sSL https://install.python-poetry.org | python3 - && \
   poetry config virtualenvs.create false
 
 # !!! USE CAUTION WHEN MODIFYING LINES ABOVE
 # -------------------------------------------------------------------------------------
 # App-specifc system build/test dependencies.
-# 
+#
 # Example: LDAP requires `libldap2-dev` to be apt-installed before the Python package.
 # -------------------------------------------------------------------------------------
 # --> Start safe to modify section

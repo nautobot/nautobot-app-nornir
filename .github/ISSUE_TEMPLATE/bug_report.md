@@ -4,9 +4,16 @@ about: Report a reproducible bug in the current release of nautobot-plugin-norni
 ---
 
 ### Environment
-* Python version:  <!-- Example: 3.7.7 -->
-* Nautobot version:  <!-- Example: 1.0.1 -->
-* nautobot-plugin-nornir version:  <!-- Example: 1.0.0 -->
+* Python version:  <!-- Example: 3.11.4 -->
+* Nautobot version:  <!-- Example: 1.4.0 -->
+* nautobot-plugin-nornir version:  <!-- Example: 0.1.0 -->
+
+<!-- What did you expect to happen? -->
+### Expected Behavior
+
+
+<!-- What happened instead? -->
+### Observed Behavior
 
 <!--
     Describe in detail the exact steps that someone else can take to reproduce
@@ -16,10 +23,3 @@ about: Report a reproducible bug in the current release of nautobot-plugin-norni
 1.
 2.
 3.
-
-<!-- What did you expect to happen? -->
-### Expected Behavior
-
-
-<!-- What happened instead? -->
-### Observed Behavior
