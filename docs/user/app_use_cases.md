@@ -1,12 +1,13 @@
 # Using the App
 
-This document describes common use-cases and scenarios for this App.
-
 ## General Usage
+
+Leveraging Nornir with direct integrations with Nautobot for Inventory and Credentials.
 
 ## Use-cases and common workflows
 
-## Screenshots
+On a high-level, all things Nornir
 
-!!! warning "Developer Note - Remove Me!"
-    Ideally captures every view exposed by the App. Should include a relevant dataset.
+* Using Jobs to create and integrate
+* Building Nornir that requires would like inventory and/or credentials
+* Using Nornir via an RestAPI and UI for integrations with other applications
