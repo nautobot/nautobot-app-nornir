@@ -15,9 +15,13 @@ class NautobotORMInventoryTests(TestCase):
         self.location_type = LocationType.objects.create(name="Site")
         self.location_type.content_types.set([device_content_type])
         active = Status.objects.get(name="Active")
-        self.site1 = Location.objects.create(name="USWEST", location_type_id=self.location_type.id, status_id=active.id)
+        self.location = Location.objects.create(
+            name="USWEST", location_type_id=self.location_type.id, status_id=active.id
+        )
         self.manufacturer1 = Manufacturer.objects.create(name="Juniper")
-        self.platform = Platform.objects.create(name="Cisco IOS", network_driver="junos", napalm_driver="junos")
+        self.platform = Platform.objects.create(
+            name="Juniper Junos", network_driver="juniper_junos", napalm_driver="junos"
+        )
         self.device_type1 = DeviceType.objects.create(model="SRX3600", manufacturer=self.manufacturer1)
         self.device_role1 = Role.objects.create(name="Firewall")
         self.device_role1.content_types.set([device_content_type])
@@ -26,7 +30,7 @@ class NautobotORMInventoryTests(TestCase):
 
         Device.objects.create(
             name="device1",
-            location=self.site1,
+            location=self.location,
             device_type=self.device_type1,
             platform=self.platform,
             role=self.device_role1,
@@ -35,7 +39,7 @@ class NautobotORMInventoryTests(TestCase):
 
         Device.objects.create(
             name="device2",
-            location=self.site1,
+            location=self.location,
             device_type=self.device_type1,
             platform=self.platform,
             role=self.device_role2,

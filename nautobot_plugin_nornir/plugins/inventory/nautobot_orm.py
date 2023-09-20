@@ -189,7 +189,7 @@ class NautobotORMInventory:
         host["platform"] = device.platform.network_driver
         host["data"]["id"] = device.id
         host["data"]["type"] = device.device_type.model
-        host["data"]["location"] = device.location.name
+        host["data"]["location"] = device.location.natural_slug
         host["data"]["role"] = device.role.name
         host["data"]["config_context"] = dict(device.get_config_context())
         host["data"]["custom_field_data"] = device.custom_field_data
@@ -241,7 +241,7 @@ class NautobotORMInventory:
         """
         groups = [
             "global",
-            f"location__{device.location.name}",
+            f"location__{device.location.natural_slug}",
             f"role__{device.role.name}",
             f"type__{device.device_type.model}",
             f"manufacturer__{device.device_type.manufacturer.name}",
