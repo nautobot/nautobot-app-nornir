@@ -1,8 +1,9 @@
 """Inventory Plugin for Nornir designed to work with Nautobot ORM."""
 # pylint: disable=unsupported-assignment-operation,unsubscriptable-object,no-member,duplicate-code
 
-from typing import Any, Dict
+from typing import Any, Dict, Generator, List, Tuple
 from copy import deepcopy
+from uuid import UUID
 
 from django.db.models import QuerySet
 from django.utils.module_loading import import_string
@@ -19,9 +20,51 @@ from nornir.core.inventory import (
 )
 from nornir_nautobot.exceptions import NornirNautobotException
 
-from nautobot.dcim.models import Device
+from nautobot.dcim.models import Device, Location
 
-from nautobot_plugin_nornir.constants import CONNECTION_SECRETS_PATHS, PLUGIN_CFG
+from nautobot_plugin_nornir.constants import CONNECTION_SECRETS_PATHS, PLUGIN_CFG, ALLOWED_LOCATIONS, DENIED_LOCATIONS
+
+
+def _is_location_allowed(uuid: UUID, name: str) -> bool:
+    if ALLOWED_LOCATIONS:
+        return name in ALLOWED_LOCATIONS or str(uuid) in ALLOWED_LOCATIONS
+    if DENIED_LOCATIONS:
+        return name not in DENIED_LOCATIONS and str(uuid) not in DENIED_LOCATIONS
+    return True
+
+
+_LocationsTree = Dict[UUID, dict]
+
+
+def _walk_locations_up(tree: _LocationsTree, location_id: UUID):
+    """Walk up the location tree."""
+    location = tree.get(location_id, None)
+
+    while location:
+        if location["is_allowed"]:
+            yield location
+        location = location.get("parent")
+
+
+def _read_locations_tree() -> _LocationsTree:
+    result = {item["id"]: item for item in Location.objects.all().values("id", "name", "parent_id")}
+
+    for item in result.values():
+        item["is_allowed"] = _is_location_allowed(item["id"], item["name"])
+        if item["parent_id"]:
+            item["parent"] = result[item["parent_id"]]
+
+    return result
+
+
+def _generate_all_devices_to_locations() -> Generator[Tuple[str, List[str]], None, None]:
+    locations = _read_locations_tree()
+
+    for item in Device.objects.all().values("name", "location_id"):
+        yield (
+            item["name"],
+            [f"location__{location['name']}" for location in _walk_locations_up(locations, item["location_id"])],
+        )
 
 
 def _set_dict_key_path(dictionary, key_path, value):
@@ -254,3 +297,7 @@ class NautobotORMInventory:
             groups.append(f"tenant__{device.tenant.name}")
 
         return groups
+
+    def get_all_devices_to_parent_mapping(self) -> Dict[str, List[str]]:
+        """Generates all devices and their location name including parent locations."""
+        return dict(_generate_all_devices_to_locations())

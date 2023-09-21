@@ -15,3 +15,6 @@ CONNECTION_SECRETS_PATHS = {
     "napalm": "napalm.extras.optional_args.secret",
     "scrapli": "scrapli.extras.auth_secondary",
 }
+
+ALLOWED_LOCATIONS = PLUGIN_CFG.get("allowed_locations", [])
+DENIED_LOCATIONS = PLUGIN_CFG.get("denied_locations", [])
