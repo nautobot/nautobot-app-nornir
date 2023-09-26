@@ -1,4 +1,5 @@
 """Unit Tests for NautobotORM Inventory."""
+from unittest.mock import patch
 from django.test import TestCase
 from nautobot.dcim.models import Device, DeviceType, Manufacturer, Platform, LocationType, Location
 from nautobot.extras.models.roles import ContentType, Role
@@ -12,11 +13,20 @@ class NautobotORMInventoryTests(TestCase):
     def setUp(self):
         """Create a superuser and token for API calls."""
         device_content_type = ContentType.objects.get(model="device")
+        location_type_region = LocationType.objects.create(name="Region")
         self.location_type = LocationType.objects.create(name="Site")
         self.location_type.content_types.set([device_content_type])
         active = Status.objects.get(name="Active")
+        location_us = Location.objects.create(
+            name="US",
+            location_type=location_type_region,
+            status_id=active.id,
+        )
         self.location = Location.objects.create(
-            name="USWEST", location_type_id=self.location_type.id, status_id=active.id
+            name="USWEST",
+            parent=location_us,
+            location_type_id=self.location_type.id,
+            status_id=active.id,
         )
         self.manufacturer1 = Manufacturer.objects.create(name="Juniper")
         self.platform = Platform.objects.create(
@@ -67,3 +77,35 @@ class NautobotORMInventoryTests(TestCase):
         inv = NautobotORMInventory().load()
         self.assertEqual(inv.hosts["device1"]["connection_options"]["napalm"]["platform"], self.platform.napalm_driver)
         self.assertEqual(inv.hosts["device2"]["connection_options"]["napalm"]["platform"], self.platform.napalm_driver)
+
+    def test_get_all_devices_to_parent_mapping(self):
+        """Ensure the mapping of devices to parents is correct."""
+        self.assertEqual(
+            NautobotORMInventory().get_all_devices_to_parent_mapping(),
+            {
+                "device1": ["location__USWEST", "location__US"],
+                "device2": ["location__USWEST", "location__US"],
+            },
+        )
+
+    @patch("nautobot_plugin_nornir.plugins.inventory.nautobot_orm.ALLOWED_LOCATION_TYPES", ["Region"])
+    def test_get_all_devices_to_parent_mapping_allowed(self):
+        """Ensure the mapping of devices to parents is correct with allowed locations."""
+        self.assertEqual(
+            NautobotORMInventory().get_all_devices_to_parent_mapping(),
+            {
+                "device1": ["location__US"],
+                "device2": ["location__US"],
+            },
+        )
+
+    @patch("nautobot_plugin_nornir.plugins.inventory.nautobot_orm.DENIED_LOCATION_TYPES", ["Site"])
+    def test_get_all_devices_to_parent_mapping_denied(self):
+        """Ensure the mapping of devices to parents is correct with denied locations."""
+        self.assertEqual(
+            NautobotORMInventory().get_all_devices_to_parent_mapping(),
+            {
+                "device1": ["location__US"],
+                "device2": ["location__US"],
+            },
+        )

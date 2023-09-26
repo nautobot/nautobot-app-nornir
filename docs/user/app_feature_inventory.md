@@ -14,6 +14,8 @@ Enabling the use of Config Context:
 ```python
 PLUGINS_CONFIG = {
     "nautobot_plugin_nornir": {
+        "allowed_location_types": ["Region"],
+        "denied_location_types": ["Site"],
         "use_config_context": {
             "connection_options": True
         },
@@ -63,11 +65,14 @@ The inventory provides natural groupings of the following.
 
 * "global"
 * "location__{device.location.name}"
+* "location__{device.location.parent.name}"
 * "role__{device.role.name}"
 * "type__{device.device_type.model}"
 * "manufacturer__{device.device_type.manufacturer.name}"
 
 As an example, if you had manufacturer of `cisco` and `arista`, there will automatically be groups call `manufacturer__cisco` and `manufacturer__arista`.
+
+All allowed locations from locations tree will be included as groups. If the device is assigned to the location of `US-East`, and it has the parent location of `US`, there will be groups called `location__US` and `location__US-East`. Allowed or denied locations can be tuned by specifying `allowed_location_types` or `denied_location_types` in the `PLUGINS_CONFIG` settings.
 
 ## Using the Inventory
 

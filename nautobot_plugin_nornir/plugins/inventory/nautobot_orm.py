@@ -1,8 +1,9 @@
 """Inventory Plugin for Nornir designed to work with Nautobot ORM."""
 # pylint: disable=unsupported-assignment-operation,unsubscriptable-object,no-member,duplicate-code
 
-from typing import Any, Dict
+from typing import Any, Dict, Generator, List, Tuple
 from copy import deepcopy
+from uuid import UUID
 
 from django.db.models import QuerySet
 from django.utils.module_loading import import_string
@@ -19,9 +20,58 @@ from nornir.core.inventory import (
 )
 from nornir_nautobot.exceptions import NornirNautobotException
 
-from nautobot.dcim.models import Device
+from nautobot.dcim.models import Device, Location
 
-from nautobot_plugin_nornir.constants import CONNECTION_SECRETS_PATHS, PLUGIN_CFG
+from nautobot_plugin_nornir.constants import (
+    CONNECTION_SECRETS_PATHS,
+    PLUGIN_CFG,
+    ALLOWED_LOCATION_TYPES,
+    DENIED_LOCATION_TYPES,
+)
+
+
+def _is_location_type_allowed(name: str) -> bool:
+    if ALLOWED_LOCATION_TYPES:
+        return name in ALLOWED_LOCATION_TYPES
+    if DENIED_LOCATION_TYPES:
+        return name not in DENIED_LOCATION_TYPES
+    return True
+
+
+_LocationsTree = Dict[UUID, dict]
+
+
+def _walk_locations_up(tree: _LocationsTree, location_id: UUID):
+    """Walk up the location tree."""
+    location = tree.get(location_id, None)
+
+    while location:
+        if location["is_allowed"]:
+            yield location
+        location = location.get("parent")
+
+
+def _read_locations_tree() -> _LocationsTree:
+    result = {
+        item["id"]: item for item in Location.objects.all().values("id", "name", "parent_id", "location_type__name")
+    }
+
+    for item in result.values():
+        item["is_allowed"] = _is_location_type_allowed(item["location_type__name"])
+        if item["parent_id"]:
+            item["parent"] = result[item["parent_id"]]
+
+    return result
+
+
+def _generate_devices_to_locations(queryset: QuerySet) -> Generator[Tuple[str, List[str]], None, None]:
+    locations = _read_locations_tree()
+
+    for item in queryset.values("name", "location_id"):
+        yield (
+            item["name"],
+            [f"location__{location['name']}" for location in _walk_locations_up(locations, item["location_id"])],
+        )
 
 
 def _set_dict_key_path(dictionary, key_path, value):
@@ -108,6 +158,7 @@ class NautobotORMInventory:
         self.credentials_params = credentials_params
         self.params = params
         self.defaults = defaults or {}
+        self.hosts_to_locations = {}
 
     def load(self) -> Inventory:
         """Standard Nornir 3 load method boilerplate."""
@@ -142,6 +193,8 @@ class NautobotORMInventory:
             cred = self.cred_class(params=self.credentials_params)
         else:
             cred = self.cred_class()
+
+        self.hosts_to_locations = self.get_all_devices_to_parent_mapping()
 
         # Create all hosts
         for device in self.queryset:
@@ -218,7 +271,10 @@ class NautobotORMInventory:
         _build_out_secret_paths(conn_options, secret)
 
         host["data"]["connection_options"] = deepcopy(conn_options)
-        host["groups"] = self.get_host_groups(device=device)
+        host["groups"] = [
+            *self.get_host_groups(device=device),
+            *self.hosts_to_locations.get(device.name, []),
+        ]
 
         for driver in ["napalm", "netmiko", "scrapli", "pyntc"]:
             if not device.platform.network_driver_mappings.get(driver):
@@ -241,7 +297,6 @@ class NautobotORMInventory:
         """
         groups = [
             "global",
-            f"location__{device.location.natural_slug}",
             f"role__{device.role.name}",
             f"type__{device.device_type.model}",
             f"manufacturer__{device.device_type.manufacturer.name}",
@@ -254,3 +309,7 @@ class NautobotORMInventory:
             groups.append(f"tenant__{device.tenant.name}")
 
         return groups
+
+    def get_all_devices_to_parent_mapping(self) -> Dict[str, List[str]]:
+        """Generates all devices and their location name including parent locations."""
+        return dict(_generate_devices_to_locations(self.queryset or Device.objects.all()))
