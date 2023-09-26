@@ -400,9 +400,9 @@ def check_migrations(context):
         "buffer": "Discard output from passing tests",
     }
 )
-def unittest(context, keepdb=False, label="nautobot_plugin_nornir", failfast=False, buffer=True):
+def unittest(context, keepdb=False, label="nautobot_plugin_nornir", failfast=False, buffer=True, pattern=""):
     """Run Nautobot unit tests."""
-    command = f"coverage run --module nautobot.core.cli test {label}"
+    command = f"coverage run --module nautobot.core.cli test {label} --verbosity 3"
 
     if keepdb:
         command += " --keepdb"
@@ -410,6 +410,9 @@ def unittest(context, keepdb=False, label="nautobot_plugin_nornir", failfast=Fal
         command += " --failfast"
     if buffer:
         command += " --buffer"
+    if pattern:
+        command += f" -k {pattern}"
+
     run_command(context, command)
 
 

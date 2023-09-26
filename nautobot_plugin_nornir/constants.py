@@ -16,5 +16,5 @@ CONNECTION_SECRETS_PATHS = {
     "scrapli": "scrapli.extras.auth_secondary",
 }
 
-ALLOWED_LOCATIONS = PLUGIN_CFG.get("allowed_locations", [])
-DENIED_LOCATIONS = PLUGIN_CFG.get("denied_locations", [])
+ALLOWED_LOCATION_TYPES = PLUGIN_CFG.get("allowed_location_types", [])
+DENIED_LOCATION_TYPES = PLUGIN_CFG.get("denied_location_types", [])

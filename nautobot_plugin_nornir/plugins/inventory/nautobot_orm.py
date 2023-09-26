@@ -22,14 +22,19 @@ from nornir_nautobot.exceptions import NornirNautobotException
 
 from nautobot.dcim.models import Device, Location
 
-from nautobot_plugin_nornir.constants import CONNECTION_SECRETS_PATHS, PLUGIN_CFG, ALLOWED_LOCATIONS, DENIED_LOCATIONS
+from nautobot_plugin_nornir.constants import (
+    CONNECTION_SECRETS_PATHS,
+    PLUGIN_CFG,
+    ALLOWED_LOCATION_TYPES,
+    DENIED_LOCATION_TYPES,
+)
 
 
-def _is_location_allowed(uuid: UUID, name: str) -> bool:
-    if ALLOWED_LOCATIONS:
-        return name in ALLOWED_LOCATIONS or str(uuid) in ALLOWED_LOCATIONS
-    if DENIED_LOCATIONS:
-        return name not in DENIED_LOCATIONS and str(uuid) not in DENIED_LOCATIONS
+def _is_location_type_allowed(name: str) -> bool:
+    if ALLOWED_LOCATION_TYPES:
+        return name in ALLOWED_LOCATION_TYPES
+    if DENIED_LOCATION_TYPES:
+        return name not in DENIED_LOCATION_TYPES
     return True
 
 
@@ -47,20 +52,22 @@ def _walk_locations_up(tree: _LocationsTree, location_id: UUID):
 
 
 def _read_locations_tree() -> _LocationsTree:
-    result = {item["id"]: item for item in Location.objects.all().values("id", "name", "parent_id")}
+    result = {
+        item["id"]: item for item in Location.objects.all().values("id", "name", "parent_id", "location_type__name")
+    }
 
     for item in result.values():
-        item["is_allowed"] = _is_location_allowed(item["id"], item["name"])
+        item["is_allowed"] = _is_location_type_allowed(item["location_type__name"])
         if item["parent_id"]:
             item["parent"] = result[item["parent_id"]]
 
     return result
 
 
-def _generate_all_devices_to_locations() -> Generator[Tuple[str, List[str]], None, None]:
+def _generate_devices_to_locations(queryset: QuerySet) -> Generator[Tuple[str, List[str]], None, None]:
     locations = _read_locations_tree()
 
-    for item in Device.objects.all().values("name", "location_id"):
+    for item in queryset.values("name", "location_id"):
         yield (
             item["name"],
             [f"location__{location['name']}" for location in _walk_locations_up(locations, item["location_id"])],
@@ -113,6 +120,8 @@ def _set_host(data: Dict[str, Any], name: str, groups, host, defaults) -> Host:
 
 class NautobotORMInventory:
     """Construct a inventory object for Nornir based on a Nautobot ORM."""
+
+    hosts_to_locations: Dict[str, List[str]] = {}
 
     def __init__(  # pylint: disable=too-many-arguments
         self,
@@ -185,6 +194,8 @@ class NautobotORMInventory:
             cred = self.cred_class(params=self.credentials_params)
         else:
             cred = self.cred_class()
+
+        self.hosts_to_locations = self.get_all_devices_to_parent_mapping()
 
         # Create all hosts
         for device in self.queryset:
@@ -261,7 +272,10 @@ class NautobotORMInventory:
         _build_out_secret_paths(conn_options, secret)
 
         host["data"]["connection_options"] = deepcopy(conn_options)
-        host["groups"] = self.get_host_groups(device=device)
+        host["groups"] = [
+            *self.get_host_groups(device=device),
+            *self.hosts_to_locations.get(device.name, []),
+        ]
 
         for driver in ["napalm", "netmiko", "scrapli", "pyntc"]:
             if not device.platform.network_driver_mappings.get(driver):
@@ -284,7 +298,6 @@ class NautobotORMInventory:
         """
         groups = [
             "global",
-            f"location__{device.location.natural_slug}",
             f"role__{device.role.name}",
             f"type__{device.device_type.model}",
             f"manufacturer__{device.device_type.manufacturer.name}",
@@ -300,4 +313,4 @@ class NautobotORMInventory:
 
     def get_all_devices_to_parent_mapping(self) -> Dict[str, List[str]]:
         """Generates all devices and their location name including parent locations."""
-        return dict(_generate_all_devices_to_locations())
+        return dict(_generate_devices_to_locations(self.queryset or Device.objects.all()))
