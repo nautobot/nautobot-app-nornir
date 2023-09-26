@@ -121,8 +121,6 @@ def _set_host(data: Dict[str, Any], name: str, groups, host, defaults) -> Host:
 class NautobotORMInventory:
     """Construct a inventory object for Nornir based on a Nautobot ORM."""
 
-    hosts_to_locations: Dict[str, List[str]] = {}
-
     def __init__(  # pylint: disable=too-many-arguments
         self,
         queryset: QuerySet = None,
@@ -160,6 +158,7 @@ class NautobotORMInventory:
         self.credentials_params = credentials_params
         self.params = params
         self.defaults = defaults or {}
+        self.hosts_to_locations = {}
 
     def load(self) -> Inventory:
         """Standard Nornir 3 load method boilerplate."""
