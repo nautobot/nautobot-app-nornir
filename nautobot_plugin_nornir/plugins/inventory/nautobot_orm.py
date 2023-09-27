@@ -23,11 +23,14 @@ from nornir_nautobot.exceptions import NornirNautobotException
 from nautobot.dcim.models import Device, Location
 
 from nautobot_plugin_nornir.constants import (
-    CONNECTION_SECRETS_PATHS,
-    PLUGIN_CFG,
     ALLOWED_LOCATION_TYPES,
+    CONNECTION_SECRETS_PATHS,
     DENIED_LOCATION_TYPES,
+    DRIVERS,
+    PLUGIN_CFG,
 )
+
+_LocationsTree = Dict[UUID, dict]
 
 
 def _is_location_type_allowed(name: str) -> bool:
@@ -36,9 +39,6 @@ def _is_location_type_allowed(name: str) -> bool:
     if DENIED_LOCATION_TYPES:
         return name not in DENIED_LOCATION_TYPES
     return True
-
-
-_LocationsTree = Dict[UUID, dict]
 
 
 def _walk_locations_up(tree: _LocationsTree, location_id: UUID):
@@ -96,15 +96,21 @@ def _build_out_secret_paths(connection_options, device_secret):
 
 def _set_host(data: Dict[str, Any], name: str, groups, host, defaults) -> Host:
     connection_option = {}
-    for key, value in data.get("connection_options", {}).items():
+
+    # Combine standard drivers with provided ones
+    drivers = list(set(DRIVERS + list(data.get("connection_options", {}).keys())))
+
+    # Get unique elements
+    for driver in drivers:
         # We do not set hostname as it must be unique and platform is set from network_driver_mappings
+        value = data.get("connection_options", {}).get(driver, {})
         driver_options = {}
+        driver_options["platform"] = host["network_driver_mappings"].get(driver)
         driver_options["hostname"] = value.get("hostname")
         driver_options["username"] = value.get("username")
         driver_options["port"] = value.get("port")
         driver_options["extras"] = value.get("extras")
-        driver_options["configuration"] = value.get("configuration")
-        connection_option[key] = ConnectionOptions(driver_options)
+        connection_option[driver] = ConnectionOptions(**driver_options)
     return Host(
         name=name,
         hostname=host["hostname"],
@@ -239,7 +245,13 @@ class NautobotORMInventory:
 
         if not device.platform:
             raise NornirNautobotException(f"E2003: Platform missing from device {device.name}, preemptively failed.")
+        if not device.platform.network_driver:
+            raise NornirNautobotException(
+                f"E2004: Platform network_driver missing from device {device.name}, preemptively failed."
+            )
+        # These keys platform & network_driver_mappings are only used for connection_options within _set_host
         host["platform"] = device.platform.network_driver
+        host["network_driver_mappings"] = device.platform.network_driver_mappings
         host["data"]["id"] = device.id
         host["data"]["type"] = device.device_type.model
         host["data"]["location"] = device.location.natural_slug
@@ -259,7 +271,8 @@ class NautobotORMInventory:
         # require password for now
         host["password"] = password
 
-        global_options = PLUGIN_CFG.get("connection_options", {"netmiko": {}, "napalm": {}, "scrapli": {}, "pytnc": {}})
+        # This dict comprehension returns {'napalm': {}, 'netmiko': {}....}
+        global_options = PLUGIN_CFG.get("connection_options", {item: {} for item in DRIVERS})
         if PLUGIN_CFG.get("use_config_context", {}).get("connection_options"):
             config_context_options = (
                 device.get_config_context().get("nautobot_plugin_nornir", {}).get("connection_options", {})
@@ -276,7 +289,7 @@ class NautobotORMInventory:
             *self.hosts_to_locations.get(device.name, []),
         ]
 
-        for driver in ["napalm", "netmiko", "scrapli", "pyntc"]:
+        for driver in DRIVERS:
             if not device.platform.network_driver_mappings.get(driver):
                 continue
             if not host["data"]["connection_options"].get(driver):
