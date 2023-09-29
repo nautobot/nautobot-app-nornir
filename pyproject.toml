@@ -34,7 +34,7 @@ python = ">=3.8,<3.12"
 # Required for Python 3.7 for now. See: https://stackoverflow.com/a/73932581/194311
 importlib-metadata = "4.13.0"
 # Used for local development
-nautobot = { version = ">=2.0.0rc3,<2.0.0rc99", optional = true }
+nautobot = "^2.0.0"
 nornir-nautobot = { git = "https://github.com/nautobot/nornir-nautobot.git", branch = "next-2.0" }  # TODO: Point to 2.x version
 netutils = ">=1.0.0"
 
