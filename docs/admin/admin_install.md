@@ -74,7 +74,6 @@ The plugin behavior can be controlled with the following list of settings.
 | Key                    | Example | Default | Description |
 | ---------------------- | ------- | ------- | ----------- |
 | nornir_settings        | {"nornir_settings": { "credentials": "cred_path"}} | N/A | The expected configuration paramters that Nornir uses, see Nornir documentation. |
-| dispatcher_mapping     | {"newos": "dispatcher.newos"} | None | A dictionary in which the key is a platform network_driver and the value is the import path of the dispatcher in string format |
 | username               | ntc | N/A | The username when leveraging the `CredentialsSettingsVars` credential provider. |
 | password               | password123 | N/A | The password when leveraging the `CredentialsSettingsVars` credential provider. |
 | secret                 | password123 | N/A | The secret password when leveraging the `CredentialsSettingsVars` credential provider.|
@@ -82,6 +81,8 @@ The plugin behavior can be controlled with the following list of settings.
 | use_config_context     | {"secrets": True, "connection_options": True} | {"secrets": False, "connection_options": False} | Whether to pull Secret Access Type, and/or Connection Options from Config Context. |
 | connection_secret_path | "my_plugin.newos" |  <see note> | Dotted expression of the dictionary path where a device secret should be stored for a given Nornir Plugin. |
 | secret_access_type     | "SSH" | "GENERIC" | Type of Secret Access Type to use. Examples. "GENERIC", "CONSOLE", "GNMI", "HTTP", "NETCONF", "REST", "RESTCONF", "SNMP", "SSH"|
+| `allowed_location_types`| ["Site"] | [] | The location types you would like to be automatically grouped. |
+| `denied_location_types` | ["Region"] | [] |  The location types you would like to NOT be automatically grouped. |
 
 > Note: The default value for  `connection_secret_path` is "nautobot_plugin_nornir.plugins.credentials.env_vars.CredentialsEnvVars", left here to import rendering of the table.
 
@@ -93,4 +94,4 @@ The plugin behavior can be extended further with [config context](https://nautob
 | connection_secret_path | Dotted expression of the dictionary path where a device secret should be stored for a given Nornir Plugin. |
 | secret_access_type     | Type of Secret Access Type to use. Examples. "GENERIC", "CONSOLE", "GNMI", "HTTP", "NETCONF", "REST", "RESTCONF", "SNMP", "SSH"|
 
-For details on the [credentials](../../user/app_feature_credentials), [inventory](../../user/app_feature_inventory), and [dispatcher](../../user/app_feature_dispatcher) please see their respective documentation.
+For details on the [credentials](../../user/app_feature_credentials), and [inventory](../../user/app_feature_inventory) please see their respective documentation.

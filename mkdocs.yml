@@ -106,6 +106,13 @@ nav:
       - Upgrade: "admin/admin_upgrade.md"
       - Uninstall: "admin/admin_uninstall.md"
       - Compatibility Matrix: "admin/compatibility_matrix.md"
+      - Troubleshooting:
+          - "task/troubleshooting/index.md"
+          - E2001: "task/troubleshooting/E2001.md"
+          - E2002: "task/troubleshooting/E2002.md"
+          - E2003: "task/troubleshooting/E2003.md"
+          - E2004: "task/troubleshooting/E2004.md"
+      - Migrating To v2: "admin/migrating_to_v2.md"
       - Release Notes:
           - "admin/release_notes/index.md"
           - v1.0: "admin/release_notes/version_1.0.md"
