@@ -35,13 +35,13 @@ class NornirConfig(PluginConfig):
         dispatcher_mapping_message = (
             "The `dispatcher_mapping` key is no longer functional, failing early"
             "to ensure your application works as expected, please see: "
-            "https://somelink@nautobot.com for more details."
+            "https://docs.nautobot.com/projects/plugin-nornir/en/latest/admin/migrating_to_v2/#dispatcher-settings for more details."
         )
         verify_setting(plugin_settings, "dispatcher_mapping", dispatcher_mapping_message)
         custom_dispatcher_message = (
             "The `custom_dispatcher` key is only meant for `golden_config_plugin` settings "
             "and not `nautobot_plugin_nornir` settings, please see: "
-            "https://somelink@nautobot.com for more details."
+            "https://docs.nautobot.com/projects/plugin-nornir/en/latest/admin/migrating_to_v2/#dispatcher-settings for more details."
         )
         verify_setting(
             plugin_settings, "credentials", "The `credentials` key should be within the `nornir_settings` dictionary"

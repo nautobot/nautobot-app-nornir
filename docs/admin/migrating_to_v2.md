@@ -1,4 +1,4 @@
-# Migration Guide
+# Migrating to v2
 
 The migration steps are pretty simple, here is a quick overview with details information below.
 
