@@ -8,7 +8,6 @@ on: # yamllint disable-line rule:truthy rule:comments
     branches:
       - "main"
       - "develop"
-      - "next-2.0"
     tags:
       - "v*"
   pull_request: ~
