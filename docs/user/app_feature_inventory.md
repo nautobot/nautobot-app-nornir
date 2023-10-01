@@ -4,8 +4,8 @@
 The Nautobot ORM inventory is rather static in nature at this point. The user has the ability to define the `default` data. The native capabilities include.
 
 * Providing an object called within the `obj` key that is a Nautobot `Device` object instance.
-* Provide additional keys for hostname, name, id, type, site, role, config_context, and custom_field_data.
-* Provide grouping for global, site, role, type, and manufacturer based on their slug (more details below).
+* Provide additional keys for hostname, name, id, type, location, role, config_context, and custom_field_data.
+* Provide grouping for global, location, role, type, and manufacturer based on their names (more details below).
 * Provide credentials for NAPALM, Netmiko, and Scrapli.
 * Link to the credential class as defined by the `nornir_settings['settings']` definition.
 
@@ -14,6 +14,8 @@ Enabling the use of Config Context:
 ```python
 PLUGINS_CONFIG = {
     "nautobot_plugin_nornir": {
+        "allowed_location_types": ["Site"],
+        "denied_location_types": ["Region"],
         "use_config_context": {
             "connection_options": True
         },
@@ -48,7 +50,7 @@ _metadata:
   description: Group Definitions for device type SPINE
   is_active: true
   device-roles:
-    - slug: spine
+    - name: spine
 nautobot_plugin_nornir:
   connection_options:
     napalm:
@@ -62,12 +64,15 @@ nautobot_plugin_nornir:
 The inventory provides natural groupings of the following.
 
 * "global"
-* "site__{device.site.slug}"
-* "role__{device.device_role.slug}"
-* "type__{device.device_type.slug}"
-* "manufacturer__{device.device_type.manufacturer.slug}"
+* "location__{device.location.name}"
+* "location__{device.location.parent.name}"
+* "role__{device.role.name}"
+* "type__{device.device_type.model}"
+* "manufacturer__{device.device_type.manufacturer.name}"
 
 As an example, if you had manufacturer of `cisco` and `arista`, there will automatically be groups call `manufacturer__cisco` and `manufacturer__arista`.
+
+All allowed locations from locations tree will be included as groups. If the device is assigned to the location of `US-East`, and it has the parent location of `US`, there will be groups called `location__US` and `location__US-East`. Allowed or denied locations can be tuned by specifying `allowed_location_types` or `denied_location_types` in the `PLUGINS_CONFIG` settings.
 
 ## Using the Inventory
 
@@ -127,10 +132,10 @@ from nautobot_plugin_nornir.plugins.inventory.nautobot_orm import NautobotORMInv
 
 InventoryPluginRegister.register("nautobot-inventory", NautobotORMInventory)
 
-def get_qs(site=None):
+def get_qs(location=None):
     query = {}
-    if site:
-        query["site__slug"] = site
+    if location:
+        query["location__name"] = location
     base_qs = Device.objects.all()
     return DeviceFilterSet(data=query, queryset=base_qs).qs
 

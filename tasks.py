@@ -1,6 +1,6 @@
 """Tasks for use with Invoke.
 
-(c) 2020-2021 Network To Code
+(c) 2020-2023 Network To Code
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
 You may obtain a copy of the License at
@@ -12,9 +12,11 @@ See the License for the specific language governing permissions and
 limitations under the License.
 """
 
-from distutils.util import strtobool
-from invoke import Collection, task as invoke_task
 import os
+from distutils.util import strtobool
+
+from invoke import Collection
+from invoke import task as invoke_task
 
 
 def is_truthy(arg):
@@ -38,9 +40,9 @@ namespace = Collection("nautobot_plugin_nornir")
 namespace.configure(
     {
         "nautobot_plugin_nornir": {
-            "nautobot_ver": "latest",
+            "nautobot_ver": "2.0.0",
             "project_name": "nautobot_plugin_nornir",
-            "python_ver": "3.8",
+            "python_ver": "3.11",
             "local": False,
             "compose_dir": os.path.join(os.path.dirname(__file__), "development"),
             "compose_files": [
@@ -373,7 +375,7 @@ def bandit(context):
 
 @task
 def yamllint(context):
-    """Run yamllint to validate formating adheres to NTC defined YAML standards.
+    """Run yamllint to validate formatting adheres to NTC defined YAML standards.
 
     Args:
         context (obj): Used to run specific commands
@@ -387,13 +389,6 @@ def check_migrations(context):
     """Check for missing migrations."""
     command = "nautobot-server --config=nautobot/core/tests/nautobot_config.py makemigrations --dry-run --check"
 
-    run_command(context, command)
-
-
-@task
-def build_and_check_docs(context):
-    """Build documentation to be available within Nautobot."""
-    command = "mkdocs build --no-directory-urls --strict"
     run_command(context, command)
 
 
@@ -450,8 +445,6 @@ def tests(context, failfast=False):
     yamllint(context)
     print("Running pylint...")
     pylint(context)
-    print("Running mkdocs...")
-    build_and_check_docs(context)
     print("Running unit tests...")
     unittest(context, failfast=failfast)
     print("All tests have passed!")

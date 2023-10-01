@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "nautobot-plugin-nornir"
-version = "1.0.1"
+version = "2.0.0"
 description = "Nautobot Nornir plugin."
 authors = ["Network to Code, LLC <info@networktocode.com>"]
 license = "Apache-2.0"
@@ -16,10 +16,10 @@ classifiers = [
     "Intended Audience :: Developers",
     "Development Status :: 5 - Production/Stable",
     "Programming Language :: Python :: 3",
-    "Programming Language :: Python :: 3.7",
     "Programming Language :: Python :: 3.8",
     "Programming Language :: Python :: 3.9",
     "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
 ]
 packages = [
     { include = "nautobot_plugin_nornir" },
@@ -30,13 +30,10 @@ packages = [
 "Bug Tracker" = "https://github.com/nautobot/nautobot-plugin-nornir/issues"
 
 [tool.poetry.dependencies]
-python = "^3.7"
-# Required for Python 3.7 for now. See: https://stackoverflow.com/a/73932581/194311
-importlib-metadata = "4.13.0"
-# Used for local development
-nautobot = { version = "^1.4.0", optional = true }
-nornir-nautobot = "^2.6.0"
-netutils = ">=1.0.0"
+python = ">=3.8,<3.12"
+nautobot = "^2.0.0"
+nornir-nautobot = "^3.0.0"
+netutils = ">=1.6.0"
 
 [tool.poetry.group.dev.dependencies]
 bandit = "*"
@@ -51,18 +48,18 @@ ipython = "*"
 pydocstyle = "*"
 pylint = "*"
 pylint-django = "*"
+pylint-nautobot = "*"
 pytest = "*"
 yamllint = "*"
 Markdown = "*"
 toml = "*"
 # Rendering docs to HTML
-mkdocs = "1.3.1"
+mkdocs = "1.5.2"
 # Material for MkDocs theme
-mkdocs-material = "8.4.2"
+mkdocs-material = "9.2.4"
 # Automatic documentation from sources, for MkDocs
 mkdocstrings = "0.22.0"
-mkdocstrings-python = "1.1.2"
-griffe = "0.30.1"
+mkdocstrings-python = "1.5.2"
 
 [tool.poetry.extras]
 nautobot = ["nautobot"]
@@ -92,7 +89,7 @@ exclude = '''
 
 [tool.pylint.master]
 # Include the pylint_django plugin to avoid spurious warnings about Django patterns
-load-plugins="pylint_django"
+load-plugins="pylint_django,pylint_nautobot"
 ignore=".venv"
 
 [tool.pylint.basic]
@@ -134,3 +131,5 @@ testpaths = [
     "tests"
 ]
 addopts = "-vv --doctest-modules"
+[tool.pylint-nautobot]
+supported_nautobot_versions = ["2"]

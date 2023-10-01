@@ -97,7 +97,6 @@ nav:
       - Using the App: "user/app_use_cases.md"
       - Getting Started: "user/app_getting_started.md"
       - Navigate Credentials: "user/app_feature_credentials.md"
-      - Navigate Dispatcher: "user/app_feature_dispatcher.md"
       - Navigate Inventory: "user/app_feature_inventory.md"
       - Frequently Asked Questions: "user/app_faq.md"
       - External Interactions: "user/app_external_interactions.md"
@@ -106,6 +105,13 @@ nav:
       - Upgrade: "admin/admin_upgrade.md"
       - Uninstall: "admin/admin_uninstall.md"
       - Compatibility Matrix: "admin/compatibility_matrix.md"
+      - Troubleshooting:
+          - "admin/troubleshooting/index.md"
+          - E2001: "admin/troubleshooting/E2001.md"
+          - E2002: "admin/troubleshooting/E2002.md"
+          - E2003: "admin/troubleshooting/E2003.md"
+          - E2004: "admin/troubleshooting/E2004.md"
+      - Migrating To v2: "admin/migrating_to_v2.md"
       - Release Notes:
           - "admin/release_notes/index.md"
           - v1.0: "admin/release_notes/version_1.0.md"

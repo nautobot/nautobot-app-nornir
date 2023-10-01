@@ -4,7 +4,7 @@ about: Report a reproducible bug in the current release of nautobot-plugin-norni
 ---
 
 ### Environment
-* Python version:  <!-- Example: 3.7.7 -->
+* Python version:  <!-- Example: 3.11.5 -->
 * Nautobot version:  <!-- Example: 1.0.1 -->
 * nautobot-plugin-nornir version:  <!-- Example: 1.0.0 -->
 
