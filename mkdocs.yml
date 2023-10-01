@@ -107,11 +107,11 @@ nav:
       - Uninstall: "admin/admin_uninstall.md"
       - Compatibility Matrix: "admin/compatibility_matrix.md"
       - Troubleshooting:
-          - "task/troubleshooting/index.md"
-          - E2001: "task/troubleshooting/E2001.md"
-          - E2002: "task/troubleshooting/E2002.md"
-          - E2003: "task/troubleshooting/E2003.md"
-          - E2004: "task/troubleshooting/E2004.md"
+          - "admin/troubleshooting/index.md"
+          - E2001: "admin/troubleshooting/E2001.md"
+          - E2002: "admin/troubleshooting/E2002.md"
+          - E2003: "admin/troubleshooting/E2003.md"
+          - E2004: "admin/troubleshooting/E2004.md"
       - Migrating To v2: "admin/migrating_to_v2.md"
       - Release Notes:
           - "admin/release_notes/index.md"

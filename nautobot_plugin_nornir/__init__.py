@@ -33,7 +33,7 @@ class NornirConfig(PluginConfig):
         plugin_settings = settings.PLUGINS_CONFIG["nautobot_plugin_nornir"]
 
         dispatcher_mapping_message = (
-            "The `dispatcher_mapping` key is no longer functional, failing early"
+            "The `dispatcher_mapping` key is no longer functional, failing early "
             "to ensure your application works as expected, please see: "
             "https://docs.nautobot.com/projects/plugin-nornir/en/latest/admin/migrating_to_v2/#dispatcher-settings for more details."
         )
@@ -43,6 +43,7 @@ class NornirConfig(PluginConfig):
             "and not `nautobot_plugin_nornir` settings, please see: "
             "https://docs.nautobot.com/projects/plugin-nornir/en/latest/admin/migrating_to_v2/#dispatcher-settings for more details."
         )
+        verify_setting(plugin_settings, "custom_dispatcher", custom_dispatcher_message)
         verify_setting(
             plugin_settings, "credentials", "The `credentials` key should be within the `nornir_settings` dictionary"
         )
