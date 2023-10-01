@@ -14,8 +14,8 @@ Enabling the use of Config Context:
 ```python
 PLUGINS_CONFIG = {
     "nautobot_plugin_nornir": {
-        "allowed_location_types": ["Region"],
-        "denied_location_types": ["Site"],
+        "allowed_location_types": ["Site"],
+        "denied_location_types": ["Region"],
         "use_config_context": {
             "connection_options": True
         },
