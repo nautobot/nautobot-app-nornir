@@ -2,6 +2,7 @@
 
 
 def verify_setting(obj, dotted_dictionary, message):
+    """Helper function to ensure known problematic settings never happen."""
     keys = dotted_dictionary.split(".")
 
     current_obj = obj
