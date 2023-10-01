@@ -137,6 +137,8 @@ PLUGINS = ["nautobot_plugin_nornir"]
 # Each key in the dictionary is the name of an installed plugin and its value is a dictionary of settings.
 PLUGINS_CONFIG = {
     "nautobot_plugin_nornir": {
+        "allowed_location_types": [],
+        "denied_location_types": [],
         "use_config_context": {"use_config_context": {"secrets": False, "connection_options": True}},
         "connection_options": {
             "napalm": {

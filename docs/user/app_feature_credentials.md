@@ -99,7 +99,7 @@ _metadata:
   description: Group Definitions for device type SPINE
   is_active: true
   device-roles:
-    - slug: spine
+    - name: spine
 nautobot_plugin_nornir:
   secret_access_type: SSH
 ```
@@ -114,7 +114,7 @@ _metadata:
   description: Group Definitions for device type SPINE
   is_active: true
   device-roles:
-    - slug: spine
+    - name: spine
 nautobot_plugin_nornir:
   pluginx: 
     connection_secret_path: "pluginx.extras.secret"
