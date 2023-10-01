@@ -97,7 +97,6 @@ nav:
       - Using the App: "user/app_use_cases.md"
       - Getting Started: "user/app_getting_started.md"
       - Navigate Credentials: "user/app_feature_credentials.md"
-      - Navigate Dispatcher: "user/app_feature_dispatcher.md"
       - Navigate Inventory: "user/app_feature_inventory.md"
       - Frequently Asked Questions: "user/app_faq.md"
       - External Interactions: "user/app_external_interactions.md"
