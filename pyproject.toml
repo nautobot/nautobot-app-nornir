@@ -1,7 +1,7 @@
 [tool.poetry]
 name = "nautobot-plugin-nornir"
-version = "0.1.0"
-description = "Nautobot Nornir Plugin"
+version = "2.0.0"
+description = "Nautobot Nornir plugin."
 authors = ["Network to Code, LLC <info@networktocode.com>"]
 license = "Apache-2.0"
 readme = "README.md"
@@ -25,10 +25,16 @@ packages = [
     { include = "nautobot_plugin_nornir" },
 ]
 
+[tool.poetry.urls]
+"Changelog" = "https://docs.nautobot.com/projects/plugin-nornir/en/latest/admin/release_notes/"
+"Bug Tracker" = "https://github.com/nautobot/nautobot-plugin-nornir/issues"
+
 [tool.poetry.dependencies]
 python = ">=3.8,<3.12"
 # Used for local development
 nautobot = "^2.0.0"
+nornir-nautobot = "^3.0.0"
+netutils = ">=1.6.0"
 
 [tool.poetry.group.dev.dependencies]
 bandit = "*"
@@ -48,7 +54,7 @@ Markdown = "*"
 # Rendering docs to HTML
 mkdocs = "1.5.2"
 # Material for MkDocs theme
-mkdocs-material = "9.1.15"
+mkdocs-material = "9.2.4"
 # Render custom markdown for version added/changed/remove notes
 mkdocs-version-annotations = "1.0.0"
 # Automatic documentation from sources, for MkDocs

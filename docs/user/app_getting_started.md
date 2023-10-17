@@ -1,19 +1,15 @@
 # Getting Started with the App
 
-This document provides a step-by-step tutorial on how to get the App going and how to use it.
+A step-by-step tutorial on how to get the App going and how to use it.
 
 ## Install the App
 
-To install the App, please follow the instructions detailed in the [Installation Guide](../admin/install.md).
+To install the App, please follow the instructions detailed in the [Installation Guide](../admin/admin_install.md).
 
-## First steps with the App
+## Credentials
 
-!!! warning "Developer Note - Remove Me!"
-    What (with screenshots preferably) does it look like to perform the simplest workflow within the App once installed?
+The plugin allows you to integrate via a variety of methods to define your credentials, for details on what the options, see the [feature overview](../app_feature_credentials).
 
-## What are the next steps?
+## Inventory
 
-!!! warning "Developer Note - Remove Me!"
-    After taking the first steps, what else could the users look at doing.
-
-You can check out the [Use Cases](app_use_cases.md) section for more examples.
+The plugin allows you integrate Nornir with inventory, for details on what the options, see the [feature overview](../app_feature_inventory).
