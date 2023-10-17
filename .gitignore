@@ -307,3 +307,4 @@ nautobot_plugin_nornir/static/nautobot_plugin_nornir/docs
 public
 /compose.yaml
 /dump.sql
+/nautobot_plugin_nornir/static/nautobot_plugin_nornir/docs

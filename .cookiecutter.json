@@ -10,12 +10,10 @@
         "project_slug": "nautobot-plugin-nornir",
         "repo_url": "https://github.com/nautobot/nautobot-plugin-nornir",
         "base_url": "plugin-nornir",
-        "min_nautobot_version": "1.4.0",
-        "max_nautobot_version": "1.9999",
-        "nautobot_version": "latest",
+        "min_nautobot_version": "2.0.0",
+        "max_nautobot_version": "2.9999",
         "camel_name": "NautobotPluginNornir",
         "project_short_description": "Nautobot Nornir Plugin",
-        "version": "0.1.0",
         "model_class_name": "None",
         "open_source_license": "Apache-2.0",
         "docs_base_url": "https://docs.nautobot.com",
@@ -26,10 +24,12 @@
             "template_ref": "develop",
             "cookie_dir": "",
             "branch_prefix": "drift-manager",
-            "pull_request_strategy": "create",
+            "pull_request_strategy": "update-or-create",
             "post_actions": [
                 "black"
-            ]
+            ],
+            "draft": true,
+            "baked_commit_ref": "c29e11db3047bfcb7305e29677ddaea958b3098d"
         }
     }
 }

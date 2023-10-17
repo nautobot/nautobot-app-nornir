@@ -32,9 +32,7 @@ packages = [
 [tool.poetry.dependencies]
 python = ">=3.8,<3.12"
 # Used for local development
-nautobot = { version = "2.0.0-rc.3", optional = true }
-nornir-nautobot = { git = "https://github.com/nautobot/nornir-nautobot.git", branch = "next-2.0" }  # TODO: Point to 2.x version
-netutils = ">=1.0.0"
+nautobot = "^2.0.0"
 
 [tool.poetry.group.dev.dependencies]
 bandit = "*"
@@ -48,8 +46,6 @@ pydocstyle = "*"
 pylint = "*"
 pylint-django = "*"
 pylint-nautobot = "*"
-pytest = "*"
-python-dotenv = "^1.0.0"
 yamllint = "*"
 toml = "*"
 Markdown = "*"
@@ -62,9 +58,6 @@ mkdocs-version-annotations = "1.0.0"
 # Automatic documentation from sources, for MkDocs
 mkdocstrings = "0.22.0"
 mkdocstrings-python = "1.5.2"
-
-[tool.poetry.extras]
-nautobot = ["nautobot"]
 
 [tool.black]
 line-length = 120
@@ -114,7 +107,7 @@ notes = """,
 
 [tool.pylint-nautobot]
 supported_nautobot_versions = [
-    "1.4.0"
+    "2.0.0"
 ]
 
 [tool.pydocstyle]
@@ -132,9 +125,3 @@ add_ignore = "D212"
 [build-system]
 requires = ["poetry_core>=1.0.0"]
 build-backend = "poetry.core.masonry.api"
-
-[tool.pytest.ini_options]
-testpaths = [
-    "tests"
-]
-addopts = "-vv --doctest-modules"
