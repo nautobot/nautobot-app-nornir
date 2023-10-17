@@ -1,17 +1,13 @@
 [tool.poetry]
 name = "nautobot-plugin-nornir"
-version = "2.0.0"
-description = "Nautobot Nornir plugin."
+version = "0.1.0"
+description = "Nautobot Nornir Plugin"
 authors = ["Network to Code, LLC <info@networktocode.com>"]
 license = "Apache-2.0"
 readme = "README.md"
 homepage = "https://github.com/nautobot/nautobot-plugin-nornir"
 repository = "https://github.com/nautobot/nautobot-plugin-nornir"
 keywords = ["nautobot", "nautobot-plugin"]
-include = [
-    "LICENSE",
-    "README.md",
-]
 classifiers = [
     "Intended Audience :: Developers",
     "Development Status :: 5 - Production/Stable",
@@ -21,52 +17,47 @@ classifiers = [
     "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
 ]
+include = [
+    "LICENSE",
+    "README.md",
+]
 packages = [
     { include = "nautobot_plugin_nornir" },
 ]
 
-[tool.poetry.urls]
-"Changelog" = "https://docs.nautobot.com/projects/plugin-nornir/en/latest/admin/release_notes/"
-"Bug Tracker" = "https://github.com/nautobot/nautobot-plugin-nornir/issues"
-
 [tool.poetry.dependencies]
 python = ">=3.8,<3.12"
+# Used for local development
 nautobot = "^2.0.0"
-nornir-nautobot = "^3.0.0"
-netutils = ">=1.6.0"
 
 [tool.poetry.group.dev.dependencies]
 bandit = "*"
 black = "*"
 coverage = "*"
 django-debug-toolbar = "*"
-# we need to pin flake8 because of package dependencies that cause it to downgrade and
-# therefore cause issues with linting since older versions do not take .flake8 as config
-flake8 = "^3.9.2"
+flake8 = "*"
 invoke = "*"
 ipython = "*"
 pydocstyle = "*"
 pylint = "*"
 pylint-django = "*"
 pylint-nautobot = "*"
-pytest = "*"
 yamllint = "*"
-Markdown = "*"
 toml = "*"
+Markdown = "*"
 # Rendering docs to HTML
 mkdocs = "1.5.2"
 # Material for MkDocs theme
-mkdocs-material = "9.2.4"
+mkdocs-material = "9.1.15"
+# Render custom markdown for version added/changed/remove notes
+mkdocs-version-annotations = "1.0.0"
 # Automatic documentation from sources, for MkDocs
 mkdocstrings = "0.22.0"
 mkdocstrings-python = "1.5.2"
 
-[tool.poetry.extras]
-nautobot = ["nautobot"]
-
 [tool.black]
 line-length = 120
-target-version = ['py37']
+target-version = ['py38', 'py39', 'py310', 'py311']
 include = '\.pyi?$'
 exclude = '''
 (
@@ -89,7 +80,7 @@ exclude = '''
 
 [tool.pylint.master]
 # Include the pylint_django plugin to avoid spurious warnings about Django patterns
-load-plugins="pylint_django,pylint_nautobot"
+load-plugins="pylint_django, pylint_nautobot"
 ignore=".venv"
 
 [tool.pylint.basic]
@@ -110,6 +101,11 @@ notes = """,
     XXX,
     """
 
+[tool.pylint-nautobot]
+supported_nautobot_versions = [
+    "2.0.0"
+]
+
 [tool.pydocstyle]
 convention = "google"
 inherit = false
@@ -125,11 +121,3 @@ add_ignore = "D212"
 [build-system]
 requires = ["poetry_core>=1.0.0"]
 build-backend = "poetry.core.masonry.api"
-
-[tool.pytest.ini_options]
-testpaths = [
-    "tests"
-]
-addopts = "-vv --doctest-modules"
-[tool.pylint-nautobot]
-supported_nautobot_versions = ["2"]

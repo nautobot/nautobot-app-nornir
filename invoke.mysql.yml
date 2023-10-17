@@ -1,7 +1,7 @@
 ---
 nautobot_plugin_nornir:
   project_name: "nautobot-plugin-nornir"
-  nautobot_ver: "latest"
+  nautobot_ver: "2.0.0"
   local: false
   python_ver: "3.11"
   compose_dir: "development"
