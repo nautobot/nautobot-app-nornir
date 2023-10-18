@@ -1,6 +1,11 @@
 # App Overview
 
-## Description/Overview
+This document provides an overview of the App including critical information and import considerations when applying it to your Nautobot environment.
+
+!!! note
+    Throughout this documentation, the terms "app" and "plugin" will be used interchangeably.
+
+## Description
 
 A plugin for [Nautobot](https://github.com/nautobot/nautobot), that intends to be a small shim layer between [nornir-nautobot](https://github.com/nautobot/nornir-nautobot) and other plugins. The primary abilities that the plugin provides is a native Nornir ORM based inventory and a credential manager.
 
@@ -20,3 +25,14 @@ That being said, there is currently little reason to install this plugin by itse
 
 * itdependsnetworks
 * jeffkala
+
+## Nautobot Features Used
+
+!!! warning "Developer Note - Remove Me!"
+    What is shown today in the Installed Plugins page in Nautobot. What parts of Nautobot does it interact with, what does it add etc. ?
+
+### Extras
+
+!!! warning "Developer Note - Remove Me!"
+    Custom Fields - things like which CFs are created by this app?
+    Jobs - are jobs, if so, which ones, installed by this app?
