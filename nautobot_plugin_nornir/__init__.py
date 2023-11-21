@@ -1,15 +1,14 @@
 """Plugin declaration for nautobot_plugin_nornir."""
-
+# Metadata is inherited from Nautobot. If not including Nautobot in the environment, this should be added
 from importlib import metadata
-
 
 __version__ = metadata.version(__name__)
 
-from nautobot.extras.plugins import PluginConfig
+from nautobot.extras.plugins import NautobotAppConfig
 from nautobot_plugin_nornir.utils import verify_setting
 
 
-class NornirConfig(PluginConfig):
+class NautobotPluginNornirConfig(NautobotAppConfig):
     """Plugin configuration for nautobot_plugin_nornir."""
 
     name = "nautobot_plugin_nornir"
@@ -69,4 +68,4 @@ class NornirConfig(PluginConfig):
         super().ready()
 
 
-config = NornirConfig  # pylint:disable=invalid-name
+config = NautobotPluginNornirConfig  # pylint:disable=invalid-name
