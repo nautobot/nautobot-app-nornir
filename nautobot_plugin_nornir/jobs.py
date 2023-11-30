@@ -9,7 +9,7 @@ from nautobot.extras.models import Status, Tag
 from nautobot.tenancy.models import Tenant, TenantGroup
 from nautobot_plugin_nornir.constants import NORNIR_SETTINGS
 from nautobot_plugin_nornir.plugins.inventory.nautobot_orm import NautobotORMInventory
-from nautobot_plugin_nornir.utilities.helper import get_job_filter
+from nautobot_plugin_nornir.utilities.helpers import get_job_filter
 from nornir import InitNornir
 from nornir.core.plugins.inventory import InventoryPluginRegister
 
@@ -30,7 +30,7 @@ class DebugInventoryJob(Job):
     tag = MultiObjectVar(model=Tag, required=False)
     status = MultiObjectVar(model=Status, required=False)
 
-    def run(self, data, commit):  # pylint: disable=too-many-branches
+    def run(self, *args, **data):  # pylint: disable=too-many-branches
         """Run config compliance report script."""
         # pylint: disable=unused-argument
         qs = get_job_filter(data)
