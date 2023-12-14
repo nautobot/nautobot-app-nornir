@@ -37,6 +37,33 @@ def _get_secret_value(secret_type, device_obj):
 class CredentialsNautobotSecrets(MixinNautobotORMCredentials):
     """Credentials Class designed to work with Nautobot Secrets Functionality."""
 
+    def __init__(self):
+        self._creds_cache = {}
+
+    @property
+    def creds_cache(self):
+        """
+        Getter for in memory creds cache. This is useds to temporarily cache secrets-group creds to avoid
+        re-querying secrets providers over and over per device if the same secret-group was used.
+
+        Example:
+            {"secret_group_name": (username, password, secret)}
+        """
+        return self._creds_cache
+
+    @creds_cache.setter
+    def creds_cache(self, new_cred):
+        """
+        Setter for creds_cache
+
+        Args:
+            new_cred (dict): new secret group key and values.
+        """
+        if isinstance(new_cred, dict):
+            self._creds_cache.update(new_cred)
+        else:
+            self._creds_cache = self._creds_cache
+
     def get_device_creds(self, device):
         """Return the credentials for a given device.
 
@@ -49,14 +76,18 @@ class CredentialsNautobotSecrets(MixinNautobotORMCredentials):
             secret (string):
         """
         if device.secrets_group:
-            self.username = _get_secret_value(
-                secret_type=SecretsGroupSecretTypeChoices.TYPE_USERNAME, device_obj=device
-            )
-            self.password = _get_secret_value(
-                secret_type=SecretsGroupSecretTypeChoices.TYPE_PASSWORD, device_obj=device
-            )
-            self.secret = _get_secret_value(secret_type=SecretsGroupSecretTypeChoices.TYPE_SECRET, device_obj=device)
-            if not self.secret:
-                self.secret = self.password
-            return (self.username, self.password, self.secret)
+            if self.creds_cache.get(device.secrets_group.name):
+                return (self.creds_cache.get(device.secrets_group.name))
+            else:
+                self.username = _get_secret_value(
+                    secret_type=SecretsGroupSecretTypeChoices.TYPE_USERNAME, device_obj=device
+                )
+                self.password = _get_secret_value(
+                    secret_type=SecretsGroupSecretTypeChoices.TYPE_PASSWORD, device_obj=device
+                )
+                self.secret = _get_secret_value(secret_type=SecretsGroupSecretTypeChoices.TYPE_SECRET, device_obj=device)
+                if not self.secret:
+                    self.secret = self.password
+                self.creds_cache = {device.secrets_group.name: (self.username, self.password, self.secret)}
+                return (self.username, self.password, self.secret)
         return (None, None, None)
