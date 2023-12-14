@@ -15,6 +15,14 @@ InventoryPluginRegister.register("nautobot-inventory", NautobotORMInventory)
 class DebugInventoryJob(Job, FormEntry):
     """Job to debug stuff."""
 
+    class Meta:
+        """Meta object boilerplate for compliance."""
+
+        name = "Debug Nornir Inventory"
+        description = "Prints inventory details per host, group, defaults."
+        has_sensitive_variables = False
+        hidden = True
+
     def run(self, *args, **data):  # pylint: disable=too-many-branches
         """Run config compliance report script."""
         # pylint: disable=unused-argument

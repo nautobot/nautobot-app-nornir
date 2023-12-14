@@ -77,7 +77,7 @@ class CredentialsNautobotSecrets(MixinNautobotORMCredentials):
         """
         if device.secrets_group:
             if self.creds_cache.get(device.secrets_group.name):
-                return (self.creds_cache.get(device.secrets_group.name))
+                return self.creds_cache.get(device.secrets_group.name)
             else:
                 self.username = _get_secret_value(
                     secret_type=SecretsGroupSecretTypeChoices.TYPE_USERNAME, device_obj=device
@@ -85,7 +85,9 @@ class CredentialsNautobotSecrets(MixinNautobotORMCredentials):
                 self.password = _get_secret_value(
                     secret_type=SecretsGroupSecretTypeChoices.TYPE_PASSWORD, device_obj=device
                 )
-                self.secret = _get_secret_value(secret_type=SecretsGroupSecretTypeChoices.TYPE_SECRET, device_obj=device)
+                self.secret = _get_secret_value(
+                    secret_type=SecretsGroupSecretTypeChoices.TYPE_SECRET, device_obj=device
+                )
                 if not self.secret:
                     self.secret = self.password
                 self.creds_cache = {device.secrets_group.name: (self.username, self.password, self.secret)}
