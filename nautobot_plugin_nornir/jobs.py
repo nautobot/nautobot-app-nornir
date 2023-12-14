@@ -1,13 +1,15 @@
+"""Jobs for nautobot-plugin-nornir debugging."""
 from datetime import datetime
 
 from nautobot.core.celery import register_jobs
 from nautobot.dcim.models import Device
 from nautobot.extras.jobs import Job
+from nornir import InitNornir
+from nornir.core.plugins.inventory import InventoryPluginRegister
 from nautobot_plugin_nornir.constants import NORNIR_SETTINGS
 from nautobot_plugin_nornir.plugins.inventory.nautobot_orm import NautobotORMInventory
 from nautobot_plugin_nornir.utilities.helpers import FormEntry, get_job_filter
-from nornir import InitNornir
-from nornir.core.plugins.inventory import InventoryPluginRegister
+
 
 InventoryPluginRegister.register("nautobot-inventory", NautobotORMInventory)
 
@@ -15,7 +17,7 @@ InventoryPluginRegister.register("nautobot-inventory", NautobotORMInventory)
 class DebugInventoryJob(Job, FormEntry):
     """Job to debug stuff."""
 
-    class Meta:
+    class Meta:  # pylint: disable=too-few-public-methods
         """Meta object boilerplate for compliance."""
 
         name = "Debug Nornir Inventory"
