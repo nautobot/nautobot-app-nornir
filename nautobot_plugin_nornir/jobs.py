@@ -4,12 +4,11 @@ from datetime import datetime
 from nautobot.core.celery import register_jobs
 from nautobot.dcim.models import Device
 from nautobot.extras.jobs import Job
-from nornir import InitNornir
-from nornir.core.plugins.inventory import InventoryPluginRegister
 from nautobot_plugin_nornir.constants import NORNIR_SETTINGS
 from nautobot_plugin_nornir.plugins.inventory.nautobot_orm import NautobotORMInventory
 from nautobot_plugin_nornir.utilities.helpers import FormEntry, get_job_filter
-
+from nornir import InitNornir
+from nornir.core.plugins.inventory import InventoryPluginRegister
 
 InventoryPluginRegister.register("nautobot-inventory", NautobotORMInventory)
 
@@ -49,13 +48,6 @@ class DebugInventoryJob(Job, FormEntry):
                         host,
                         "\n".join(f"{k}: {v}\n" for k, v in data.dict().items()),
                         extra={"object": Device.objects.get(id=data.data["id"])},
-                    )
-                for group, data in nornir_obj.inventory.groups.items():
-                    self.logger.info(
-                        "#### %s Group Data\n%s",
-                        group,
-                        "\n".join(f"{k}: {v}\n" for k, v in data.dict().items()),
-                        extra={"object": group},
                     )
                 self.logger.info(
                     "#### Default Data\n%s",
