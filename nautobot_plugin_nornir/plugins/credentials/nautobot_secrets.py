@@ -24,7 +24,6 @@ creds_cache = {
 import json
 
 from nautobot.extras.choices import SecretsGroupAccessTypeChoices, SecretsGroupSecretTypeChoices
-from nautobot.extras.models.secrets import SecretsGroupAssociation
 from nautobot_plugin_nornir.constants import PLUGIN_CFG
 
 from .nautobot_orm import MixinNautobotORMCredentials
@@ -96,14 +95,27 @@ class CredentialsNautobotSecrets(MixinNautobotORMCredentials):
             self.secret = None
             for sec in device.secrets_group.secrets.all():
                 secret_value = self.creds_cache.get(self._get_or_cache_secret_key(device, sec))
-                current_secret_type = sec.secrets_group_associations.first().secret_type
-                current_access_type = sec.secrets_group_associations.first().access_type
+                current_secret_type = getattr(
+                    SecretsGroupSecretTypeChoices, f"TYPE_{sec.secrets_group_associations.first().secret_type.upper()}"
+                )
+                current_access_type = getattr(
+                    SecretsGroupAccessTypeChoices, f"TYPE_{sec.secrets_group_associations.first().access_type.upper()}"
+                )
                 configured_access_type = _get_access_type_value(device)
-                if current_secret_type == "username" and configured_access_type == current_access_type:
+                if (
+                    current_secret_type == SecretsGroupSecretTypeChoices.TYPE_USERNAME
+                    and configured_access_type == current_access_type
+                ):
                     self.username = secret_value
-                if current_secret_type == "password" and configured_access_type == current_access_type:
+                if (
+                    current_secret_type == SecretsGroupSecretTypeChoices.TYPE_PASSWORD
+                    and configured_access_type == current_access_type
+                ):
                     self.password = secret_value
-                if current_secret_type == "secret" and configured_access_type == current_access_type:
+                if (
+                    current_secret_type == SecretsGroupSecretTypeChoices.TYPE_SECRET
+                    and configured_access_type == current_access_type
+                ):
                     self.secret = secret_value
             if not self.secret:
                 self.secret = self.password
