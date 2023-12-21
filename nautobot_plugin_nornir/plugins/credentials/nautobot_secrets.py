@@ -30,7 +30,7 @@ from .nautobot_orm import MixinNautobotORMCredentials
 
 
 def _get_access_type_value(device_obj):
-    """Get value for access_type
+    """Get value for access_type.
 
     Args:
         device_obj (dcim.models.Device): Nautobot device object.
@@ -62,8 +62,7 @@ class CredentialsNautobotSecrets(MixinNautobotORMCredentials):
     @property
     def creds_cache(self):
         """
-        Getter for in memory creds cache. This is useds to temporarily cache secrets-group creds to avoid re-querying
-        secrets providers over and over per device if the same secret-group was used.
+        Getter for in memory creds cache. This is useds to temporarily cache secrets-group creds to avoid re-querying secrets providers over and over per device if the same secret-group was used.
 
         Example:
             {"123435": 'supersecret'}
