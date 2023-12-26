@@ -19,7 +19,7 @@ jobs:
   black:
     runs-on: "ubuntu-22.04"
     env:
-      INVOKE_NAUTOBOT_PLUGIN_NORNIR_LOCAL: "True"
+      INVOKE_NAUTOBOT_APP_NORNIR_LOCAL: "True"
     steps:
       - name: "Check out repository code"
         uses: "actions/checkout@v4"
@@ -30,7 +30,7 @@ jobs:
   bandit:
     runs-on: "ubuntu-22.04"
     env:
-      INVOKE_NAUTOBOT_PLUGIN_NORNIR_LOCAL: "True"
+      INVOKE_NAUTOBOT_APP_NORNIR_LOCAL: "True"
     steps:
       - name: "Check out repository code"
         uses: "actions/checkout@v4"
@@ -41,7 +41,7 @@ jobs:
   pydocstyle:
     runs-on: "ubuntu-22.04"
     env:
-      INVOKE_NAUTOBOT_PLUGIN_NORNIR_LOCAL: "True"
+      INVOKE_NAUTOBOT_APP_NORNIR_LOCAL: "True"
     steps:
       - name: "Check out repository code"
         uses: "actions/checkout@v4"
@@ -52,7 +52,7 @@ jobs:
   flake8:
     runs-on: "ubuntu-22.04"
     env:
-      INVOKE_NAUTOBOT_PLUGIN_NORNIR_LOCAL: "True"
+      INVOKE_NAUTOBOT_APP_NORNIR_LOCAL: "True"
     steps:
       - name: "Check out repository code"
         uses: "actions/checkout@v4"
@@ -63,7 +63,7 @@ jobs:
   poetry:
     runs-on: "ubuntu-22.04"
     env:
-      INVOKE_NAUTOBOT_PLUGIN_NORNIR_LOCAL: "True"
+      INVOKE_NAUTOBOT_APP_NORNIR_LOCAL: "True"
     steps:
       - name: "Check out repository code"
         uses: "actions/checkout@v4"
@@ -74,7 +74,7 @@ jobs:
   yamllint:
     runs-on: "ubuntu-22.04"
     env:
-      INVOKE_NAUTOBOT_PLUGIN_NORNIR_LOCAL: "True"
+      INVOKE_NAUTOBOT_APP_NORNIR_LOCAL: "True"
     steps:
       - name: "Check out repository code"
         uses: "actions/checkout@v4"
@@ -97,8 +97,8 @@ jobs:
         python-version: ["3.11"]
         nautobot-version: ["2.0.0"]
     env:
-      INVOKE_NAUTOBOT_PLUGIN_NORNIR_PYTHON_VER: "${{ matrix.python-version }}"
-      INVOKE_NAUTOBOT_PLUGIN_NORNIR_NAUTOBOT_VER: "${{ matrix.nautobot-version }}"
+      INVOKE_NAUTOBOT_APP_NORNIR_PYTHON_VER: "${{ matrix.python-version }}"
+      INVOKE_NAUTOBOT_APP_NORNIR_NAUTOBOT_VER: "${{ matrix.nautobot-version }}"
     steps:
       - name: "Check out repository code"
         uses: "actions/checkout@v4"
@@ -140,8 +140,8 @@ jobs:
         python-version: ["3.11"]
         nautobot-version: ["2.0.0"]
     env:
-      INVOKE_NAUTOBOT_PLUGIN_NORNIR_PYTHON_VER: "${{ matrix.python-version }}"
-      INVOKE_NAUTOBOT_PLUGIN_NORNIR_NAUTOBOT_VER: "${{ matrix.nautobot-version }}"
+      INVOKE_NAUTOBOT_APP_NORNIR_PYTHON_VER: "${{ matrix.python-version }}"
+      INVOKE_NAUTOBOT_APP_NORNIR_NAUTOBOT_VER: "${{ matrix.nautobot-version }}"
     steps:
       - name: "Check out repository code"
         uses: "actions/checkout@v4"
@@ -187,8 +187,8 @@ jobs:
             nautobot-version: "stable"
     runs-on: "ubuntu-22.04"
     env:
-      INVOKE_NAUTOBOT_PLUGIN_NORNIR_PYTHON_VER: "${{ matrix.python-version }}"
-      INVOKE_NAUTOBOT_PLUGIN_NORNIR_NAUTOBOT_VER: "${{ matrix.nautobot-version }}"
+      INVOKE_NAUTOBOT_APP_NORNIR_PYTHON_VER: "${{ matrix.python-version }}"
+      INVOKE_NAUTOBOT_APP_NORNIR_NAUTOBOT_VER: "${{ matrix.nautobot-version }}"
     steps:
       - name: "Check out repository code"
         uses: "actions/checkout@v4"

@@ -1,4 +1,4 @@
-# Nautobot Plugin Nornir Inventory
+# Nautobot App Nornir Inventory
 
 ::: nautobot_plugin_nornir.plugins.inventory
     options:

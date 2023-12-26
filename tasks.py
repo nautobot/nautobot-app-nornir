@@ -41,13 +41,13 @@ def is_truthy(arg):
 
 
 # Use pyinvoke configuration for default values, see http://docs.pyinvoke.org/en/stable/concepts/configuration.html
-# Variables may be overwritten in invoke.yml or by the environment variables INVOKE_NAUTOBOT_PLUGIN_NORNIR_xxx
-namespace = Collection("nautobot_plugin_nornir")
+# Variables may be overwritten in invoke.yml or by the environment variables INVOKE_NAUTOBOT_APP_NORNIR_xxx
+namespace = Collection("nautobot_app_nornir")
 namespace.configure(
     {
-        "nautobot_plugin_nornir": {
+        "nautobot_app_nornir": {
             "nautobot_ver": "2.0.0",
-            "project_name": "nautobot-plugin-nornir",
+            "project_name": "nautobot-app-nornir",
             "python_ver": "3.11",
             "local": False,
             "compose_dir": os.path.join(os.path.dirname(__file__), "development"),
@@ -64,7 +64,7 @@ namespace.configure(
 
 
 def _is_compose_included(context, name):
-    return f"docker-compose.{name}.yml" in context.nautobot_plugin_nornir.compose_files
+    return f"docker-compose.{name}.yml" in context.nautobot_app_nornir.compose_files
 
 
 def task(function=None, *args, **kwargs):
@@ -97,19 +97,19 @@ def docker_compose(context, command, **kwargs):
     build_env = {
         # Note: 'docker compose logs' will stop following after 60 seconds by default,
         # so we are overriding that by setting this environment variable.
-        "COMPOSE_HTTP_TIMEOUT": context.nautobot_plugin_nornir.compose_http_timeout,
-        "NAUTOBOT_VER": context.nautobot_plugin_nornir.nautobot_ver,
-        "PYTHON_VER": context.nautobot_plugin_nornir.python_ver,
+        "COMPOSE_HTTP_TIMEOUT": context.nautobot_app_nornir.compose_http_timeout,
+        "NAUTOBOT_VER": context.nautobot_app_nornir.nautobot_ver,
+        "PYTHON_VER": context.nautobot_app_nornir.python_ver,
         **kwargs.pop("env", {}),
     }
     compose_command_tokens = [
         "docker compose",
-        f"--project-name {context.nautobot_plugin_nornir.project_name}",
-        f'--project-directory "{context.nautobot_plugin_nornir.compose_dir}"',
+        f"--project-name {context.nautobot_app_nornir.project_name}",
+        f'--project-directory "{context.nautobot_app_nornir.compose_dir}"',
     ]
 
-    for compose_file in context.nautobot_plugin_nornir.compose_files:
-        compose_file_path = os.path.join(context.nautobot_plugin_nornir.compose_dir, compose_file)
+    for compose_file in context.nautobot_app_nornir.compose_files:
+        compose_file_path = os.path.join(context.nautobot_app_nornir.compose_dir, compose_file)
         compose_command_tokens.append(f' -f "{compose_file_path}"')
 
     compose_command_tokens.append(command)
@@ -127,7 +127,7 @@ def docker_compose(context, command, **kwargs):
 
 def run_command(context, command, **kwargs):
     """Wrapper to run a command locally or inside the nautobot container."""
-    if is_truthy(context.nautobot_plugin_nornir.local):
+    if is_truthy(context.nautobot_app_nornir.local):
         context.run(command, **kwargs)
     else:
         # Check if nautobot is running, no need to start another nautobot container to run a command
@@ -161,7 +161,7 @@ def build(context, force_rm=False, cache=True):
     if force_rm:
         command += " --force-rm"
 
-    print(f"Building Nautobot with Python {context.nautobot_plugin_nornir.python_ver}...")
+    print(f"Building Nautobot with Python {context.nautobot_app_nornir.python_ver}...")
     docker_compose(context, command)
 
 
@@ -516,7 +516,7 @@ def docs(context):
     """Build and serve docs locally for development."""
     command = "mkdocs serve -v"
 
-    if is_truthy(context.nautobot_plugin_nornir.local):
+    if is_truthy(context.nautobot_app_nornir.local):
         print(">>> Serving Documentation at http://localhost:8001")
         run_command(context, command)
     else:
@@ -669,9 +669,9 @@ def unittest_coverage(context):
     }
 )
 def tests(context, failfast=False, keepdb=False, lint_only=False):
-    """Run all tests for this plugin."""
+    """Run all tests for this app."""
     # If we are not running locally, start the docker containers so we don't have to for each test
-    if not is_truthy(context.nautobot_plugin_nornir.local):
+    if not is_truthy(context.nautobot_app_nornir.local):
         print("Starting Docker Containers...")
         start(context)
     # Sorted loosely from fastest to slowest

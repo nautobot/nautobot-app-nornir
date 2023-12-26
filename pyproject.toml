@@ -1,13 +1,13 @@
 [tool.poetry]
 name = "nautobot-plugin-nornir"
 version = "2.0.0"
-description = "Nautobot Nornir plugin."
+description = "Nautobot Nornir app."
 authors = ["Network to Code, LLC <info@networktocode.com>"]
 license = "Apache-2.0"
 readme = "README.md"
-homepage = "https://github.com/nautobot/nautobot-plugin-nornir"
-repository = "https://github.com/nautobot/nautobot-plugin-nornir"
-keywords = ["nautobot", "nautobot-plugin"]
+homepage = "https://github.com/nautobot/nautobot-app-nornir"
+repository = "https://github.com/nautobot/nautobot-app-nornir"
+keywords = ["nautobot", "nautobot-plugin", "nautobot-app"]
 classifiers = [
     "Intended Audience :: Developers",
     "Development Status :: 5 - Production/Stable",
@@ -27,7 +27,7 @@ packages = [
 
 [tool.poetry.urls]
 "Changelog" = "https://docs.nautobot.com/projects/plugin-nornir/en/latest/admin/release_notes/"
-"Bug Tracker" = "https://github.com/nautobot/nautobot-plugin-nornir/issues"
+"Bug Tracker" = "https://github.com/nautobot/nautobot-app-nornir/issues"
 
 [tool.poetry.dependencies]
 python = ">=3.8,<3.12"

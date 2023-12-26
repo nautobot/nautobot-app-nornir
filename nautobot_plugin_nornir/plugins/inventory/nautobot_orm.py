@@ -1,4 +1,4 @@
-"""Inventory Plugin for Nornir designed to work with Nautobot ORM."""
+"""Inventory App for Nornir designed to work with Nautobot ORM."""
 # pylint: disable=unsupported-assignment-operation,unsubscriptable-object,no-member,duplicate-code
 
 from typing import Any, Dict, Generator, List, Tuple
@@ -84,7 +84,7 @@ def _set_dict_key_path(dictionary, key_path, value):
 
 def _build_out_secret_paths(connection_options, device_secret):
     for nornir_provider, nornir_options in connection_options.items():
-        # Offers extensibility to nornir plugins not listed in constants.py under CONNECTION_SECRETS_PATHS.
+        # Offers extensibility to nornir apps not listed in constants.py under CONNECTION_SECRETS_PATHS.
         if nornir_options.get("connection_secret_path"):
             secret_path = nornir_options.pop("connection_secret_path")
         elif CONNECTION_SECRETS_PATHS.get(nornir_provider):

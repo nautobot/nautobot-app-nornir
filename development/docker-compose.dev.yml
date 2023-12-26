@@ -20,7 +20,7 @@ services:
       - "8001:8080"
     volumes:
       - "../:/source"
-    image: "nautobot-plugin-nornir/nautobot:${NAUTOBOT_VER}-py${PYTHON_VER}"
+    image: "nautobot-app-nornir/nautobot:${NAUTOBOT_VER}-py${PYTHON_VER}"
     healthcheck:
       disable: true
     tty: true

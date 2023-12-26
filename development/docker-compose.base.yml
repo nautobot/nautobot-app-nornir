@@ -7,7 +7,7 @@ x-nautobot-build: &nautobot-build
     context: "../"
     dockerfile: "development/Dockerfile"
 x-nautobot-base: &nautobot-base
-  image: "nautobot-plugin-nornir/nautobot:${NAUTOBOT_VER}-py${PYTHON_VER}"
+  image: "nautobot-app-nornir/nautobot:${NAUTOBOT_VER}-py${PYTHON_VER}"
   env_file:
     - "development.env"
     - "creds.env"

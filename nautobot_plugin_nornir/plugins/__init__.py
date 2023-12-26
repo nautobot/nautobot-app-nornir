@@ -1,1 +1,1 @@
-"""Plugin initialization."""
+"""App initialization."""

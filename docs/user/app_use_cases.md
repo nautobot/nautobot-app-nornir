@@ -16,4 +16,4 @@ On a high-level, all things Nornir
 
 ## Screenshots
 
-![Backup Job](https://raw.githubusercontent.com/nautobot/nautobot-plugin-nornir/develop/docs/images/nornir-backup-job.png)
+![Backup Job](https://raw.githubusercontent.com/nautobot/nautobot-app-nornir/develop/docs/images/nornir-backup-job.png)

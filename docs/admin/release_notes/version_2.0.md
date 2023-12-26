@@ -14,15 +14,15 @@ This document describes all new features and changes in the release `2.0`. The f
 
 ### Changed
 
-- [#117](https://github.com/nautobot/nautobot-plugin-nornir/issues/117) - Updated `nautobot` to `2.0.0`.
-- [#117](https://github.com/nautobot/nautobot-plugin-nornir/issues/117) - Removed `dispatcher_mapping` a similar functionality can be found in Nautobot's Golden Config plugin, but simplified version in nornir-nautobot means this is no longer required.
-- [#117](https://github.com/nautobot/nautobot-plugin-nornir/issues/117) - Moved all references of `Platform.slug` to `Platform.network_driver`.
-- [#117](https://github.com/nautobot/nautobot-plugin-nornir/issues/117) - Removed references to `.slug` for Nautobot core models and changed to `.name`.
-- [#117](https://github.com/nautobot/nautobot-plugin-nornir/issues/117) - Moved all references of `Site` or `Region` to `Location`.
+- [#117](https://github.com/nautobot/nautobot-app-nornir/issues/117) - Updated `nautobot` to `2.0.0`.
+- [#117](https://github.com/nautobot/nautobot-app-nornir/issues/117) - Removed `dispatcher_mapping` a similar functionality can be found in Nautobot's Golden Config App, but simplified version in nornir-nautobot means this is no longer required.
+- [#117](https://github.com/nautobot/nautobot-app-nornir/issues/117) - Moved all references of `Platform.slug` to `Platform.network_driver`.
+- [#117](https://github.com/nautobot/nautobot-app-nornir/issues/117) - Removed references to `.slug` for Nautobot core models and changed to `.name`.
+- [#117](https://github.com/nautobot/nautobot-app-nornir/issues/117) - Moved all references of `Site` or `Region` to `Location`.
 
 ### Added
 
-- [#117](https://github.com/nautobot/nautobot-plugin-nornir/issues/117) - Plugin config `allowed_location_types` to limit what locations are **allowed** based on location types, specifically from `LocationType.name`.
-- [#117](https://github.com/nautobot/nautobot-plugin-nornir/issues/117) - Plugin config `denied_location_types` to limit what locations are turned **denied** based on location types, specifically from `LocationType.name`.
-- [#117](https://github.com/nautobot/nautobot-plugin-nornir/issues/117) - Added early failure with message when settings are in the wrong location such as `dispatcher_mapping` or `custom_dispatcher`.
-- [#117](https://github.com/nautobot/nautobot-plugin-nornir/issues/117) - Added error code framework.
+- [#117](https://github.com/nautobot/nautobot-app-nornir/issues/117) - App config `allowed_location_types` to limit what locations are **allowed** based on location types, specifically from `LocationType.name`.
+- [#117](https://github.com/nautobot/nautobot-app-nornir/issues/117) - App config `denied_location_types` to limit what locations are turned **denied** based on location types, specifically from `LocationType.name`.
+- [#117](https://github.com/nautobot/nautobot-app-nornir/issues/117) - Added early failure with message when settings are in the wrong location such as `dispatcher_mapping` or `custom_dispatcher`.
+- [#117](https://github.com/nautobot/nautobot-app-nornir/issues/117) - Added error code framework.

@@ -6,7 +6,7 @@ The credentials that will be used by Nornir to connect to the device is based on
 
 ## Supported Credential Types
 
-Out of the box, there are three credential plugins.
+Out of the box, there are three credential apps.
 
 * Environment Variables - Leveraging pre-defined environment variables for your credentials.
 * Setting Variables - Leveraging the `nautobot_config.py` for your credentials
@@ -65,7 +65,7 @@ PLUGINS_CONFIG = {
 
 Leverages the [Nautobot Secrets Group](https://nautobot.readthedocs.io/en/latest/core-functionality/secrets/#secrets-groups) core functionality.
 
-**The default assumes Secrets Group contain secrets with "Access Type" of `Generic`** and expects these secrets to have "Secret Type" of `username`, `password`, and optionally `secret`. The "Access Type" is configurable via the plugin configuration parameter `use_config_context`, which if enabled changes the plugin functionality to pull `device_obj.get_config_context()['nautobot_plugin_nornir']['secret_access_type']` from each devices config_context. Which is the config context dictionary `nautobot_plugin_nornir` and the subkey of `secret_access_type`.
+**The default assumes Secrets Group contain secrets with "Access Type" of `Generic`** and expects these secrets to have "Secret Type" of `username`, `password`, and optionally `secret`. The "Access Type" is configurable via the app configuration parameter `use_config_context`, which if enabled changes the app functionality to pull `device_obj.get_config_context()['nautobot_plugin_nornir']['secret_access_type']` from each devices config_context. Which is the config context dictionary `nautobot_plugin_nornir` and the subkey of `secret_access_type`.
 
 Enabling the use of Config Context:
 

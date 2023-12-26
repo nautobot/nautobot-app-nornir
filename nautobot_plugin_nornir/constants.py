@@ -1,4 +1,4 @@
-"""Constants for plugin."""
+"""Constants for app."""
 from django.conf import settings
 
 _NORNIR_SETTINGS = {
