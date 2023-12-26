@@ -12,4 +12,4 @@ $ pip3 uninstall nautobot-plugin-nornir
 
 ## Database Cleanup
 
-Not applicable, as the plugin does not have any models.
+Not applicable, as the app does not have any models.

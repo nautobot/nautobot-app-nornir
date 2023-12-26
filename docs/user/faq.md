@@ -12,13 +12,13 @@ f"type__{device.device_type.model}",
 f"manufacturer__{device.device_type.manufacturer.name}",
 ```
 
-_Why is the plugin installed as nautobot_plugin_nornir and not nautobot_nornir?_
+_Why is the app installed as nautobot_plugin_nornir and not nautobot_nornir?_
 
 There is already a repository called `nornir-nautbot` and in order to avoid the confusion of both a `nornir-nautobot` and `nautobot-nornir`, the word `plugin` was left in the name. While it is clear that this will still remain confusing, it was deemed the lesser of two evils.
 
 _What is the difference between `nautobot_plugin_nornir` and `nornir_settings`? Why not just flatten?_
 
-Nautobot provides each plugin a set of settings and Nornir has it's own settings. In order to "pass on" the Nornir settings as required, this leads to the nesting as seen. 
+Nautobot provides each app a set of settings and Nornir has it's own settings. In order to "pass on" the Nornir settings as required, this leads to the nesting as seen. 
 
 This does often lead to some confusion. Let's take a few examples. 
 

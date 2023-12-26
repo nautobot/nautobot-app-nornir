@@ -1,6 +1,6 @@
 ---
-nautobot_plugin_nornir:
-  project_name: "nautobot-plugin-nornir"
+nautobot_app_nornir:
+  project_name: "nautobot-app-nornir"
   nautobot_ver: "2.0.0"
   local: false
   python_ver: "3.11"

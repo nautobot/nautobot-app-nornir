@@ -1,4 +1,4 @@
-"""Utility function for the plugin."""
+"""Utility function for the app."""
 
 
 def verify_setting(obj, dotted_dictionary, message):

@@ -4,9 +4,9 @@
         "full_name": "Network to Code, LLC",
         "email": "info@networktocode.com",
         "github_org": "nautobot",
-        "plugin_name": "nautobot_plugin_nornir",
+        "app_name": "nautobot_plugin_nornir",
         "verbose_name": "Nautobot Nornir Plugin",
-        "plugin_slug": "nautobot-plugin-nornir",
+        "app_slug": "nautobot-plugin-nornir",
         "project_slug": "nautobot-plugin-nornir",
         "repo_url": "https://github.com/nautobot/nautobot-plugin-nornir",
         "base_url": "plugin-nornir",
@@ -33,3 +33,4 @@
         }
     }
 }
+

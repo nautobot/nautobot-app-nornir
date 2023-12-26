@@ -87,7 +87,7 @@ params: Dict = None
 defaults: Dict = None
 ```
 
-The most important part about the inventory is providing a valid `queryset`. This defines what is in scope for your environment. Ideally, the code that interacts with the inventory (via jobs, a plugin, or other custom code) would take some parameters to filter the queryset. In the below illustrative example we simply use the full inventory:
+The most important part about the inventory is providing a valid `queryset`. This defines what is in scope for your environment. Ideally, the code that interacts with the inventory (via jobs, a app, or other custom code) would take some parameters to filter the queryset. In the below illustrative example we simply use the full inventory:
 
 ```python
 from nautobot.dcim.models import Device

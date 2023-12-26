@@ -1,10 +1,10 @@
 ---
 dev_addr: "127.0.0.1:8001"
-edit_uri: "edit/main/nautobot-plugin-nornir/docs"
+edit_uri: "edit/main/nautobot-app-nornir/docs"
 site_dir: "nautobot_plugin_nornir/static/nautobot_plugin_nornir/docs"
-site_name: "Nautobot Nornir Plugin Documentation"
+site_name: "Nautobot Nornir App Documentation"
 site_url: "https://docs.nautobot.com/projects/plugin-nornir/en/latest/"
-repo_url: "https://github.com/nautobot/nautobot-plugin-nornir"
+repo_url: "https://github.com/nautobot/nautobot-app-nornir"
 copyright: "Copyright &copy; The Authors"
 theme:
   name: "material"
@@ -120,6 +120,7 @@ nav:
       - Migrating To v2: "admin/migrating_to_v2.md"
       - Release Notes:
           - "admin/release_notes/index.md"
+          - v2.0: "admin/release_notes/version_2.0.md"
           - v1.0: "admin/release_notes/version_1.0.md"
           - v0.9: "admin/release_notes/version_0.9.md"
   - Developer Guide:
