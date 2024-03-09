@@ -129,7 +129,7 @@ if not _TESTING:
 #
 
 # Enable installed Apps. Add the name of each App to the list.
-PLUGINS = ["nautobot_plugin_nornir"]
+PLUGINS = ["nautobot_plugin_nornir", "nautobot_secrets_providers"]
 
 # Apps configuration settings. These settings are used by various Apps that the user may have installed.
 # Each key in the dictionary is the name of an installed App and its value is a dictionary of settings.
@@ -152,6 +152,7 @@ PLUGINS_CONFIG = {
         },
         "nornir_settings": {
             "credentials": "nautobot_plugin_nornir.plugins.credentials.env_vars.CredentialsEnvVars",
+            # "credentials": "nautobot_plugin_nornir.plugins.credentials.nautobot_secrets.CredentialsNautobotSecrets",
             "runner": {
                 "plugin": "threaded",
                 "options": {
@@ -160,4 +161,11 @@ PLUGINS_CONFIG = {
             },
         },
     },
+    # "nautobot_secrets_providers": {
+    #     "hashicorp_vault": {
+    #         "url": "http://10.1.1.63:8200",
+    #         "auth_method": "token",
+    #         "token": "hvs.secretkeytoken",
+    #     }
+    # },
 }

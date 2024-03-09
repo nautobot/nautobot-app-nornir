@@ -46,7 +46,7 @@ namespace = Collection("nautobot_plugin_nornir")
 namespace.configure(
     {
         "nautobot_plugin_nornir": {
-            "nautobot_ver": "2.0.0",
+            "nautobot_ver": "2.0.4",
             "project_name": "nautobot-plugin-nornir",
             "python_ver": "3.11",
             "local": False,

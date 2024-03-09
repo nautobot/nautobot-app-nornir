@@ -35,6 +35,8 @@ python = ">=3.8,<3.12"
 nautobot = "^2.0.0"
 nornir-nautobot = "^3.0.0"
 netutils = ">=1.6.0"
+nautobot-secrets-providers = "^2.0.1"
+hvac = "^2.0.0"
 
 [tool.poetry.group.dev.dependencies]
 bandit = "*"
