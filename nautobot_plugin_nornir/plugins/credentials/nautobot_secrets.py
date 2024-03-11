@@ -54,8 +54,42 @@ class CredentialsNautobotSecrets(MixinNautobotORMCredentials):
         self._creds_cache = {}
 
     def _get_or_cache_secret_key(self, device, sec):
+        """Check if secret_key is already in cache, if not call setter method to add the entry.
+
+        Args:
+            device (dcim.Device): Nautobot Device object.
+            sec (extra.SecretGroup): Nautobot SecretGroup objects.
+
+        Returns:
+            str: A rendered secgret group hashed into a single hashed id to use as a unique key.
+
+        Examples:
+            >>> # Example of a Environment Variable rendered.
+            >>> device = Device.objects.first()
+            >>> sec = device.secrets_group.secrets.last()
+            >>> sec
+            >>> <Secret: router-u>
+            >>> sec.rendered_parameters(obj=device)
+            >>> {'variable': 'DEVICE_ROUTER_USERNAME'}
+            >>> str(hash(json.dumps(sec.rendered_parameters(obj=device), sort_keys=True)))
+            >>> '588946476233721127'
+            >>>
+            >>> # Example using hashicorp vault secrets provider backend.
+            >>> sec = device.secrets_group.secrets.first()
+            >>> sec.rendered_parameters(obj=device)
+            >>> 
+            {'key': 'username',
+            'path': 'goldenconfig',
+            'kv_version': 'v2',
+            'mount_point': 'secret'}
+            >>> str(hash(json.dumps(sec.rendered_parameters(obj=device), sort_keys=True)))
+            >>> '-3888945057722956687'
+        """
+        # hash the rendered secrets params.
         secret_key_hash = str(hash(json.dumps(sec.rendered_parameters(obj=device), sort_keys=True)))
         if not self.creds_cache.get(secret_key_hash):
+            # If hashed value isn't in the cache, then call actual get_value to pull secret value itself and
+            # Update the cache property.
             self.creds_cache = {secret_key_hash: sec.get_value(obj=device)}
         return secret_key_hash
 
