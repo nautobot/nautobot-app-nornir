@@ -8,9 +8,11 @@ from nornir import InitNornir
 from nornir.core.plugins.inventory import InventoryPluginRegister
 from nautobot_plugin_nornir.constants import NORNIR_SETTINGS
 from nautobot_plugin_nornir.plugins.inventory.nautobot_orm import NautobotORMInventory
+from nautobot_plugin_nornir.plugins.inventory.nautobot_orm_lite import NautobotORMLiteInventory
+
 from nautobot_plugin_nornir.utilities.helpers import FormEntry, get_job_filter
 
-InventoryPluginRegister.register("nautobot-inventory", NautobotORMInventory)
+InventoryPluginRegister.register("nautobot-inventory", NautobotORMLiteInventory)
 
 
 class DebugInventoryJob(Job, FormEntry):
