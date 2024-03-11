@@ -77,7 +77,7 @@ class CredentialsNautobotSecrets(MixinNautobotORMCredentials):
             >>> # Example using hashicorp vault secrets provider backend.
             >>> sec = device.secrets_group.secrets.first()
             >>> sec.rendered_parameters(obj=device)
-            >>> 
+            >>>
             {'key': 'username',
             'path': 'goldenconfig',
             'kv_version': 'v2',
