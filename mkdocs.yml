@@ -120,6 +120,7 @@ nav:
       - Migrating To v2: "admin/migrating_to_v2.md"
       - Release Notes:
           - "admin/release_notes/index.md"
+          - v2.0: "admin/release_notes/version_2.0.md"
           - v1.0: "admin/release_notes/version_1.0.md"
           - v0.9: "admin/release_notes/version_0.9.md"
   - Developer Guide:
