@@ -10,6 +10,14 @@ This document describes all new features and changes in the release `2.0`. The f
 - Provided a mechanism to allow for Location Groupings to be configurable.
 
 
+## [v2.0.1] - 2024-03
+
+### Changed
+
+- [#120](https://github.com/nautobot/nautobot-plugin-nornir/issues/120) - Updated to use Cookiecutter from drift manager.
+- [#134](https://github.com/nautobot/nautobot-plugin-nornir/issues/134) - Changed to app vs plugin, first of many.
+- [#139](https://github.com/nautobot/nautobot-plugin-nornir/issues/139) - Changed mechanism to get secrets by caching them.
+
 ## [v2.0.0] - 2023-09
 
 ### Changed
