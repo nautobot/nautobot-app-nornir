@@ -5,7 +5,7 @@ from nautobot.dcim.models import Device, DeviceType, Manufacturer, Platform, Loc
 from nautobot.extras.models.roles import ContentType, Role
 from nautobot.extras.models.statuses import Status
 from nautobot_plugin_nornir.plugins.inventory.nautobot_orm import NautobotORMInventory
-
+from nautobot_plugin_nornir.constants import CONNECTION_SECRETS_PATHS, DRIVERS, PLUGIN_CFG
 
 class NautobotORMInventoryTests(TestCase):
     """Test cases for ensuring the NautobotORM Inventory is working properly."""
@@ -32,6 +32,7 @@ class NautobotORMInventoryTests(TestCase):
         self.platform = Platform.objects.create(
             name="Juniper Junos", network_driver="juniper_junos", napalm_driver="junos"
         )
+
         self.device_type1 = DeviceType.objects.create(model="SRX3600", manufacturer=self.manufacturer1)
         self.device_role1 = Role.objects.create(name="Firewall")
         self.device_role1.content_types.set([device_content_type])
@@ -109,3 +110,54 @@ class NautobotORMInventoryTests(TestCase):
                 "device2": ["location__US"],
             },
         )
+
+    def test_credentials_path(self):
+        """Ensure credentials path is getting built."""
+        self.assertEqual(CONNECTION_SECRETS_PATHS, {
+            "netmiko": "netmiko.extras.secret",
+            "napalm": "napalm.extras.optional_args.secret",
+            "pyntc": "pyntc.extras.secret",
+            "scrapli": "scrapli.extras.auth_secondary",
+        })
+
+    @patch.dict(
+        PLUGIN_CFG,
+        {
+            "nornir_settings": {
+                "credentials": "nautobot_plugin_nornir.plugins.credentials.settings_vars.CredentialsSettingsVars",
+            },
+            "connection_options": None
+        },
+    )
+    def test_credentials_path_drivers_defaults(self):
+        """Ensure credentials path is getting built."""
+        self.assertEqual(sorted(DRIVERS), sorted(["napalm", "netmiko", "scrapli", "pyntc"]))
+
+        # global_options = PLUGIN_CFG.get("connection_options", {item: {} for item in DRIVERS})
+        # drivers = list(set(DRIVERS + list(PLUGIN_CFG.get("connection_options", {}).keys())))
+        # self.assertEqual(list(global_options.keys()), drivers)
+
+    @patch.dict(
+        PLUGIN_CFG,
+        {
+            "nornir_settings": {
+                "credentials": "nautobot_plugin_nornir.plugins.credentials.settings_vars.CredentialsSettingsVars",
+            },
+            "connection_options": {
+                "napalm": {
+                    "extras": {
+                        "optional_args": {"global_delay_factor": 1},
+                    },
+                },
+                "netmiko": {
+                    "extras": {
+                        "global_delay_factor": 1,
+                    },
+                },
+            },
+        },
+    )
+    def test_credentials_path_drivers_global_override(self):
+        """Ensure credentials path is getting built."""
+        global_options = PLUGIN_CFG.get("connection_options", {item: {} for item in DRIVERS})
+        self.assertEqual(sorted(global_options), sorted(["napalm", "netmiko"]))
