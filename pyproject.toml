@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "nautobot-plugin-nornir"
-version = "1.0.1"
+version = "1.0.2"
 description = "Nautobot Nornir plugin."
 authors = ["Network to Code, LLC <info@networktocode.com>"]
 license = "Apache-2.0"
@@ -19,6 +19,7 @@ classifiers = [
     "Programming Language :: Python :: 3.8",
     "Programming Language :: Python :: 3.9",
     "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
 ]
 packages = [
     { include = "nautobot_plugin_nornir" },
@@ -67,7 +68,7 @@ nautobot = ["nautobot"]
 
 [tool.black]
 line-length = 120
-target-version = ['py38', 'py39', 'py310']
+target-version = ['py38', 'py39', 'py310', 'py311']
 include = '\.pyi?$'
 exclude = '''
 (
