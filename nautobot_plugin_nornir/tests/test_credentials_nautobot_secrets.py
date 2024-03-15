@@ -2,16 +2,20 @@
 import os
 from unittest import mock
 from django.test import TestCase
+from nornir import InitNornir
+from nornir.core.plugins.inventory import InventoryPluginRegister
 from nautobot.dcim.models import Device, DeviceType, Manufacturer, Platform, LocationType, Location
-from nautobot.extras.models.secrets import SecretsGroup, Secret, SecretsGroupAssociation, SecretsGroupAccessTypeChoices, SecretsGroupSecretTypeChoices
+from nautobot.extras.models.secrets import (
+    SecretsGroup,
+    Secret,
+    SecretsGroupAssociation,
+    SecretsGroupAccessTypeChoices,
+    SecretsGroupSecretTypeChoices,
+)
 from nautobot.extras.models.roles import ContentType, Role
 from nautobot.extras.models.statuses import Status
 from nautobot_plugin_nornir.plugins.inventory.nautobot_orm import NautobotORMInventory
 from nautobot_plugin_nornir.plugins.credentials.settings_vars import PLUGIN_CFG
-from nornir.core.plugins.inventory import InventoryPluginRegister
-
-
-from nornir import InitNornir
 
 InventoryPluginRegister.register("nautobot-inventory", NautobotORMInventory)
 
@@ -64,23 +68,21 @@ class SecretsGroupCredentialTests(TestCase):
 
         user_user = Secret.objects.create(
             name="Environment Vars User",
-            parameters={'variable': 'NET_{{ obj.role.name | upper }}_USERNAME'},
-            provider='environment-variable'
+            parameters={"variable": "NET_{{ obj.role.name | upper }}_USERNAME"},
+            provider="environment-variable",
         )
         password = Secret.objects.create(
             name="Environment Vars Password",
-            parameters={'variable': 'NET_{{ obj.role.name | upper  }}_PASSWORD'},
-            provider='environment-variable'
+            parameters={"variable": "NET_{{ obj.role.name | upper  }}_PASSWORD"},
+            provider="environment-variable",
         )
         secret = Secret.objects.create(
             name="Environment Vars Secret",
-            parameters={'variable': 'NET_{{ obj.role.name | upper  }}_SECRET'},
-            provider='environment-variable'
+            parameters={"variable": "NET_{{ obj.role.name | upper  }}_SECRET"},
+            provider="environment-variable",
         )
 
-        sec_group = SecretsGroup.objects.create(
-            name="Environment Vars SG"
-        )
+        sec_group = SecretsGroup.objects.create(name="Environment Vars SG")
         SecretsGroup.objects.create(name="Net Creds")
         SecretsGroupAssociation.objects.create(
             secret=user_user,
@@ -107,7 +109,7 @@ class SecretsGroupCredentialTests(TestCase):
             platform=self.platform,
             role=self.device_role1,
             status_id=active.id,
-            secrets_group=sec_group
+            secrets_group=sec_group,
         )
 
         Device.objects.create(
@@ -117,7 +119,7 @@ class SecretsGroupCredentialTests(TestCase):
             platform=self.platform,
             role=self.device_role2,
             status_id=active.id,
-            secrets_group=sec_group
+            secrets_group=sec_group,
         )
 
     def test_hosts_credentials(self):
@@ -148,9 +150,7 @@ class SecretsGroupCredentialTests(TestCase):
         # self.assertEqual(
         #     nr_obj.inventory.hosts["device1"]["connection_options"]["scrapli"]["extras"]["auth_secondary"], "credsenv-secret123"
         # )
-        self.assertEqual(
-            nr_obj.inventory.hosts["device1"]["connection_options"]["napalm"]["platform"], self.platform.napalm_driver
-        )
+        self.assertEqual(nr_obj.inventory.hosts["device1"]["connection_options"]["napalm"]["platform"], "junos")
         self.assertEqual(nr_obj.inventory.hosts["device2"].username, "sw-user")
         self.assertEqual(nr_obj.inventory.hosts["device2"].password, "sw-password123")
         self.assertEqual(
@@ -166,6 +166,4 @@ class SecretsGroupCredentialTests(TestCase):
         # self.assertEqual(
         #     nr_obj.inventory.hosts["device2"]["connection_options"]["scrapli"]["extras"]["auth_secondary"], "credsenv-secret123"
         # )
-        self.assertEqual(
-            nr_obj.inventory.hosts["device2"]["connection_options"]["napalm"]["platform"], self.platform.napalm_driver
-        )
+        self.assertEqual(nr_obj.inventory.hosts["device2"]["connection_options"]["napalm"]["platform"], "junos")
