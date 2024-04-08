@@ -41,7 +41,7 @@ Full web-based HTML documentation for this app can be found over on the [Nautobo
 - [Administrator Guide](https://docs.nautobot.com/projects/plugin-nornir/en/latest/admin/admin_install/) - How to Install, Configure, Upgrade, or Uninstall the App.
 - [Developer Guide](https://docs.nautobot.com/projects/plugin-nornir/en/latest/dev/dev_contributing/) - Extending the App, Code Reference, Contribution Guide.
 - [Release Notes / Changelog](https://docs.nautobot.com/projects/plugin-nornir/en/latest/admin/release_notes/).
-- [Frequently Asked Questions](https://docs.nautobot.com/projects/plugin-nornir/en/latest/user/app_faq/).
+- [Frequently Asked Questions](https://docs.nautobot.com/projects/plugin-nornir/en/latest/user/faq/).
 
 ### Contributing to the Docs
 
@@ -53,4 +53,4 @@ Any PRs with fixes or improvements are very welcome!
 
 ## Questions
 
-For any questions or comments, please check the [FAQ](https://docs.nautobot.com/projects/plugin-nornir/en/latest/user/app_faq/) first. Feel free to also swing by the [Network to Code Slack](https://networktocode.slack.com/) (channel `#nautobot`), sign up [here](http://slack.networktocode.com/) if you don't have an account.
+For any questions or comments, please check the [FAQ](https://docs.nautobot.com/projects/plugin-nornir/en/latest/user/faq/) first. Feel free to also swing by the [Network to Code Slack](https://networktocode.slack.com/) (channel `#nautobot`), sign up [here](http://slack.networktocode.com/) if you don't have an account.
