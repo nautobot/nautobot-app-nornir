@@ -129,10 +129,10 @@ class CredentialsNautobotSecrets(MixinNautobotORMCredentials):
             for sec in device.secrets_group.secrets.all():
                 secret_value = self.creds_cache.get(self._get_or_cache_secret_key(device, sec))
                 current_secret_type = getattr(
-                    SecretsGroupSecretTypeChoices, f"TYPE_{sec.secrets_group_associations.first().secret_type.upper()}"
+                    SecretsGroupSecretTypeChoices, f"TYPE_{sec.secretsgroupassociation_set.first().secret_type.upper()}"
                 )
                 current_access_type = getattr(
-                    SecretsGroupAccessTypeChoices, f"TYPE_{sec.secrets_group_associations.first().access_type.upper()}"
+                    SecretsGroupAccessTypeChoices, f"TYPE_{sec.secretsgroupassociation_set.first().access_type.upper()}"
                 )
                 configured_access_type = _get_access_type_value(device)
                 if (
