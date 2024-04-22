@@ -6,6 +6,13 @@
 - Add provider class for Nautobot Secrets Functionality
 
 
+## [v1.0.4] - 2024-04
+
+### Fixed
+
+- [#153](https://github.com/nautobot/nautobot-plugin-nornir/issues/153) - Fixed credential cache when using Nautobot secrets.
+
+
 ## [v1.0.3] - 2024-04
 
 ### Fixed
