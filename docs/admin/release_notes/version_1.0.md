@@ -5,6 +5,11 @@
 
 - Add provider class for Nautobot Secrets Functionality
 
+## [v1.0.5] - 2024-04
+
+### Fixed
+
+- [#155](https://github.com/nautobot/nautobot-plugin-nornir/issues/155) - Fixed secrets group access type overrides not working.
 
 ## [v1.0.4] - 2024-04
 
