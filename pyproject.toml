@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "nautobot-plugin-nornir"
-version = "1.0.4"
+version = "1.0.5"
 description = "Nautobot Nornir plugin."
 authors = ["Network to Code, LLC <info@networktocode.com>"]
 license = "Apache-2.0"
