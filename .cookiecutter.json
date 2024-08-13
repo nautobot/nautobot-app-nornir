@@ -8,7 +8,7 @@
         "verbose_name": "Nautobot Nornir Plugin",
         "app_slug": "nautobot-plugin-nornir",
         "project_slug": "nautobot-plugin-nornir",
-        "repo_url": "https://github.com/nautobot/nautobot-plugin-nornir",
+        "repo_url": "https://github.com/nautobot/nautobot-app-nornir",
         "base_url": "plugin-nornir",
         "min_nautobot_version": "2.0.0",
         "max_nautobot_version": "2.9999",
