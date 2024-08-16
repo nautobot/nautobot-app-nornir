@@ -85,6 +85,8 @@ PLUGINS_CONFIG = {
 }
 ```
 
+Once again, the wrong indentation will not work. This leads to errors one would not expect.
+
 _How can I set the TCP Port that is used in the connectivity check?_
 
 Nornir-Nautobot provides the ability to check the connectivity first via TCP, this port is set per OS driver and is generally port 22. Howeever, you can adjust this yourself, and is partially described in the [nornir-nautobot docs](https://docs.nautobot.com/projects/nornir-nautobot/en/latest/task/task/#check-connectivity-configuration).
