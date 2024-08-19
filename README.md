@@ -1,14 +1,14 @@
 # Nautobot Plugin Nornir
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/nautobot/nautobot-plugin-nornir/develop/docs/images/icon-NautobotPluginNornir.png" class="logo" height="200px">
+  <img src="https://raw.githubusercontent.com/nautobot/nautobot-app-nornir/develop/docs/images/icon-nautobot-plugin-nornir.png" class="logo" height="200px">
   <br>
-  <a href="https://github.com/nautobot/nautobot-plugin-nornir/actions"><img src="https://github.com/nautobot/nautobot-plugin-nornir/actions/workflows/ci.yml/badge.svg?branch=main"></a>
-  <a href="https://docs.nautobot.com/projects/plugin-nornir/en/latest"><img src="https://readthedocs.org/projects/nautobot-plugin-nornir/badge/"></a>
+  <a href="https://github.com/nautobot/nautobot-app-nornir/actions"><img src="https://github.com/nautobot/nautobot-app-nornir/actions/workflows/ci.yml/badge.svg?branch=main"></a>
+  <a href="https://docs.nautobot.com/projects/plugin-nornir/en/latest/"><img src="https://readthedocs.org/projects/nautobot-plugin-plugin-nornir/badge/"></a>
   <a href="https://pypi.org/project/nautobot-plugin-nornir/"><img src="https://img.shields.io/pypi/v/nautobot-plugin-nornir"></a>
   <a href="https://pypi.org/project/nautobot-plugin-nornir/"><img src="https://img.shields.io/pypi/dm/nautobot-plugin-nornir"></a>
   <br>
-  An App for <a href="https://github.com/nautobot/nautobot">Nautobot</a>.
+  An <a href="https://networktocode.com/nautobot-apps/">App</a> for <a href="https://nautobot.com/">Nautobot</a>.
 </p>
 
 ## Overview
@@ -25,7 +25,11 @@ That being said, there is currently little reason to install this plugin by itse
 
 As previously mentioned, the plugin is mostly a shim layer, here is an example of how Nautobot Golden Config uses a Nornir Job.
 
-![Backup Job](https://raw.githubusercontent.com/nautobot/nautobot-plugin-nornir/develop/docs/images/nornir-backup-job.png)
+> Developer Note: Place the files in the `docs/images/` folder and link them using only full URLs from GitHub, for example: `![Overview](https://raw.githubusercontent.com/nautobot/nautobot-app-nornir/develop/docs/images/app-overview.png)`. This absolute static linking is required to ensure the README renders properly in GitHub, the docs site, and any other external sites like PyPI.
+
+More screenshots can be found in the [Using the App](https://docs.nautobot.com/projects/plugin-nornir/en/latest/user/app_use_cases/) page in the documentation. Here's a quick overview of some of the app's added functionality:
+
+![](https://raw.githubusercontent.com/nautobot/nautobot-app-nornir/develop/docs/images/placeholder.png)
 
 ## Try it out!
 
@@ -45,7 +49,7 @@ Full web-based HTML documentation for this app can be found over on the [Nautobo
 
 ### Contributing to the Docs
 
-You can find all the Markdown source for the App documentation under the [docs](https://github.com/nautobot/nautobot-plugin-nornir/tree/develop/docs) folder in this repository. For simple edits, a Markdown capable editor is sufficient - clone the repository and edit away.
+You can find all the Markdown source for the App documentation under the [`docs`](https://github.com/nautobot/nautobot-app-nornir/tree/develop/docs) folder in this repository. For simple edits, a Markdown capable editor is sufficient: clone the repository and edit away.
 
 If you need to view the fully generated documentation site, you can build it with [mkdocs](https://www.mkdocs.org/). A container hosting the docs will be started using the invoke commands (details in the [Development Environment Guide](https://docs.nautobot.com/projects/plugin-nornir/en/latest/dev/dev_environment/#docker-development-environment)) on [http://localhost:8001](http://localhost:8001). As your changes are saved, the live docs will be automatically reloaded.
 

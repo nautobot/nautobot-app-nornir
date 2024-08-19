@@ -1,10 +1,10 @@
 ---
 dev_addr: "127.0.0.1:8001"
-edit_uri: "edit/main/nautobot-plugin-nornir/docs"
+edit_uri: "edit/main/nautobot-app-nornir/docs"
 site_dir: "nautobot_plugin_nornir/static/nautobot_plugin_nornir/docs"
 site_name: "Nautobot Nornir Plugin Documentation"
 site_url: "https://docs.nautobot.com/projects/plugin-nornir/en/latest/"
-repo_url: "https://github.com/nautobot/nautobot-plugin-nornir"
+repo_url: "https://github.com/nautobot/nautobot-app-nornir"
 copyright: "Copyright &copy; The Authors"
 theme:
   name: "material"
@@ -72,6 +72,8 @@ extra:
       link: "https://twitter.com/networktocode"
       name: "Network to Code Twitter"
 markdown_extensions:
+  - "markdown_version_annotations":
+      admonition_tag: "???"
   - "admonition"
   - "toc":
       permalink: true
@@ -81,11 +83,14 @@ markdown_extensions:
       anchor_linenums: true
   - "pymdownx.inlinehilite"
   - "pymdownx.snippets"
-  - "pymdownx.superfences"
+  - "pymdownx.superfences":
+      custom_fences:
+        - name: "mermaid"
+          class: "mermaid"
+          format: !!python/name:pymdownx.superfences.fence_code_format
   - "footnotes"
 plugins:
   - "search"
-  - "mkdocs-version-annotations"
   - "mkdocstrings":
       default_handler: "python"
       handlers:

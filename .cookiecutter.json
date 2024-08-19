@@ -7,7 +7,6 @@
         "app_name": "nautobot_plugin_nornir",
         "verbose_name": "Nautobot Nornir Plugin",
         "app_slug": "nautobot-plugin-nornir",
-        "_comment": "app_slug should match the folder structure, but project_slug should match the repo name.",
         "project_slug": "nautobot-app-nornir",
         "repo_url": "https://github.com/nautobot/nautobot-app-nornir",
         "base_url": "plugin-nornir",
@@ -22,7 +21,7 @@
         "_drift_manager": {
             "template": "https://github.com/nautobot/cookiecutter-nautobot-app.git",
             "template_dir": "nautobot-app",
-            "template_ref": "develop",
+            "template_ref": "nautobot-app-v2.3.0",
             "cookie_dir": "",
             "branch_prefix": "drift-manager",
             "pull_request_strategy": "create",
@@ -30,7 +29,7 @@
                 "black"
             ],
             "draft": true,
-            "baked_commit_ref": "7cd62373450b4459a5fa3397a2d27214f7217a9c"
+            "baked_commit_ref": "ea85a24b83f594fc5b27c38f8c39d4bb0b90bed2"
         }
     }
 }
