@@ -14,7 +14,7 @@ f"manufacturer__{device.device_type.manufacturer.name}",
 
 _Why is the plugin installed as nautobot_plugin_nornir and not nautobot_nornir?_
 
-There is already a repository called `nornir-nautbot` and in order to avoid the confusion of both a `nornir-nautobot` and `nautobot-nornir`, the word `plugin` was left in the name. While it is clear that this will still remain confusing, it was deemed the lesser of two evils.
+There is already a repository called `nornir-nautobot` and in order to avoid the confusion of both a `nornir-nautobot` and `nautobot-nornir`, the word `plugin` was left in the name. While it is clear that this will still remain confusing, it was deemed the lesser of two evils.
 
 _What is the difference between `nautobot_plugin_nornir` and `nornir_settings`? Why not just flatten?_
 
