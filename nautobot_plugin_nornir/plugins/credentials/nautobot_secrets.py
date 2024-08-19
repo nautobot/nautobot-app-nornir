@@ -20,10 +20,12 @@ creds_cache = {
     - "hashed key" is the rendred.parameter which is post template rendered secret key.
     - "value" is the literal secrets value.
 """
+
 # pylint: disable=attribute-defined-outside-init
 import json
 
 from nautobot.extras.choices import SecretsGroupAccessTypeChoices, SecretsGroupSecretTypeChoices
+
 from nautobot_plugin_nornir.constants import PLUGIN_CFG
 
 from .nautobot_orm import MixinNautobotORMCredentials

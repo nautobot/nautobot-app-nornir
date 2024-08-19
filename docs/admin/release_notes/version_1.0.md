@@ -3,9 +3,7 @@
 
 ## Release Overview
 
-- Major features or milestones
-- Achieved in this `x.y` release
-- Changes to compatibility with Nautobot and/or other apps, libraries etc.
+- Add provider class for Nautobot Secrets Functionality
 
 ## [v1.0.1] - 2023-08
 
@@ -26,7 +24,9 @@
 
 ### Fixed
 
-- [#123](https://github.com/nautobot/nautobot-app-nornir/issues/123) Fixed Tag filtering not working in job launch form
+- [#68](https://github.com/nautobot/nautobot-plugin-nornir/issues/68) - Merge dispatcher rather than overwrite.
+- [#91](https://github.com/nautobot/nautobot-plugin-nornir/issues/91) - Fix conn_options by using deepcopy to avoid pointers.
+- [#102](https://github.com/nautobot/nautobot-plugin-nornir/issues/102) - Fix jinja settings support for golden config plugin.
 
 ## [v1.0.0] - 2022-02
 

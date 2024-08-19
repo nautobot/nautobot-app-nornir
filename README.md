@@ -25,11 +25,7 @@ That being said, there is currently little reason to install this plugin by itse
 
 As previously mentioned, the plugin is mostly a shim layer, here is an example of how Nautobot Golden Config uses a Nornir Job.
 
-> Developer Note: Place the files in the `docs/images/` folder and link them using only full URLs from GitHub, for example: `![Overview](https://raw.githubusercontent.com/nautobot/nautobot-app-nornir/develop/docs/images/app-overview.png)`. This absolute static linking is required to ensure the README renders properly in GitHub, the docs site, and any other external sites like PyPI.
-
-More screenshots can be found in the [Using the App](https://docs.nautobot.com/projects/plugin-nornir/en/latest/user/app_use_cases/) page in the documentation. Here's a quick overview of some of the app's added functionality:
-
-![](https://raw.githubusercontent.com/nautobot/nautobot-app-nornir/develop/docs/images/placeholder.png)
+![Backup Job](https://raw.githubusercontent.com/nautobot/nautobot-plugin-nornir/develop/docs/images/nornir-backup-job.png)
 
 ## Try it out!
 

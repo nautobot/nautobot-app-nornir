@@ -28,7 +28,4 @@ That being said, there is currently little reason to install this plugin by itse
 
 ## Nautobot Features Used
 
-!!! warning "Developer Note - Remove Me!"
-    What is shown today in the Installed Apps page in Nautobot. What parts of Nautobot does it interact with, what does it add etc. ?
-
 ### Extras
