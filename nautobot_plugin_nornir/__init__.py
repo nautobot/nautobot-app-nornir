@@ -1,20 +1,21 @@
-"""Plugin declaration for nautobot_plugin_nornir."""
+"""App declaration for nautobot_plugin_nornir."""
+
 # Metadata is inherited from Nautobot. If not including Nautobot in the environment, this should be added
 from importlib import metadata
 
-__version__ = metadata.version(__name__)
+from nautobot.apps import NautobotAppConfig
 
-from nautobot.extras.plugins import NautobotAppConfig
+__version__ = metadata.version(__name__)
 
 
 class NautobotPluginNornirConfig(NautobotAppConfig):
-    """Plugin configuration for the nautobot_plugin_nornir plugin."""
+    """App configuration for the nautobot_plugin_nornir app."""
 
     name = "nautobot_plugin_nornir"
     verbose_name = "Nautobot Nornir Plugin"
     version = __version__
     author = "Network to Code, LLC"
-    description = "Nautobot Nornir Plugin."
+    description = "Nautobot App that provides a shim layer to simplify using Nornir within other Nautobot Apps and Nautobot Jobs."
     base_url = "plugin-nornir"
     required_settings = []
     min_version = "2.0.0"

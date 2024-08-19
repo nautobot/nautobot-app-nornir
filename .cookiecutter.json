@@ -1,19 +1,19 @@
 {
     "cookiecutter": {
-        "codeowner_github_usernames": "@smith-ntc",
+        "codeowner_github_usernames": "-* @itdependsnetworks\n-* @jeffkala",
         "full_name": "Network to Code, LLC",
         "email": "info@networktocode.com",
         "github_org": "nautobot",
-        "plugin_name": "nautobot_plugin_nornir",
+        "app_name": "nautobot_plugin_nornir",
         "verbose_name": "Nautobot Nornir Plugin",
-        "plugin_slug": "nautobot-plugin-nornir",
-        "project_slug": "nautobot-plugin-nornir",
-        "repo_url": "https://github.com/nautobot/nautobot-plugin-nornir",
+        "app_slug": "nautobot-plugin-nornir",
+        "project_slug": "nautobot-app-nornir",
+        "repo_url": "https://github.com/nautobot/nautobot-app-nornir",
         "base_url": "plugin-nornir",
         "min_nautobot_version": "2.0.0",
         "max_nautobot_version": "2.9999",
         "camel_name": "NautobotPluginNornir",
-        "project_short_description": "Nautobot Nornir Plugin",
+        "project_short_description": "Nautobot App that provides a shim layer to simplify using Nornir within other Nautobot Apps and Nautobot Jobs",
         "model_class_name": "None",
         "open_source_license": "Apache-2.0",
         "docs_base_url": "https://docs.nautobot.com",
@@ -21,10 +21,10 @@
         "_drift_manager": {
             "template": "https://github.com/nautobot/cookiecutter-nautobot-app.git",
             "template_dir": "nautobot-app",
-            "template_ref": "develop",
+            "template_ref": "nautobot-app-v2.3.0",
             "cookie_dir": "",
             "branch_prefix": "drift-manager",
-            "pull_request_strategy": "update-or-create",
+            "pull_request_strategy": "create",
             "post_actions": [
                 "black"
             ],
