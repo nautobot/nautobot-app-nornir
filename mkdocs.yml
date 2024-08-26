@@ -1,6 +1,6 @@
 ---
 dev_addr: "127.0.0.1:8001"
-edit_uri: "edit/main/nautobot-app-nornir/docs"
+edit_uri: "edit/main/docs"
 site_dir: "nautobot_plugin_nornir/static/nautobot_plugin_nornir/docs"
 site_name: "Nautobot Nornir Plugin Documentation"
 site_url: "https://docs.nautobot.com/projects/plugin-nornir/en/latest/"
