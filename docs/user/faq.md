@@ -89,7 +89,7 @@ Once again, the wrong indentation will not work. This leads to errors one would 
 
 _How can I set the TCP Port that is used in the connectivity check?_
 
-Nornir-Nautobot provides the ability to check the connectivity first via TCP, this port is set per OS driver and is generally port 22. Howeever, you can adjust this yourself, and is partially described in the [nornir-nautobot docs](https://docs.nautobot.com/projects/nornir-nautobot/en/latest/task/task/#check-connectivity-configuration).
+Nornir-Nautobot provides the ability to check the connectivity first via TCP, this port is set per OS driver and is generally port 22. However, you can adjust this yourself, and is partially described in the [nornir-nautobot docs](https://docs.nautobot.com/projects/nornir-nautobot/en/latest/task/task/#check-connectivity-configuration).
 
 The docs indicate that there is 3 choices for check connectivity will send attempt to tcp ping the port based on the following order or precedence from most to least preferred.
 
