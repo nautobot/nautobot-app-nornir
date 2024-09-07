@@ -2,7 +2,7 @@
 
 ## Prerequisites
 
-- The plugin is compatible with Nautobot 2.0.0 and higher.
+- The app is compatible with Nautobot 2.0.0 and higher.
 - Databases supported: PostgreSQL, MySQL
 
 !!! note
@@ -15,9 +15,9 @@ N/A
 ## Install Guide
 
 !!! note
-    Plugins can be installed manually or using Python's `pip`. See the [nautobot documentation](https://nautobot.readthedocs.io/en/latest/plugins/#install-the-package) for more details. The pip package name for this plugin is [`nautobot_plugin_nornir`](https://pypi.org/project/nautobot_plugin_nornir/).
+    Apps can be installed from the [Python Package Index](https://pypi.org/) or locally. See the [Nautobot documentation](https://docs.nautobot.com/projects/core/en/stable/user-guide/administration/installation/app-install/) for more details. The pip package name for this app is [`nautobot-plugin-nornir`](https://pypi.org/project/nautobot-plugin-nornir/).
 
-The plugin is available as a Python package via PyPI and can be installed with `pip`:
+The app is available as a Python package via PyPI and can be installed with `pip`:
 
 ```shell
 pip install nautobot-plugin-nornir
@@ -29,7 +29,7 @@ To ensure Nautobot Plugin Nornir is automatically re-installed during future upg
 # echo nautobot-plugin-nornir >> local_requirements.txt
 ```
 
-Once installed, the plugin needs to be enabled in your Nautobot configuration. The following block of code below shows the additional configuration required to be added to your `nautobot_config.py` file:
+Once installed, the app needs to be enabled in your Nautobot configuration. The following block of code below shows the additional configuration required to be added to your `nautobot_config.py` file:
 
 - Append `"nautobot_plugin_nornir"` to the `PLUGINS` list.
 - Append the `"nautobot_plugin_nornir"` dictionary to the `PLUGINS_CONFIG` dictionary and override any defaults.
@@ -69,7 +69,7 @@ PLUGINS_CONFIG = {
 
 ## App Configuration
 
-The plugin behavior can be controlled with the following list of settings. 
+The plugin behavior can be controlled with the following list of settings.
 
 | Key                    | Example | Default | Description |
 | ---------------------- | ------- | ------- | ----------- |

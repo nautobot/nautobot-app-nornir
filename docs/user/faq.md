@@ -14,7 +14,7 @@ f"manufacturer__{device.device_type.manufacturer.name}",
 
 _Why is the plugin installed as nautobot_plugin_nornir and not nautobot_nornir?_
 
-There is already a repository called `nornir-nautbot` and in order to avoid the confusion of both a `nornir-nautobot` and `nautobot-nornir`, the word `plugin` was left in the name. While it is clear that this will still remain confusing, it was deemed the lesser of two evils.
+There is already a repository called `nornir-nautobot` and in order to avoid the confusion of both a `nornir-nautobot` and `nautobot-nornir`, the word `plugin` was left in the name. While it is clear that this will still remain confusing, it was deemed the lesser of two evils.
 
 _What is the difference between `nautobot_plugin_nornir` and `nornir_settings`? Why not just flatten?_
 
@@ -86,3 +86,13 @@ PLUGINS_CONFIG = {
 ```
 
 Once again, the wrong indentation will not work. This leads to errors one would not expect.
+
+_How can I set the TCP Port that is used in the connectivity check?_
+
+Nornir-Nautobot provides the ability to check the connectivity first via TCP, this port is set per OS driver and is generally port 22. However, you can adjust this yourself, and is partially described in the [nornir-nautobot docs](https://docs.nautobot.com/projects/nornir-nautobot/en/latest/task/task/#check-connectivity-configuration).
+
+The docs indicate that there is 3 choices for check connectivity will send attempt to tcp ping the port based on the following order or precedence from most to least preferred.
+
+- If there is a [Custom Field](https://docs.nautobot.com/projects/core/en/stable/user-guide/feature-guides/custom-fields/) called `tcp_port` that is an integer, prefer that.
+- Next check if there is a [Config Context](https://docs.nautobot.com/projects/core/en/stable/user-guide/core-data-model/extras/configcontext/) key called `tcp_port` and if it is a valid integer, prefer that.
+- Finally, there is default for each driver, which is generally port 22 which it will be defaulted to.
