@@ -1,10 +1,12 @@
 """Credentials class for environment variables passwords."""
+
 import os
+
 from .nautobot_orm import MixinNautobotORMCredentials
 
-USERNAME_ENV_VAR_NAME = "NAPALM_USERNAME"  # nosec
-PASSWORD_ENV_VAR_NAME = "NAPALM_PASSWORD"  # nosec
-SECRET_ENV_VAR_NAME = "DEVICE_SECRET"  # nosec
+USERNAME_ENV_VAR_NAME = "NAPALM_USERNAME"  # noqa
+PASSWORD_ENV_VAR_NAME = "NAPALM_PASSWORD"  # noqa
+SECRET_ENV_VAR_NAME = "DEVICE_SECRET"  # noqa
 
 
 class CredentialsEnvVars(MixinNautobotORMCredentials):
