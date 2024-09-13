@@ -1,4 +1,5 @@
 """Unit Tests for NautobotORM Inventory with Environment Vars."""
+
 import os
 from unittest import mock
 from django.test import TestCase

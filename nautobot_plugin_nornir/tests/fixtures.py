@@ -1,4 +1,5 @@
 """Fixtures for reusable test code."""
+
 from nautobot.dcim.models import Device, DeviceType, Manufacturer, Platform, LocationType, Location
 from nautobot.extras.models.roles import ContentType, Role
 from nautobot.extras.models.statuses import Status

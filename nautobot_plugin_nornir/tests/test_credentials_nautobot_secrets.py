@@ -1,4 +1,5 @@
 """Unit Tests for NautobotORM Inventory with Nautobot Secrets Feature."""
+
 import os
 from unittest import mock
 from django.test import TestCase

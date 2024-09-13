@@ -1,4 +1,5 @@
 """Unit Tests for NautobotORM Inventory with Settings Vars."""
+
 from unittest import mock
 from django.test import TestCase
 from nornir import InitNornir
