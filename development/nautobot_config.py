@@ -136,7 +136,7 @@ PLUGINS_CONFIG = {
     "nautobot_plugin_nornir": {
         "allowed_location_types": [],
         "denied_location_types": [],
-        "use_config_context": {"use_config_context": {"secrets": False, "connection_options": True}},
+        "use_config_context": {"secrets": False, "connection_options": True},
         "connection_options": {
             "napalm": {
                 "extras": {
