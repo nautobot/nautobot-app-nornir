@@ -3,11 +3,11 @@
 from unittest.mock import patch
 
 from django.test import TestCase
-from nautobot.dcim.models import Device, DeviceType, Location, LocationType, Manufacturer, Platform
-from nautobot.extras.models.roles import ContentType, Role
-from nautobot.extras.models.statuses import Status
+from nautobot.dcim.models import Device
 
+from nautobot_plugin_nornir.constants import CONNECTION_SECRETS_PATHS, DRIVERS, PLUGIN_CFG
 from nautobot_plugin_nornir.plugins.inventory.nautobot_orm import NautobotORMInventory
+from nautobot_plugin_nornir.tests.fixtures import create_test_data
 
 
 class NautobotORMInventoryTests(TestCase):
@@ -15,49 +15,7 @@ class NautobotORMInventoryTests(TestCase):
 
     def setUp(self):
         """Create a superuser and token for API calls."""
-        device_content_type = ContentType.objects.get(model="device")
-        location_type_region = LocationType.objects.create(name="Region")
-        self.location_type = LocationType.objects.create(name="Site")
-        self.location_type.content_types.set([device_content_type])
-        active = Status.objects.get(name="Active")
-        location_us = Location.objects.create(
-            name="US",
-            location_type=location_type_region,
-            status_id=active.id,
-        )
-        self.location = Location.objects.create(
-            name="USWEST",
-            parent=location_us,
-            location_type_id=self.location_type.id,
-            status_id=active.id,
-        )
-        self.manufacturer1 = Manufacturer.objects.create(name="Juniper")
-        self.platform = Platform.objects.create(
-            name="Juniper Junos", network_driver="juniper_junos", napalm_driver="junos"
-        )
-        self.device_type1 = DeviceType.objects.create(model="SRX3600", manufacturer=self.manufacturer1)
-        self.device_role1 = Role.objects.create(name="Firewall")
-        self.device_role1.content_types.set([device_content_type])
-        self.device_role2 = Role.objects.create(name="Switch")
-        self.device_role2.content_types.set([device_content_type])
-
-        Device.objects.create(
-            name="device1",
-            location=self.location,
-            device_type=self.device_type1,
-            platform=self.platform,
-            role=self.device_role1,
-            status_id=active.id,
-        )
-
-        Device.objects.create(
-            name="device2",
-            location=self.location,
-            device_type=self.device_type1,
-            platform=self.platform,
-            role=self.device_role2,
-            status_id=active.id,
-        )
+        create_test_data()
 
     def test_init_default(self):
         """Ensure inventory is working properly with default settings."""
@@ -78,8 +36,8 @@ class NautobotORMInventoryTests(TestCase):
     def test_hosts_platform(self):
         """Ensure platform is assigned to hosts."""
         inv = NautobotORMInventory().load()
-        self.assertEqual(inv.hosts["device1"]["connection_options"]["napalm"]["platform"], self.platform.napalm_driver)
-        self.assertEqual(inv.hosts["device2"]["connection_options"]["napalm"]["platform"], self.platform.napalm_driver)
+        self.assertEqual(inv.hosts["device1"]["connection_options"]["napalm"]["platform"], "junos")
+        self.assertEqual(inv.hosts["device2"]["connection_options"]["napalm"]["platform"], "junos")
 
     def test_get_all_devices_to_parent_mapping(self):
         """Ensure the mapping of devices to parents is correct."""
@@ -112,3 +70,57 @@ class NautobotORMInventoryTests(TestCase):
                 "device2": ["location__US"],
             },
         )
+
+    def test_credentials_path(self):
+        """Ensure credentials path is getting built."""
+        self.assertEqual(
+            CONNECTION_SECRETS_PATHS,
+            {
+                "netmiko": "netmiko.extras.secret",
+                "napalm": "napalm.extras.optional_args.secret",
+                "pyntc": "pyntc.extras.secret",
+                "scrapli": "scrapli.extras.auth_secondary",
+            },
+        )
+
+    @patch.dict(
+        PLUGIN_CFG,
+        {
+            "nornir_settings": {
+                "credentials": "nautobot_plugin_nornir.plugins.credentials.settings_vars.CredentialsSettingsVars",
+            },
+            "connection_options": None,
+        },
+    )
+    def test_credentials_path_drivers_defaults(self):
+        """Ensure credentials path is getting built."""
+        self.assertEqual(sorted(DRIVERS), sorted(["napalm", "netmiko", "scrapli", "pyntc"]))
+
+        # global_options = PLUGIN_CFG.get("connection_options", {item: {} for item in DRIVERS})
+        # drivers = list(set(DRIVERS + list(PLUGIN_CFG.get("connection_options", {}).keys())))
+        # self.assertEqual(list(global_options.keys()), drivers)
+
+    @patch.dict(
+        PLUGIN_CFG,
+        {
+            "nornir_settings": {
+                "credentials": "nautobot_plugin_nornir.plugins.credentials.settings_vars.CredentialsSettingsVars",
+            },
+            "connection_options": {
+                "napalm": {
+                    "extras": {
+                        "optional_args": {"global_delay_factor": 1},
+                    },
+                },
+                "netmiko": {
+                    "extras": {
+                        "global_delay_factor": 1,
+                    },
+                },
+            },
+        },
+    )
+    def test_credentials_path_drivers_global_override(self):
+        """Ensure credentials path is getting built."""
+        global_options = PLUGIN_CFG.get("connection_options", {item: {} for item in DRIVERS})
+        self.assertEqual(sorted(global_options), sorted(["napalm", "netmiko"]))
