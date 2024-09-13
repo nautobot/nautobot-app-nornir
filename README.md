@@ -1,14 +1,14 @@
 # Nautobot Plugin Nornir
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/nautobot/nautobot-plugin-nornir/develop/docs/images/icon-NautobotPluginNornir.png" class="logo" height="200px">
+  <img src="https://raw.githubusercontent.com/nautobot/nautobot-app-nornir/develop/docs/images/icon-nautobot-plugin-nornir.png" class="logo" height="200px">
   <br>
-  <a href="https://github.com/nautobot/nautobot-plugin-nornir/actions"><img src="https://github.com/nautobot/nautobot-plugin-nornir/actions/workflows/ci.yml/badge.svg?branch=main"></a>
-  <a href="https://docs.nautobot.com/projects/plugin-nornir/en/latest"><img src="https://readthedocs.org/projects/nautobot-plugin-nornir/badge/"></a>
+  <a href="https://github.com/nautobot/nautobot-app-nornir/actions"><img src="https://github.com/nautobot/nautobot-app-nornir/actions/workflows/ci.yml/badge.svg?branch=main"></a>
+  <a href="https://docs.nautobot.com/projects/plugin-nornir/en/latest/"><img src="https://readthedocs.org/projects/nautobot-plugin-plugin-nornir/badge/"></a>
   <a href="https://pypi.org/project/nautobot-plugin-nornir/"><img src="https://img.shields.io/pypi/v/nautobot-plugin-nornir"></a>
   <a href="https://pypi.org/project/nautobot-plugin-nornir/"><img src="https://img.shields.io/pypi/dm/nautobot-plugin-nornir"></a>
   <br>
-  An App for <a href="https://github.com/nautobot/nautobot">Nautobot</a>.
+  An <a href="https://networktocode.com/nautobot-apps/">App</a> for <a href="https://nautobot.com/">Nautobot</a>.
 </p>
 
 ## Overview
@@ -41,11 +41,11 @@ Full web-based HTML documentation for this app can be found over on the [Nautobo
 - [Administrator Guide](https://docs.nautobot.com/projects/plugin-nornir/en/latest/admin/admin_install/) - How to Install, Configure, Upgrade, or Uninstall the App.
 - [Developer Guide](https://docs.nautobot.com/projects/plugin-nornir/en/latest/dev/dev_contributing/) - Extending the App, Code Reference, Contribution Guide.
 - [Release Notes / Changelog](https://docs.nautobot.com/projects/plugin-nornir/en/latest/admin/release_notes/).
-- [Frequently Asked Questions](https://docs.nautobot.com/projects/plugin-nornir/en/latest/user/app_faq/).
+- [Frequently Asked Questions](https://docs.nautobot.com/projects/plugin-nornir/en/latest/user/faq/).
 
 ### Contributing to the Docs
 
-You can find all the Markdown source for the App documentation under the [docs](https://github.com/nautobot/nautobot-plugin-nornir/tree/develop/docs) folder in this repository. For simple edits, a Markdown capable editor is sufficient - clone the repository and edit away.
+You can find all the Markdown source for the App documentation under the [`docs`](https://github.com/nautobot/nautobot-app-nornir/tree/develop/docs) folder in this repository. For simple edits, a Markdown capable editor is sufficient: clone the repository and edit away.
 
 If you need to view the fully generated documentation site, you can build it with [mkdocs](https://www.mkdocs.org/). A container hosting the docs will be started using the invoke commands (details in the [Development Environment Guide](https://docs.nautobot.com/projects/plugin-nornir/en/latest/dev/dev_environment/#docker-development-environment)) on [http://localhost:8001](http://localhost:8001). As your changes are saved, the live docs will be automatically reloaded.
 
@@ -53,4 +53,4 @@ Any PRs with fixes or improvements are very welcome!
 
 ## Questions
 
-For any questions or comments, please check the [FAQ](https://docs.nautobot.com/projects/plugin-nornir/en/latest/user/app_faq/) first. Feel free to also swing by the [Network to Code Slack](https://networktocode.slack.com/) (channel `#nautobot`), sign up [here](http://slack.networktocode.com/) if you don't have an account.
+For any questions or comments, please check the [FAQ](https://docs.nautobot.com/projects/plugin-nornir/en/latest/user/faq/) first. Feel free to also swing by the [Network to Code Slack](https://networktocode.slack.com/) (channel `#nautobot`), sign up [here](http://slack.networktocode.com/) if you don't have an account.

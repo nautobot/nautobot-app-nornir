@@ -1,4 +1,5 @@
 """Credentials class for setting credentials."""
+
 # pylint: disable=duplicate-code
 from nautobot_plugin_nornir.constants import PLUGIN_CFG
 from nautobot_plugin_nornir.plugins.credentials.nautobot_orm import MixinNautobotORMCredentials

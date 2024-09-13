@@ -1,13 +1,13 @@
 """Inventory Plugin for Nornir designed to work with Nautobot ORM."""
 # pylint: disable=unsupported-assignment-operation,unsubscriptable-object,no-member,duplicate-code
 
-from typing import Any, Dict, Generator, List, Tuple
 from copy import deepcopy
+from typing import Any, Dict, Generator, List, Tuple
 from uuid import UUID
 
 from django.db.models import QuerySet
 from django.utils.module_loading import import_string
-
+from nautobot.dcim.models import Device, Location
 from nornir.core.inventory import (
     ConnectionOptions,
     Defaults,
@@ -19,8 +19,6 @@ from nornir.core.inventory import (
     ParentGroups,
 )
 from nornir_nautobot.exceptions import NornirNautobotException
-
-from nautobot.dcim.models import Device, Location
 
 from nautobot_plugin_nornir.constants import (
     ALLOWED_LOCATION_TYPES,

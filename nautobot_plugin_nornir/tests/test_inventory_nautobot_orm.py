@@ -1,7 +1,10 @@
 """Unit Tests for NautobotORM Inventory."""
+
 from unittest.mock import patch
+
 from django.test import TestCase
 from nautobot.dcim.models import Device
+
 from nautobot_plugin_nornir.plugins.inventory.nautobot_orm import NautobotORMInventory
 from nautobot_plugin_nornir.constants import CONNECTION_SECRETS_PATHS, DRIVERS, PLUGIN_CFG
 from nautobot_plugin_nornir.tests.fixtures import create_test_data
