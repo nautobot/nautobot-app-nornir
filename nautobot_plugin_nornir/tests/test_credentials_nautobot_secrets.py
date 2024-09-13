@@ -2,21 +2,22 @@
 
 import os
 from unittest import mock
+
 from django.test import TestCase
-from nornir import InitNornir
-from nornir.core.plugins.inventory import InventoryPluginRegister
-from nautobot.dcim.models import Device, DeviceType, Manufacturer, Platform, LocationType, Location
+from nautobot.dcim.models import Device
 from nautobot.extras.models.secrets import (
-    SecretsGroup,
     Secret,
-    SecretsGroupAssociation,
+    SecretsGroup,
     SecretsGroupAccessTypeChoices,
+    SecretsGroupAssociation,
     SecretsGroupSecretTypeChoices,
 )
-from nautobot.extras.models.roles import ContentType, Role
-from nautobot.extras.models.statuses import Status
-from nautobot_plugin_nornir.plugins.inventory.nautobot_orm import NautobotORMInventory
+from nornir import InitNornir
+from nornir.core.plugins.inventory import InventoryPluginRegister
+
 from nautobot_plugin_nornir.plugins.credentials.settings_vars import PLUGIN_CFG
+from nautobot_plugin_nornir.plugins.inventory.nautobot_orm import NautobotORMInventory
+from nautobot_plugin_nornir.tests.fixtures import create_test_data
 
 InventoryPluginRegister.register("nautobot-inventory", NautobotORMInventory)
 
@@ -40,32 +41,7 @@ class SecretsGroupCredentialTests(TestCase):
 
     def setUp(self):
         """Create a superuser and token for API calls."""
-        device_content_type = ContentType.objects.get(model="device")
-        location_type_region = LocationType.objects.create(name="Region")
-        self.location_type = LocationType.objects.create(name="Site")
-        self.location_type.content_types.set([device_content_type])
-        active = Status.objects.get(name="Active")
-        location_us = Location.objects.create(
-            name="US",
-            location_type=location_type_region,
-            status_id=active.id,
-        )
-        self.location = Location.objects.create(
-            name="USWEST",
-            parent=location_us,
-            location_type_id=self.location_type.id,
-            status_id=active.id,
-        )
-        self.manufacturer1 = Manufacturer.objects.create(name="Juniper")
-        self.platform = Platform.objects.create(
-            name="Juniper Junos", network_driver="juniper_junos", napalm_driver="junos"
-        )
-
-        self.device_type1 = DeviceType.objects.create(model="SRX3600", manufacturer=self.manufacturer1)
-        self.device_role1 = Role.objects.create(name="Firewall")
-        self.device_role1.content_types.set([device_content_type])
-        self.device_role2 = Role.objects.create(name="Switch")
-        self.device_role2.content_types.set([device_content_type])
+        create_test_data()
 
         user_user = Secret.objects.create(
             name="Environment Vars User",
@@ -103,28 +79,18 @@ class SecretsGroupCredentialTests(TestCase):
             access_type=SecretsGroupAccessTypeChoices.TYPE_GENERIC,
             secret_type=SecretsGroupSecretTypeChoices.TYPE_SECRET,
         )
-        Device.objects.create(
-            name="device1",
-            location=self.location,
-            device_type=self.device_type1,
-            platform=self.platform,
-            role=self.device_role1,
-            status_id=active.id,
-            secrets_group=sec_group,
-        )
+        dev1 = Device.objects.get(name="device1")
+        dev1.secrets_group = sec_group
+        dev1.save()
 
-        Device.objects.create(
-            name="device2",
-            location=self.location,
-            device_type=self.device_type1,
-            platform=self.platform,
-            role=self.device_role2,
-            status_id=active.id,
-            secrets_group=sec_group,
-        )
+        dev2 = Device.objects.get(name="device2")
+        dev2.secrets_group = sec_group
+        dev2.save()
+
 
     def test_hosts_credentials(self):
         """Ensure credentials is assigned to hosts."""
+        # pylint: disable=duplicate-code
         qs = Device.objects.all()
         nr_obj = InitNornir(
             inventory={

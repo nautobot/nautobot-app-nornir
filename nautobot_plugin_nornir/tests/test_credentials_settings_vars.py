@@ -1,12 +1,14 @@
 """Unit Tests for NautobotORM Inventory with Settings Vars."""
 
 from unittest import mock
+
 from django.test import TestCase
+from nautobot.dcim.models import Device
 from nornir import InitNornir
 from nornir.core.plugins.inventory import InventoryPluginRegister
-from nautobot.dcim.models import Device
-from nautobot_plugin_nornir.plugins.inventory.nautobot_orm import NautobotORMInventory
+
 from nautobot_plugin_nornir.plugins.credentials.settings_vars import PLUGIN_CFG
+from nautobot_plugin_nornir.plugins.inventory.nautobot_orm import NautobotORMInventory
 from nautobot_plugin_nornir.tests.fixtures import create_test_data
 
 InventoryPluginRegister.register("nautobot-inventory", NautobotORMInventory)
@@ -32,6 +34,7 @@ class SettingsVarCredentialTests(TestCase):
 
     def test_hosts_credentials(self):
         """Ensure credentials is assigned to hosts."""
+        # pylint: disable=duplicate-code
         qs = Device.objects.all()
         nr_obj = InitNornir(
             inventory={
