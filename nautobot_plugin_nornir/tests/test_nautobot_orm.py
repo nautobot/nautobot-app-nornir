@@ -1,9 +1,12 @@
 """Unit Tests for NautobotORM Inventory."""
+
 from unittest.mock import patch
+
 from django.test import TestCase
-from nautobot.dcim.models import Device, DeviceType, Manufacturer, Platform, LocationType, Location
+from nautobot.dcim.models import Device, DeviceType, Location, LocationType, Manufacturer, Platform
 from nautobot.extras.models.roles import ContentType, Role
 from nautobot.extras.models.statuses import Status
+
 from nautobot_plugin_nornir.plugins.inventory.nautobot_orm import NautobotORMInventory
 
 

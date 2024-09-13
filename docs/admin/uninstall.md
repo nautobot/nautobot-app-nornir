@@ -13,3 +13,13 @@ $ pip3 uninstall nautobot-plugin-nornir
 ## Database Cleanup
 
 Not applicable, as the plugin does not have any models.
+
+## Remove App configuration
+
+Remove the configuration you added in `nautobot_config.py` from `PLUGINS` & `PLUGINS_CONFIG`.
+
+## Uninstall the package
+
+```bash
+$ pip3 uninstall nautobot-plugin-nornir
+```
