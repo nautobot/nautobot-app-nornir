@@ -22,6 +22,7 @@ class NautobotPluginNornirConfig(NautobotAppConfig):
     max_version = "2.9999"
     default_settings = {}
     caching_config = {}
+    docs_view_name = "plugins:nautobot_plugin_nornir:docs"
 
 
 config = NautobotPluginNornirConfig  # pylint:disable=invalid-name
