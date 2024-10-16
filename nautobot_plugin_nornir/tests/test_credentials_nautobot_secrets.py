@@ -87,7 +87,6 @@ class SecretsGroupCredentialTests(TestCase):
         dev2.secrets_group = sec_group
         dev2.save()
 
-
     def test_hosts_credentials(self):
         """Ensure credentials is assigned to hosts."""
         # pylint: disable=duplicate-code
