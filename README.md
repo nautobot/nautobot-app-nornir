@@ -38,8 +38,8 @@ This App is installed in the Nautobot Community Sandbox found over at [demo.naut
 Full web-based HTML documentation for this app can be found over on the [Nautobot Docs](https://docs.nautobot.com/projects/plugin-nornir/en/latest/) website:
 
 - [User Guide](https://docs.nautobot.com/projects/plugin-nornir/en/latest/user/app_overview/) - Overview, Using the App, Getting Started.
-- [Administrator Guide](https://docs.nautobot.com/projects/plugin-nornir/en/latest/admin/admin_install/) - How to Install, Configure, Upgrade, or Uninstall the App.
-- [Developer Guide](https://docs.nautobot.com/projects/plugin-nornir/en/latest/dev/dev_contributing/) - Extending the App, Code Reference, Contribution Guide.
+- [Administrator Guide](https://docs.nautobot.com/projects/plugin-nornir/en/latest/admin/install/) - How to Install, Configure, Upgrade, or Uninstall the App.
+- [Developer Guide](https://docs.nautobot.com/projects/plugin-nornir/en/latest/dev/contributing/) - Extending the App, Code Reference, Contribution Guide.
 - [Release Notes / Changelog](https://docs.nautobot.com/projects/plugin-nornir/en/latest/admin/release_notes/).
 - [Frequently Asked Questions](https://docs.nautobot.com/projects/plugin-nornir/en/latest/user/faq/).
 
