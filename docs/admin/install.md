@@ -94,4 +94,4 @@ The plugin behavior can be extended further with [config context](https://nautob
 | connection_secret_path | Dotted expression of the dictionary path where a device secret should be stored for a given Nornir Plugin. |
 | secret_access_type     | Type of Secret Access Type to use. Examples. "GENERIC", "CONSOLE", "GNMI", "HTTP", "NETCONF", "REST", "RESTCONF", "SNMP", "SSH"|
 
-For details on the [credentials](../../user/app_feature_credentials), and [inventory](../../user/app_feature_inventory) please see their respective documentation.
+For details on the [credentials](../user/app_feature_credentials.md), and [inventory](../user/app_feature_inventory.md) please see their respective documentation.

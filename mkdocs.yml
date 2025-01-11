@@ -132,6 +132,7 @@ nav:
       - Extending the App: "dev/extending.md"
       - Contributing to the App: "dev/contributing.md"
       - Development Environment: "dev/dev_environment.md"
+      - Release Checklist: "dev/release_checklist.md"
       - Code Reference:
           - "dev/code_reference/index.md"
           - Package: "dev/code_reference/package.md"
