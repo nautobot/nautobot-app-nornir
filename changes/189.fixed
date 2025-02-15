@@ -1,0 +1,3 @@
+Drop Python3.8 support.
+Bump nornir-nautobot to newest version.
+Update CI testing to remove Python3.8 from testing.
