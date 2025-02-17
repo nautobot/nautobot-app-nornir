@@ -42,6 +42,8 @@ def _get_access_type_value(device_obj):
     """
     if PLUGIN_CFG.get("use_config_context", {}).get("secrets"):
         access_type_str = device_obj.get_config_context()["nautobot_plugin_nornir"]["secret_access_type"].upper()
+        if access_type_str in ["HTTP(S)", "HTTP"]:
+            access_type_str = "HTTP"
         access_type = getattr(SecretsGroupAccessTypeChoices, f"TYPE_{access_type_str}")
     else:
         access_type = SecretsGroupAccessTypeChoices.TYPE_GENERIC
