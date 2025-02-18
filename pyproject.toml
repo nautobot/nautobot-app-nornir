@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "nautobot-plugin-nornir"
-version = "2.1.0"
+version = "2.2.0"
 description = "Nautobot App that provides a shim layer to simplify using Nornir within other Nautobot Apps and Nautobot Jobs"
 authors = ["Network to Code, LLC <info@networktocode.com>"]
 license = "Apache-2.0"
@@ -34,7 +34,7 @@ include = [
 python = ">=3.9,<3.13"
 # Used for local development
 nautobot = "^2.0.0"
-nornir-nautobot = "^3.0.0"
+nornir-nautobot = "^3.3.0"
 netutils = ">=1.6.0"
 
 [tool.poetry.group.dev.dependencies]
