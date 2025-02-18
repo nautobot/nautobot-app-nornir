@@ -47,7 +47,7 @@ The branching policy includes the following tenets:
 - PRs intended to add new features should be sourced from the `develop` branch.
 - PRs intended to fix issues in the Nautobot LTM compatible release should be sourced from the latest `ltm-<major.minor>` branch instead of `develop`.
 
-Nautobot Nornir Plugin will observe semantic versioning, as of 1.0. This may result in a quick turnaround in minor versions to keep pace with an ever-growing feature set.
+Nautobot Plugin Nornir will observe semantic versioning, as of 1.0. This may result in a quick turnaround in minor versions to keep pace with an ever-growing feature set.
 
 ### Backporting to Older Releases
 
@@ -57,6 +57,6 @@ We will create a `release-X.Y` branch for you to open your PR against and cut a 
 
 ## Release Policy
 
-Nautobot Nornir Plugin has currently no intended scheduled release schedule, and will release new features in minor versions.
+Nautobot Plugin Nornir has currently no intended scheduled release schedule, and will release new features in minor versions.
 
 The steps taken by maintainers when creating a new release are documented in the [release checklist](./release_checklist.md).
