@@ -1,10 +1,10 @@
 # Nautobot Plugin Nornir
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/nautobot/nautobot-app-nornir/develop/docs/images/icon-nautobot-plugin-nornir.png" class="logo" height="200px">
+  <img src="https://raw.githubusercontent.com/nautobot/nautobot-app-nornir/develop/docs/images/icon-NautobotPluginNornir.png" class="logo" height="200px">
   <br>
   <a href="https://github.com/nautobot/nautobot-app-nornir/actions"><img src="https://github.com/nautobot/nautobot-app-nornir/actions/workflows/ci.yml/badge.svg?branch=main"></a>
-  <a href="https://docs.nautobot.com/projects/plugin-nornir/en/latest/"><img src="https://readthedocs.org/projects/nautobot-plugin-plugin-nornir/badge/"></a>
+  <a href="https://docs.nautobot.com/projects/plugin-nornir/en/latest/"><img src="https://readthedocs.org/projects/nautobot-plugin-nornir/badge/"></a>
   <a href="https://pypi.org/project/nautobot-plugin-nornir/"><img src="https://img.shields.io/pypi/v/nautobot-plugin-nornir"></a>
   <a href="https://pypi.org/project/nautobot-plugin-nornir/"><img src="https://img.shields.io/pypi/dm/nautobot-plugin-nornir"></a>
   <br>
@@ -38,8 +38,8 @@ This App is installed in the Nautobot Community Sandbox found over at [demo.naut
 Full web-based HTML documentation for this app can be found over on the [Nautobot Docs](https://docs.nautobot.com/projects/plugin-nornir/en/latest/) website:
 
 - [User Guide](https://docs.nautobot.com/projects/plugin-nornir/en/latest/user/app_overview/) - Overview, Using the App, Getting Started.
-- [Administrator Guide](https://docs.nautobot.com/projects/plugin-nornir/en/latest/admin/admin_install/) - How to Install, Configure, Upgrade, or Uninstall the App.
-- [Developer Guide](https://docs.nautobot.com/projects/plugin-nornir/en/latest/dev/dev_contributing/) - Extending the App, Code Reference, Contribution Guide.
+- [Administrator Guide](https://docs.nautobot.com/projects/plugin-nornir/en/latest/admin/install/) - How to Install, Configure, Upgrade, or Uninstall the App.
+- [Developer Guide](https://docs.nautobot.com/projects/plugin-nornir/en/latest/dev/contributing/) - Extending the App, Code Reference, Contribution Guide.
 - [Release Notes / Changelog](https://docs.nautobot.com/projects/plugin-nornir/en/latest/admin/release_notes/).
 - [Frequently Asked Questions](https://docs.nautobot.com/projects/plugin-nornir/en/latest/user/faq/).
 

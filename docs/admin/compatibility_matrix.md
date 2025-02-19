@@ -10,3 +10,4 @@ While that last supported version will not be strictly enforced--via the max_ver
 | 1.0.X                          | 1.2.0                          | 1.3.99                        |
 | 2.0.X                          | 2.0.0                          | 2.99.99                       |
 | 2.1.X                          | 2.0.0                          | 2.99.99                       |
+| 2.2.X                          | 2.2.0                          | 2.99.99                       |
