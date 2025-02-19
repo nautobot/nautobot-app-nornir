@@ -1,1 +1,0 @@
-Augment SecretAccessType to support both HTTP(S) with HTTP in _get_secret_value
