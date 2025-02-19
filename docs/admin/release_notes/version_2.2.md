@@ -10,6 +10,12 @@ Versioning](https://semver.org/spec/v2.0.0.html).
 - Major features or milestones
 - Changes to compatibility with Nautobot and/or other apps, libraries etc.
 
+## [v2.2.1 (2025-02-19)](https://github.com/nautobot/nautobot-app-nornir/releases/tag/v2.2.1)
+
+### Housekeeping
+
+- [#194](https://github.com/nautobot/nautobot-app-nornir/issues/194) - Resolve issue with release 2.2.0 referencing outdated code.
+
 ## [v2.2.0 (2025-02-18)](https://github.com/nautobot/nautobot-app-nornir/releases/tag/v2.2.0)
 
 ### Added
