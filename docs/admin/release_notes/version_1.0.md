@@ -28,7 +28,7 @@
 
 ### Fixed
 
-- [#143](https://github.com/nautobot/nautobot-plugin-nornir/issues/143) - Deprecate Python 3.7 ass Python 3.11.
+- [#143](https://github.com/nautobot/nautobot-plugin-nornir/issues/143) - Deprecate Python 3.7 add Python 3.11.
 
 ## [v1.0.1] - 2023-08
 
