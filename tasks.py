@@ -90,7 +90,7 @@ def docker_compose(context, command, **kwargs):
         "PYTHON_VER": context.nautobot_plugin_nornir.python_ver,
     }
     compose_command_tokens = [
-        "docker-compose",
+        "docker compose",
         f"--project-name {context.nautobot_plugin_nornir.project_name}",
         f'--project-directory "{context.nautobot_plugin_nornir.compose_dir}"',
     ]
