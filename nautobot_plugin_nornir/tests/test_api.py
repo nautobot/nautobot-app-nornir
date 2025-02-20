@@ -1,4 +1,5 @@
 """Unit tests for nautobot_plugin_nornir."""
+
 import unittest
 import os
 import toml

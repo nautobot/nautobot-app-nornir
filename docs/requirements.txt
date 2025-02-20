@@ -3,3 +3,5 @@ mkdocs-material==9.2.4
 mkdocs-version-annotations==1.0.0
 mkdocstrings==0.22.0
 mkdocstrings-python==1.5.2
+mkdocs-autorefs==1.2.0
+griffe==0.35.0

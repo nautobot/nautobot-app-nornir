@@ -312,3 +312,6 @@ invoke.yml
 docs/README.md
 docs/CHANGELOG.md
 public
+/compose.yaml
+/dump.sql
+/nautobot_plugin_nornir/static/nautobot_plugin_nornir/docs

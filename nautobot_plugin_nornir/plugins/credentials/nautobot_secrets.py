@@ -20,6 +20,7 @@ creds_cache = {
     - "hashed key" is the rendred.parameter which is post template rendered secret key.
     - "value" is the literal secrets value.
 """
+
 # pylint: disable=attribute-defined-outside-init
 import json
 

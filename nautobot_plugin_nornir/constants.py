@@ -1,4 +1,5 @@
 """Constants for plugin."""
+
 from django.conf import settings
 from nornir_nautobot.plugins.tasks.dispatcher import _DEFAULT_DRIVERS_MAPPING
 

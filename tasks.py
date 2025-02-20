@@ -38,7 +38,7 @@ namespace = Collection("nautobot_plugin_nornir")
 namespace.configure(
     {
         "nautobot_plugin_nornir": {
-            "nautobot_ver": "1.6.1",
+            "nautobot_ver": "1.6.30",
             "project_name": "nautobot_plugin_nornir",
             "python_ver": "3.8",
             "local": False,
@@ -75,22 +75,22 @@ def task(function=None, *args, **kwargs):
 
 
 def docker_compose(context, command, **kwargs):
-    """Helper function for running a specific docker-compose command with all appropriate parameters and environment.
+    """Helper function for running a specific docker compose command with all appropriate parameters and environment.
 
     Args:
         context (obj): Used to run specific commands
-        command (str): Command string to append to the "docker-compose ..." command, such as "build", "up", etc.
+        command (str): Command string to append to the "docker compose ..." command, such as "build", "up", etc.
         **kwargs: Passed through to the context.run() call.
     """
     build_env = {
-        # Note: 'docker-compose logs' will stop following after 60 seconds by default,
+        # Note: 'docker compose logs' will stop following after 60 seconds by default,
         # so we are overriding that by setting this environment variable.
         "COMPOSE_HTTP_TIMEOUT": context.nautobot_plugin_nornir.compose_http_timeout,
         "NAUTOBOT_VER": context.nautobot_plugin_nornir.nautobot_ver,
         "PYTHON_VER": context.nautobot_plugin_nornir.python_ver,
     }
     compose_command_tokens = [
-        "docker-compose",
+        "docker compose",
         f"--project-name {context.nautobot_plugin_nornir.project_name}",
         f'--project-directory "{context.nautobot_plugin_nornir.compose_dir}"',
     ]
@@ -106,7 +106,7 @@ def docker_compose(context, command, **kwargs):
     if service is not None:
         compose_command_tokens.append(service)
 
-    print(f'Running docker-compose command "{command}"')
+    print(f'Running docker compose command "{command}"')
     compose_command = " ".join(compose_command_tokens)
 
     return context.run(compose_command, env=build_env, **kwargs)
@@ -205,13 +205,13 @@ def vscode(context):
 
 @task(
     help={
-        "service": "Docker-compose service name to view (default: nautobot)",
+        "service": "Docker compose service name to view (default: nautobot)",
         "follow": "Follow logs",
         "tail": "Tail N number of lines or 'all'",
     }
 )
 def logs(context, service="nautobot", follow=False, tail=None):
-    """View the logs of a docker-compose service."""
+    """View the logs of a docker compose service."""
     command = "logs "
 
     if follow:

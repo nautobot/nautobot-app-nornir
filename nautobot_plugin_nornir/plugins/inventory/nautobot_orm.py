@@ -1,4 +1,5 @@
 """Inventory Plugin for Nornir designed to work with Nautobot ORM."""
+
 # pylint: disable=unsupported-assignment-operation,unsubscriptable-object,no-member,duplicate-code
 
 from typing import Any, Dict

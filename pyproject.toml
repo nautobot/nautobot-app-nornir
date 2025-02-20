@@ -62,6 +62,8 @@ mkdocs-version-annotations = "1.0.0"
 # Automatic documentation from sources, for MkDocs
 mkdocstrings = "0.22.0"
 mkdocstrings-python = "1.5.2"
+mkdocs-autorefs = "1.2.0"
+griffe = "0.35.0"
 
 [tool.poetry.extras]
 nautobot = ["nautobot"]
