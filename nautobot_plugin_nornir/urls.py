@@ -10,6 +10,7 @@ from nautobot.apps.urls import NautobotUIViewSetRouter
 # from nautobot_plugin_nornir import views
 
 
+app_name = "nautobot_plugin_nornir"
 router = NautobotUIViewSetRouter()
 
 # Here is an example of how to register a viewset, you will want to replace views.NautobotPluginNornirUIViewSet with your viewset
