@@ -23,12 +23,13 @@ creds_cache = {
 
 # pylint: disable=attribute-defined-outside-init
 import json
-
 from nautobot.extras.choices import SecretsGroupAccessTypeChoices, SecretsGroupSecretTypeChoices
 
-from nautobot_plugin_nornir.constants import PLUGIN_CFG
+from nornir_nautobot.exceptions import NornirNautobotException
 
-from .nautobot_orm import MixinNautobotORMCredentials
+from nautobot_plugin_nornir.constants import PLUGIN_CFG
+from nautobot_plugin_nornir.plugins.credentials.nautobot_orm import MixinNautobotORMCredentials
+from nautobot_plugin_nornir.utils import get_error_message
 
 
 def _get_access_type_value(device_obj):
@@ -41,7 +42,15 @@ def _get_access_type_value(device_obj):
         SecretsGroupAccessTypeChoices: Choice
     """
     if PLUGIN_CFG.get("use_config_context", {}).get("secrets"):
-        access_type_str = device_obj.get_config_context()["nautobot_plugin_nornir"]["secret_access_type"].upper()
+        try:
+            access_type_str = device_obj.get_config_context()["nautobot_plugin_nornir"]["secret_access_type"]
+            if not isinstance(access_type_str, str):
+                raise NornirNautobotException(
+                    get_error_message("E2006", device_obj=device_obj, access_type_str=access_type_str)
+                )
+            access_type_str = access_type_str.upper()
+        except KeyError:
+            raise NornirNautobotException(get_error_message("E2005", device_obj=device_obj))
         if access_type_str in ["HTTP(S)", "HTTP"]:
             access_type_str = "HTTP"
         access_type = getattr(SecretsGroupAccessTypeChoices, f"TYPE_{access_type_str}")

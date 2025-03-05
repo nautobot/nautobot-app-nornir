@@ -15,6 +15,7 @@ from nautobot.extras.models.secrets import (
 from nornir import InitNornir
 from nornir.core.plugins.inventory import InventoryPluginRegister
 
+from nautobot_plugin_nornir.plugins.credentials.nautobot_secrets import _get_access_type_value
 from nautobot_plugin_nornir.plugins.credentials.settings_vars import PLUGIN_CFG
 from nautobot_plugin_nornir.plugins.inventory.nautobot_orm import NautobotORMInventory
 from nautobot_plugin_nornir.tests.fixtures import create_test_data
@@ -133,3 +134,46 @@ class SecretsGroupCredentialTests(TestCase):
         #     nr_obj.inventory.hosts["device2"]["connection_options"]["scrapli"]["extras"]["auth_secondary"], "credsenv-secret123"
         # )
         self.assertEqual(nr_obj.inventory.hosts["device2"]["connection_options"]["napalm"]["platform"], "junos")
+
+
+class SecretsGroupConfigContextTests(TestCase):
+    @mock.patch(
+        "nautobot_plugin_nornir.plugins.credentials.nautobot_secrets.PLUGIN_CFG",
+        {"use_config_context": {"secrets": True}},
+    )
+    def test_access_type_from_config_context(self):
+        device_obj = mock.Mock()
+        device_obj.get_config_context.return_value = {"nautobot_plugin_nornir": {"secret_access_type": "http"}}
+        access_type = _get_access_type_value(device_obj)
+        self.assertEqual(access_type, SecretsGroupAccessTypeChoices.TYPE_HTTP)
+
+    @mock.patch(
+        "nautobot_plugin_nornir.plugins.credentials.nautobot_secrets.PLUGIN_CFG",
+        {"use_config_context": {"secrets": True}},
+    )
+    def test_access_type_from_config_context_invalid_type(self):
+        device_obj = mock.Mock()
+        device_obj.get_config_context.return_value = {"nautobot_plugin_nornir": {"secret_access_type": 123}}
+        with self.assertRaises(Exception) as context:
+            _get_access_type_value(device_obj)
+        self.assertTrue("E2006" in str(context.exception))
+
+    @mock.patch(
+        "nautobot_plugin_nornir.plugins.credentials.nautobot_secrets.PLUGIN_CFG",
+        {"use_config_context": {"secrets": True}},
+    )
+    def test_access_type_from_config_context_missing_key(self):
+        device_obj = mock.Mock()
+        device_obj.get_config_context.return_value = {}
+        with self.assertRaises(Exception) as context:
+            _get_access_type_value(device_obj)
+        self.assertTrue("E2005" in str(context.exception))
+
+    @mock.patch(
+        "nautobot_plugin_nornir.plugins.credentials.nautobot_secrets.PLUGIN_CFG",
+        {"use_config_context": {"secrets": False}},
+    )
+    def test_access_type_default(self):
+        device_obj = mock.Mock()
+        access_type = _get_access_type_value(device_obj)
+        self.assertEqual(access_type, SecretsGroupAccessTypeChoices.TYPE_GENERIC)
