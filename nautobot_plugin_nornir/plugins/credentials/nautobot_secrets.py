@@ -23,8 +23,8 @@ creds_cache = {
 
 # pylint: disable=attribute-defined-outside-init
 import json
-from nautobot.extras.choices import SecretsGroupAccessTypeChoices, SecretsGroupSecretTypeChoices
 
+from nautobot.extras.choices import SecretsGroupAccessTypeChoices, SecretsGroupSecretTypeChoices
 from nornir_nautobot.exceptions import NornirNautobotException
 
 from nautobot_plugin_nornir.constants import PLUGIN_CFG
@@ -50,7 +50,7 @@ def _get_access_type_value(device_obj):
                 )
             access_type_str = access_type_str.upper()
         except KeyError:
-            raise NornirNautobotException(get_error_message("E2005", device_obj=device_obj))
+            raise NornirNautobotException(get_error_message("E2005", device_obj=device_obj))  # pylint: disable=raise-missing-from
         if access_type_str in ["HTTP(S)", "HTTP"]:
             access_type_str = "HTTP"
         access_type = getattr(SecretsGroupAccessTypeChoices, f"TYPE_{access_type_str}")

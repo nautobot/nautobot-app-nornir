@@ -137,6 +137,8 @@ class SecretsGroupCredentialTests(TestCase):
 
 
 class SecretsGroupConfigContextTests(TestCase):
+    """Test cases for ensuring the NautobotORM Inventory is working properly with Secrets from config context feature."""
+
     @mock.patch(
         "nautobot_plugin_nornir.plugins.credentials.nautobot_secrets.PLUGIN_CFG",
         {"use_config_context": {"secrets": True}},
