@@ -9,7 +9,7 @@ ERROR_CODES = {
         troubleshooting="Find the error code in the traceback, and search for it in the codebase.",
         description="This means a code snippet was calling get_error_code() with an error code that is not registered.",
         error_message="Un-Registered Error Code used.",
-        recommendation="Add the error code to the constants.py file.",
+        recommendation="Add the error code to the `error_codes.py` file.",
     ),
     "E2001": ErrorCode(
         troubleshooting="""There was no device found in the inventory that matched the query, which includes what you inputted into the form as well what is the dynamic group(s).
