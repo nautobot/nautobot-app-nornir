@@ -1,4 +1,5 @@
 """Unit Tests for NautobotORM Inventory."""
+
 from unittest import skip
 
 from django.test import TestCase

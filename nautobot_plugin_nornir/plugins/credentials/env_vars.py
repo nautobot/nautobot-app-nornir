@@ -1,4 +1,5 @@
 """Credentials class for environment variables passwords."""
+
 import os
 from .nautobot_orm import MixinNautobotORMCredentials
 
