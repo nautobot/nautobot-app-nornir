@@ -51,7 +51,7 @@ namespace = Collection("nautobot_plugin_nornir")
 namespace.configure(
     {
         "nautobot_plugin_nornir": {
-            "nautobot_ver": "2.3.1",
+            "nautobot_ver": "next",  # TODO: Change to 3.0.0 after v3.0.0 is released
             "project_name": "nautobot-plugin-nornir",
             "python_ver": "3.11",
             "local": False,
