@@ -50,7 +50,6 @@ yamllint = "*"
 toml = "*"
 # Python implementation of markdownlint
 pymarkdownlnt = [
-    {version = "0.9.26", python = "~3.8.0"},
     {version = "~0.9.29", python = ">=3.9,<3.13"},
 ]
 Markdown = "*"
