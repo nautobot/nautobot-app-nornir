@@ -71,10 +71,10 @@ class CredentialsNautobotSecrets(MixinNautobotORMCredentials):
 
         Args:
             device (dcim.Device): Nautobot Device object.
-            sec (extra.SecretGroup): Nautobot SecretGroup objects.
+            sec (extra.Secret): Nautobot Secret objects.
 
         Returns:
-            str: A rendered secgret group hashed into a single hashed id to use as a unique key.
+            str: A rendered secret group hashed into a single hashed id to use as a unique key.
 
         Examples:
             >>> # Example of a Environment Variable rendered.
@@ -171,6 +171,8 @@ class CredentialsNautobotSecrets(MixinNautobotORMCredentials):
                     and configured_access_type == current_access_type
                 ):
                     self.secret = secret_value
+                if not self.password and not self.secret:
+                    self.password = sec.get_value(obj=device)
             if not self.secret:
                 self.secret = self.password
             return (self.username, self.password, self.secret)
