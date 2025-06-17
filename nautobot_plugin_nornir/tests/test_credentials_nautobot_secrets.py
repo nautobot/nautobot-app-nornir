@@ -18,7 +18,7 @@ from nornir.core.plugins.inventory import InventoryPluginRegister
 from nautobot_plugin_nornir.plugins.credentials.nautobot_secrets import _get_access_type_value
 from nautobot_plugin_nornir.plugins.credentials.settings_vars import PLUGIN_CFG
 from nautobot_plugin_nornir.plugins.inventory.nautobot_orm import NautobotORMInventory
-from nautobot_plugin_nornir.tests.fixtures import create_test_data
+from nautobot_plugin_nornir.tests.fixtures import create_controller_test_data, create_test_data
 
 InventoryPluginRegister.register("nautobot-inventory", NautobotORMInventory)
 
@@ -179,3 +179,69 @@ class SecretsGroupConfigContextTests(TestCase):
         device_obj = mock.Mock()
         access_type = _get_access_type_value(device_obj)
         self.assertEqual(access_type, SecretsGroupAccessTypeChoices.TYPE_GENERIC)
+
+
+@mock.patch.dict(
+    PLUGIN_CFG,
+    {
+        "nornir_settings": {
+            "credentials": "nautobot_plugin_nornir.plugins.credentials.nautobot_secrets.CredentialsNautobotSecrets",
+        },
+    },
+)
+@mock.patch.dict(os.environ, {"MERAKI_API_KEY": "abc123"})
+class SecretsGroupHttpCredentialTests(TestCase):
+    """Test cases for ensuring the NautobotORM Inventory is working properly with Secrets Feature."""
+
+    def setUp(self):
+        """Create a superuser and token for API calls."""
+        create_controller_test_data()
+
+        api_key = Secret.objects.create(
+            name="Environment Vars User",
+            parameters={"variable": "MERAKI_API_KEY"},
+            provider="environment-variable",
+        )
+
+        sec_group = SecretsGroup.objects.create(name="MERAKI_API_KEY_CRED")
+        SecretsGroupAssociation.objects.create(
+            secret=api_key,
+            secrets_group=sec_group,
+            access_type=SecretsGroupAccessTypeChoices.TYPE_HTTP,
+            secret_type=SecretsGroupSecretTypeChoices.TYPE_TOKEN,
+        )
+        dev1 = Device.objects.get(name="meraki-controller1")
+        dev1.secrets_group = sec_group
+        dev1.save()
+
+    def test_hosts_credentials(self):
+        """Ensure credentials is assigned to hosts."""
+        # pylint: disable=duplicate-code
+        qs = Device.objects.all()
+        nr_obj = InitNornir(
+            inventory={
+                "plugin": "nautobot-inventory",
+                "options": {
+                    "credentials_class": PLUGIN_CFG["nornir_settings"]["credentials"],
+                    "params": PLUGIN_CFG["nornir_settings"].get("inventory_params"),
+                    "queryset": qs,
+                },
+            },
+        )
+        self.assertEqual(nr_obj.inventory.hosts["meraki-controller1"].username, None)
+        self.assertEqual(
+            nr_obj.inventory.hosts["meraki-controller1"]["connection_options"]["netmiko"]["extras"]["secret"],
+            "abc123",
+        )
+        self.assertEqual(
+            nr_obj.inventory.hosts["meraki-controller1"]["connection_options"]["napalm"]["extras"]["optional_args"][
+                "secret"
+            ],
+            "abc123",
+        )
+        # self.assertEqual(
+        #     nr_obj.inventory.hosts["meraki-controller1"]["connection_options"]["pyntc"]["extras"]["secret"], "credsenv-secret123"
+        # )
+        # self.assertEqual(
+        #     nr_obj.inventory.hosts["meraki-controller1"]["connection_options"]["scrapli"]["extras"]["auth_secondary"], "credsenv-secret123"
+        # )
