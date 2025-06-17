@@ -1,0 +1,1 @@
+Fixed lack of support for Access Type HTTP and devices that only have API key as the secret/password.

@@ -1,6 +1,6 @@
 # Credentials
 
-The credentials that will be used by Nornir to connect to the device is based on the `credential` parameter. Credentials come in both provided and also allows you to create your own credential provider. 
+The credentials that will be used by Nornir to connect to the device is based on the `credential` parameter. Credentials come in both provided and also allows you to create your own credential provider.
 
 > For any of these classes, if a "secret" value is not defined, the "password" will also be used as the "secret" value.
 
@@ -8,9 +8,9 @@ The credentials that will be used by Nornir to connect to the device is based on
 
 Out of the box, there are three credential plugins.
 
-* Environment Variables - Leveraging pre-defined environment variables for your credentials.
-* Setting Variables - Leveraging the `nautobot_config.py` for your credentials
-* Nautobot Secrets - Leveraging the [Nautobot Secrets Group](https://nautobot.readthedocs.io/en/latest/core-functionality/secrets/#secrets-groups) feature for your credentials.
+- Environment Variables - Leveraging pre-defined environment variables for your credentials.
+- Setting Variables - Leveraging the `nautobot_config.py` for your credentials
+- Nautobot Secrets - Leveraging the [Nautobot Secrets Group](https://nautobot.readthedocs.io/en/latest/core-functionality/secrets/#secrets-groups) feature for your credentials.
 
 ### Environment Variables
 
@@ -19,7 +19,6 @@ Out of the box, there are three credential plugins.
 Leverages the environment variables `NAPALM_USERNAME`, `NAPALM_PASSWORD`, and `DEVICE_SECRET`.
 
 The environment variable must be accessible on the web service. This often means simply exporting the environment variable on the cli will not suffice, but instead requiring users to update the `nautobot.service` and `nautobot-worker.service` files. Keep in mind this will ultimately depend **on your own setup** and is simply based on standard Linux environment variables. Environment variables are distinctively not nautobot configuration parameters (in `nautobot_config.py`), if that does not makes sense, expect to see authentication issues. If you wish to simply put the passwords in `nautobot_config.py`, see Settings Variables section.
-
 
 An example of what the `nautobot.service` and `nautobot-worker.service` would look like.
 
@@ -65,14 +64,14 @@ PLUGINS_CONFIG = {
 
 Leverages the [Nautobot Secrets Group](https://nautobot.readthedocs.io/en/latest/core-functionality/secrets/#secrets-groups) core functionality.
 
-**The default assumes Secrets Group contain secrets with "Access Type" of `Generic`** and expects these secrets to have "Secret Type" of `username`, `password`, and optionally `secret`. The "Access Type" is configurable via the plugin configuration parameter `use_config_context`, which if enabled changes the plugin functionality to pull `device_obj.get_config_context()['nautobot_plugin_nornir']['secret_access_type']` from each devices config_context. Which is the config context dictionary `nautobot_plugin_nornir` and the subkey of `secret_access_type`.
+**The default assumes Secrets Group contain secrets with "Access Type" of `Generic`** and expects these secrets to have "Secret Type" of `username`, `password`, and optionally `secret`. The "Access Type" is configurable via the plugin configuration parameter `use_config_context`, which if enabled changes the plugin functionality to pull `device_obj.get_config_context()['nautobot_plugin_nornir']['secret_access_type']` from each devices config_context. Which is the config context dictionary `nautobot_plugin_nornir` and the subkey of `secret_access_type`. If connecting to a API based device, you may need to provide your own dispatcher, but you could use the TYPE_HTTP "Access Type" and TYPE_TOKEN "Secret Type" as the API key. this would set both the password and secret to the value of the API key, and leave username as None.
 
 Enabling the use of Config Context:
 
 ```python
 PLUGINS_CONFIG = {
     "nautobot_plugin_nornir": {
-        "use_config_context": {"secrets": True}, 
+        "use_config_context": {"secrets": True},
         "nornir_settings": {
             "credentials": "nautobot_plugin_nornir.plugins.credentials.nautobot_secrets.CredentialsNautobotSecrets",
         }
@@ -81,14 +80,15 @@ PLUGINS_CONFIG = {
 ```
 
 Local Device Config Context:
+
 ```json
 {
-    "nautobot_plugin_nornir": {
-        "secret_access_type": "SSH"
-    }
+  "nautobot_plugin_nornir": {
+    "secret_access_type": "SSH"
+  }
 }
 ```
-  
+
 Device Type Config Context:
 
 ```yaml
@@ -104,7 +104,7 @@ nautobot_plugin_nornir:
   secret_access_type: SSH
 ```
 
-By default the device secret connection option path will be set for connections using: Napalm, Netmiko, and Scrapli.  If an additional path needs to be registered it can be done by setting it inside the config context data.  See below for an example.
+By default the device secret connection option path will be set for connections using: Napalm, Netmiko, and Scrapli. If an additional path needs to be registered it can be done by setting it inside the config context data. See below for an example.
 
 ```yaml
 ---
@@ -116,7 +116,7 @@ _metadata:
   device-roles:
     - name: spine
 nautobot_plugin_nornir:
-  pluginx: 
+  pluginx:
     connection_secret_path: "pluginx.extras.secret"
 ```
 
