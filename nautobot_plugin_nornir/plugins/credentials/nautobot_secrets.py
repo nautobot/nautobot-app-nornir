@@ -139,6 +139,7 @@ class CredentialsNautobotSecrets(MixinNautobotORMCredentials):
         """
         if device.secrets_group:
             self.secret = None
+            self.password = None
             for sec in device.secrets_group.secrets.all():
                 secret_value = self.creds_cache.get(self._get_or_cache_secret_key(device, sec))
                 current_secret_type = getattr(
