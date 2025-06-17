@@ -141,19 +141,20 @@ class CredentialsNautobotSecrets(MixinNautobotORMCredentials):
             self.secret = None
             for sec in device.secrets_group.secrets.all():
                 secret_value = self.creds_cache.get(self._get_or_cache_secret_key(device, sec))
-                if access_type := sec.secrets_group_associations.first().secret_type.upper() == "HTTP(S)":
-                    current_secret_type = getattr(
-                        SecretsGroupSecretTypeChoices,
-                        "TYPE_HTTP",
+                current_secret_type = getattr(
+                    SecretsGroupSecretTypeChoices,
+                    f"TYPE_{sec.secrets_group_associations.first().secret_type.upper()}",
+                )
+                if sec.secrets_group_associations.first().access_type.upper().endswith("(S)"):
+                    current_access_type = getattr(
+                        SecretsGroupAccessTypeChoices,
+                        f"TYPE_{sec.secrets_group_associations.first().access_type.upper().replace("(S)", "")}",
                     )
                 else:
-                    current_secret_type = getattr(
-                        SecretsGroupSecretTypeChoices,
-                        f"TYPE_{access_type}",
+                    current_access_type = getattr(
+                        SecretsGroupAccessTypeChoices,
+                        f"TYPE_{sec.secrets_group_associations.first().access_type.upper()}",
                     )
-                current_access_type = getattr(
-                    SecretsGroupAccessTypeChoices, f"TYPE_{sec.secrets_group_associations.first().access_type.upper()}"
-                )
                 configured_access_type = _get_access_type_value(device)
                 if (
                     current_secret_type == SecretsGroupSecretTypeChoices.TYPE_USERNAME
