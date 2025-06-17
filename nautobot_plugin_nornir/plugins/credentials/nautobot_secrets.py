@@ -148,7 +148,7 @@ class CredentialsNautobotSecrets(MixinNautobotORMCredentials):
                 if "(S)" in sec.secrets_group_associations.first().access_type.upper():
                     current_access_type = getattr(
                         SecretsGroupAccessTypeChoices,
-                        f"TYPE_{sec.secrets_group_associations.first().access_type.upper().replace('(S)', '')}",
+                        "TYPE_HTTP",
                     )
                 else:
                     current_access_type = getattr(
