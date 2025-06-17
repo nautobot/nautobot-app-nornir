@@ -138,6 +138,7 @@ class CredentialsNautobotSecrets(MixinNautobotORMCredentials):
             secret (string):
         """
         if device.secrets_group:
+            self.username = None
             self.secret = None
             self.password = None
             for sec in device.secrets_group.secrets.all():
