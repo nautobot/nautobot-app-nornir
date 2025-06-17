@@ -137,10 +137,10 @@ class CredentialsNautobotSecrets(MixinNautobotORMCredentials):
             password (string):
             secret (string):
         """
+        self.username = None
+        self.password = None
+        self.secret = None
         if device.secrets_group:
-            self.username = None
-            self.secret = None
-            self.password = None
             for sec in device.secrets_group.secrets.all():
                 secret_value = self.creds_cache.get(self._get_or_cache_secret_key(device, sec))
                 current_secret_type = getattr(
@@ -177,5 +177,4 @@ class CredentialsNautobotSecrets(MixinNautobotORMCredentials):
                     self.password = sec.get_value(obj=device)
             if not self.secret:
                 self.secret = self.password
-            return (self.username, self.password, self.secret)
-        return (None, None, None)
+        return (self.username, self.password, self.secret)
