@@ -145,10 +145,10 @@ class CredentialsNautobotSecrets(MixinNautobotORMCredentials):
                     SecretsGroupSecretTypeChoices,
                     f"TYPE_{sec.secrets_group_associations.first().secret_type.upper()}",
                 )
-                if sec.secrets_group_associations.first().access_type.upper().endswith("(S)"):
+                if "(S)" in sec.secrets_group_associations.first().access_type.upper():
                     current_access_type = getattr(
                         SecretsGroupAccessTypeChoices,
-                        f"TYPE_{sec.secrets_group_associations.first().access_type.upper().replace("(S)", "")}",
+                        f"TYPE_{sec.secrets_group_associations.first().access_type.upper().replace('(S)', '')}",
                     )
                 else:
                     current_access_type = getattr(
