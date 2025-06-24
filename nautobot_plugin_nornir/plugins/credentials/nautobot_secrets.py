@@ -147,7 +147,8 @@ class CredentialsNautobotSecrets(MixinNautobotORMCredentials):
                     SecretsGroupSecretTypeChoices,
                     f"TYPE_{sec.secrets_group_associations.first().secret_type.upper()}",
                 )
-                if "(S)" in sec.secrets_group_associations.first().access_type.upper():
+                # Access type string HTTP(S) does not match callable TYPE_HTTP
+                if "HTTP(S)" == sec.secrets_group_associations.first().access_type.upper():
                     current_access_type = getattr(
                         SecretsGroupAccessTypeChoices,
                         "TYPE_HTTP",
