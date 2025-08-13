@@ -1,0 +1,2 @@
+Added a common Nornir logger to support writing to console and db.
+Added a helper decorator to close idle DB connections in a thread.
