@@ -49,9 +49,13 @@ ruff = "0.5.5"
 yamllint = "*"
 toml = "*"
 # Python implementation of markdownlint
+<<<<<<< HEAD
 pymarkdownlnt = [
     {version = "~0.9.29", python = ">=3.9,<3.13"},
 ]
+=======
+pymarkdownlnt = "~0.9.29"
+>>>>>>> a060401 (Cookie updated by NetworkToCode Cookie Drift Manager Tool)
 Markdown = "*"
 # Render custom markdown for version added/changed/remove notes
 markdown-version-annotations = "1.0.1"
