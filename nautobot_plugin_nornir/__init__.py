@@ -18,11 +18,10 @@ class NautobotPluginNornirConfig(NautobotAppConfig):
     description = "Nautobot App that provides a shim layer to simplify using Nornir within other Nautobot Apps and Nautobot Jobs."
     base_url = "plugin-nornir"
     required_settings = []
-    min_version = "2.0.0"
-    max_version = "2.9999"
     default_settings = {}
     caching_config = {}
     docs_view_name = "plugins:nautobot_plugin_nornir:docs"
+    searchable_models = []
 
 
 config = NautobotPluginNornirConfig  # pylint:disable=invalid-name
