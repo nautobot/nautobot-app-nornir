@@ -10,8 +10,6 @@
         "project_slug": "nautobot-app-nornir",
         "repo_url": "https://github.com/nautobot/nautobot-app-nornir",
         "base_url": "plugin-nornir",
-        "min_nautobot_version": "2.0.0",
-        "max_nautobot_version": "2.9999",
         "camel_name": "NautobotPluginNornir",
         "project_short_description": "Nautobot App that provides a shim layer to simplify using Nornir within other Nautobot Apps and Nautobot Jobs",
         "model_class_name": "None",
@@ -21,6 +19,7 @@
         "_drift_manager": {
             "template": "https://github.com/nautobot/cookiecutter-nautobot-app.git",
             "template_dir": "nautobot-app",
+<<<<<<< HEAD
             "template_ref": "nautobot-app-v2.5.1",
             "cookie_dir": "",
             "branch_prefix": "drift-manager",
@@ -28,6 +27,15 @@
             "post_actions": [],
             "draft": false,
             "baked_commit_ref": "946f83261a4741ab4bb72a71a2ff5caa2cb52475"
+=======
+            "template_ref": "nautobot-app-v2.6.0",
+            "cookie_dir": "",
+            "branch_prefix": "drift-manager",
+            "pull_request_strategy": "update-or-create",
+            "post_actions": [],
+            "draft": false,
+            "baked_commit_ref": "785ef817f351a0d559dc53f699c286ee92b99582"
+>>>>>>> 3d52ec8 (Cookie updated by NetworkToCode Cookie Drift Manager Tool)
         }
     }
 }

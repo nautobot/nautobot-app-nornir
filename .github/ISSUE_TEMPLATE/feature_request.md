@@ -6,7 +6,7 @@ labels:
 ---
 
 ### Environment
-* Nautobot version:  <!-- Example: 2.0.0 -->
+* Nautobot version:  <!-- Example: 2.4.2 -->
 * nautobot-plugin-nornir version:  <!-- Example: 1.0.0 -->
 
 <!--
