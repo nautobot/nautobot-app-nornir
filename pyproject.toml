@@ -39,7 +39,7 @@ netutils = ">=1.6.0"
 
 [tool.poetry.group.dev.dependencies]
 coverage = "*"
-django-debug-toolbar = "*"
+django-debug-toolbar = "<6.0.0"
 invoke = "*"
 ipython = "*"
 pylint = "*"
