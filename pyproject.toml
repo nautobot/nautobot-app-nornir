@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "nautobot-plugin-nornir"
-version = "2.2.2a0"
+version = "2.3.0a0"
 description = "Nautobot App that provides a shim layer to simplify using Nornir within other Nautobot Apps and Nautobot Jobs"
 authors = ["Network to Code, LLC <info@networktocode.com>"]
 license = "Apache-2.0"
@@ -33,13 +33,9 @@ include = [
 [tool.poetry.dependencies]
 python = ">=3.9.2,<3.13"
 # Used for local development
-<<<<<<< HEAD
-nautobot = "^2.2.0"
+nautobot = ">=2.4.2,<3.0.0"
 nornir-nautobot = "^3.3.0"
 netutils = ">=1.6.0"
-=======
-nautobot = ">=2.4.2,<3.0.0"
->>>>>>> 3d52ec8 (Cookie updated by NetworkToCode Cookie Drift Manager Tool)
 
 [tool.poetry.group.dev.dependencies]
 coverage = "*"
@@ -53,11 +49,7 @@ ruff = "0.5.5"
 yamllint = "*"
 toml = "*"
 # Python implementation of markdownlint
-<<<<<<< HEAD
-pymarkdownlnt = "~0.9.29"
-=======
 pymarkdownlnt = "~0.9.30"
->>>>>>> 3d52ec8 (Cookie updated by NetworkToCode Cookie Drift Manager Tool)
 Markdown = "*"
 towncrier = ">=23.6.0,<=24.8.0"
 to-json-schema = "*"
