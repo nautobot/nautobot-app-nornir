@@ -46,12 +46,6 @@ theme:
 extra_css:
   - "assets/extra.css"
 
-# needed for RTD version flyout menu
-# jquery is not (yet) injected by RTD automatically and it might be dropped
-# as a dependency in the future
-extra_javascript:
-  - "https://code.jquery.com/jquery-3.6.0.min.js"
-
 extra:
   generator: false
   ntc_sponsor: true
@@ -79,6 +73,7 @@ markdown_extensions:
       permalink: true
   - "attr_list"
   - "md_in_html"
+  - "pymdownx.details"
   - "pymdownx.highlight":
       anchor_linenums: true
   - "pymdownx.inlinehilite"
@@ -101,6 +96,12 @@ plugins:
 watch:
   - "README.md"
 
+validation:
+  omitted_files: "warn"
+  absolute_links: "warn"
+  unrecognized_links: "warn"
+  anchors: "warn"
+
 nav:
   - Overview: "index.md"
   - User Guide:
@@ -118,13 +119,18 @@ nav:
       - Compatibility Matrix: "admin/compatibility_matrix.md"
       - Troubleshooting:
           - "admin/troubleshooting/index.md"
+          - EXXXX: "admin/troubleshooting/E2XXX.md"
           - E2001: "admin/troubleshooting/E2001.md"
           - E2002: "admin/troubleshooting/E2002.md"
           - E2003: "admin/troubleshooting/E2003.md"
           - E2004: "admin/troubleshooting/E2004.md"
+          - E2005: "admin/troubleshooting/E2005.md"
+          - E2006: "admin/troubleshooting/E2006.md"
       - Migrating To v2: "admin/migrating_to_v2.md"
       - Release Notes:
           - "admin/release_notes/index.md"
+          - v2.3: "admin/release_notes/version_2.3.md"
+          - v2.2: "admin/release_notes/version_2.2.md"
           - v2.1: "admin/release_notes/version_2.1.md"
           - v2.0: "admin/release_notes/version_2.0.md"
           - v1.0: "admin/release_notes/version_1.0.md"

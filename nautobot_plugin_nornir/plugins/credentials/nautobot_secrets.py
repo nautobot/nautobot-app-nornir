@@ -25,10 +25,11 @@ creds_cache = {
 import json
 
 from nautobot.extras.choices import SecretsGroupAccessTypeChoices, SecretsGroupSecretTypeChoices
+from nornir_nautobot.exceptions import NornirNautobotException
 
 from nautobot_plugin_nornir.constants import PLUGIN_CFG
-
-from .nautobot_orm import MixinNautobotORMCredentials
+from nautobot_plugin_nornir.plugins.credentials.nautobot_orm import MixinNautobotORMCredentials
+from nautobot_plugin_nornir.utils import get_error_message
 
 
 def _get_access_type_value(device_obj):
@@ -41,7 +42,15 @@ def _get_access_type_value(device_obj):
         SecretsGroupAccessTypeChoices: Choice
     """
     if PLUGIN_CFG.get("use_config_context", {}).get("secrets"):
-        access_type_str = device_obj.get_config_context()["nautobot_plugin_nornir"]["secret_access_type"].upper()
+        try:
+            access_type_str = device_obj.get_config_context()["nautobot_plugin_nornir"]["secret_access_type"]
+            if not isinstance(access_type_str, str):
+                raise NornirNautobotException(
+                    get_error_message("E2006", device_obj=device_obj, access_type_str=access_type_str)
+                )
+            access_type_str = access_type_str.upper()
+        except KeyError:
+            raise NornirNautobotException(get_error_message("E2005", device_obj=device_obj))  # pylint: disable=raise-missing-from
         if access_type_str in ["HTTP(S)", "HTTP"]:
             access_type_str = "HTTP"
         access_type = getattr(SecretsGroupAccessTypeChoices, f"TYPE_{access_type_str}")
@@ -130,14 +139,12 @@ class CredentialsNautobotSecrets(MixinNautobotORMCredentials):
         """
         if device.secrets_group:
             self.secret = None
-            for sec in device.secrets_group.secrets.all():
-                secret_value = self.creds_cache.get(self._get_or_cache_secret_key(device, sec))
-                current_secret_type = getattr(
-                    SecretsGroupSecretTypeChoices, f"TYPE_{sec.secrets_group_associations.first().secret_type.upper()}"
+            for secrets_group_association in device.secrets_group.secrets_group_associations.all():
+                secret_value = self.creds_cache.get(
+                    self._get_or_cache_secret_key(device, secrets_group_association.secret)
                 )
-                current_access_type = getattr(
-                    SecretsGroupAccessTypeChoices, f"TYPE_{sec.secrets_group_associations.first().access_type.upper()}"
-                )
+                current_secret_type = secrets_group_association.secret_type
+                current_access_type = secrets_group_association.access_type
                 configured_access_type = _get_access_type_value(device)
                 if (
                     current_secret_type == SecretsGroupSecretTypeChoices.TYPE_USERNAME

@@ -27,6 +27,7 @@ from nautobot_plugin_nornir.constants import (
     DRIVERS,
     PLUGIN_CFG,
 )
+from nautobot_plugin_nornir.utils import get_error_message
 
 _LocationsTree = Dict[UUID, dict]
 
@@ -150,15 +151,13 @@ class NautobotORMInventory:
         # Based on the class name defined in the parameters
         # At creation time, pass the credentials_params dict to the class
         if isinstance(queryset, QuerySet) and not queryset:
-            raise NornirNautobotException("`E2001:` There was no matching results from the query.")
+            raise NornirNautobotException(get_error_message("E2001"))
         self.queryset = queryset
         self.filters = filters
         if isinstance(credentials_class, str):
             self.cred_class = import_string(credentials_class)
         else:
-            raise NornirNautobotException(
-                f"`E2002:` A valid credentials class path (as defined by Django's import_string function) is required, but got {credentials_class} which is not importable. See https://github.com/nautobot/nautobot-plugin-nornir#credentials for details."
-            )
+            raise NornirNautobotException(get_error_message("E2002", credentials_class=credentials_class))
         self.credentials_params = credentials_params
         self.params = params
         self.defaults = defaults or {}
@@ -242,11 +241,9 @@ class NautobotORMInventory:
         host["name"] = device.name
 
         if not device.platform:
-            raise NornirNautobotException(f"`E2003:` Platform missing from device {device.name}, preemptively failed.")
+            raise NornirNautobotException(get_error_message("E2003", device=device))
         if not device.platform.network_driver:
-            raise NornirNautobotException(
-                f"`E2004:` Platform network_driver missing from device {device.name}, preemptively failed."
-            )
+            raise NornirNautobotException(get_error_message("E2004", device=device))
         # These keys platform & network_driver_mappings are only used for connection_options within _set_host
         host["platform"] = device.platform.network_driver
         host["network_driver_mappings"] = device.platform.network_driver_mappings
