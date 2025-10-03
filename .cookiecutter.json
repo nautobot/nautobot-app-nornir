@@ -10,8 +10,6 @@
         "project_slug": "nautobot-app-nornir",
         "repo_url": "https://github.com/nautobot/nautobot-app-nornir",
         "base_url": "plugin-nornir",
-        "min_nautobot_version": "2.0.0",
-        "max_nautobot_version": "2.9999",
         "camel_name": "NautobotPluginNornir",
         "project_short_description": "Nautobot App that provides a shim layer to simplify using Nornir within other Nautobot Apps and Nautobot Jobs",
         "model_class_name": "None",
@@ -21,16 +19,13 @@
         "_drift_manager": {
             "template": "https://github.com/nautobot/cookiecutter-nautobot-app.git",
             "template_dir": "nautobot-app",
-            "template_ref": "refs/tags/nautobot-app-v2.5.0",
+            "template_ref": "nautobot-app-v2.6.0",
             "cookie_dir": "",
             "branch_prefix": "drift-manager",
-            "pull_request_strategy": "create",
-            "post_actions": [
-                "ruff",
-                "poetry"
-            ],
+            "pull_request_strategy": "update-or-create",
+            "post_actions": [],
             "draft": false,
-            "baked_commit_ref": "98d6a248df50667dbc452aefa210f35e097aecfb"
+            "baked_commit_ref": "785ef817f351a0d559dc53f699c286ee92b99582"
         }
     }
 }
