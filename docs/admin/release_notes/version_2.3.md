@@ -5,6 +5,7 @@ This document describes all new features and changes in the release. The format 
 
 ## Release Overview
 
+- Changed the minimum Nautobot version support to 2.4.2.
 - Added a common Nornir logger for console and database logging.
 - Fixed secret group "types" errors for HTTP and new SNMP types.
 
