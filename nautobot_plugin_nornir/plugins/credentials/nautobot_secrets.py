@@ -139,14 +139,12 @@ class CredentialsNautobotSecrets(MixinNautobotORMCredentials):
         """
         if device.secrets_group:
             self.secret = None
-            for sec in device.secrets_group.secrets.all():
-                secret_value = self.creds_cache.get(self._get_or_cache_secret_key(device, sec))
-                current_secret_type = getattr(
-                    SecretsGroupSecretTypeChoices, f"TYPE_{sec.secrets_group_associations.first().secret_type.upper()}"
+            for secrets_group_association in device.secrets_group.secrets_group_associations.all():
+                secret_value = self.creds_cache.get(
+                    self._get_or_cache_secret_key(device, secrets_group_association.secret)
                 )
-                current_access_type = getattr(
-                    SecretsGroupAccessTypeChoices, f"TYPE_{sec.secrets_group_associations.first().access_type.upper()}"
-                )
+                current_secret_type = secrets_group_association.secret_type
+                current_access_type = secrets_group_association.access_type
                 configured_access_type = _get_access_type_value(device)
                 if (
                     current_secret_type == SecretsGroupSecretTypeChoices.TYPE_USERNAME
