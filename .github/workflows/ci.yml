@@ -209,7 +209,7 @@ jobs:
       matrix:
         python-version: ["3.13"]
         db-backend: ["postgresql"]
-        nautobot-version: ["stable"]
+        nautobot-version: ["next"]  # TODO: Change to stable after v3.0.0 is released
     runs-on: "ubuntu-latest"
     permissions:
       pull-requests: "write"
