@@ -23,7 +23,6 @@ class NautobotPluginNornirConfig(NautobotAppConfig):
     base_url = "plugin-nornir"
     required_settings = []
     default_settings = {}
-    caching_config = {}
     docs_view_name = "plugins:nautobot_plugin_nornir:docs"
     searchable_models = []
 
