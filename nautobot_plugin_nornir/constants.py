@@ -21,3 +21,17 @@ DRIVERS = ["napalm", "netmiko", "scrapli", "pyntc"]
 
 ALLOWED_LOCATION_TYPES = PLUGIN_CFG.get("allowed_location_types", [])
 DENIED_LOCATION_TYPES = PLUGIN_CFG.get("denied_location_types", [])
+
+FIELDS_PK = {
+    "platform",
+    "tenant_group",
+    "tenant",
+    "location",
+    "role",
+    "rack",
+    "rack_group",
+    "manufacturer",
+    "device_type",
+}
+
+FIELDS_NAME = {"tags", "status"}
