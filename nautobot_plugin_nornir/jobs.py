@@ -53,7 +53,7 @@ def get_job_filter(data=None):
     return devices_filtered.qs
 
 
-class FormEntry:  # pylint disable=too-few-public-method
+class FormEntry:  # pylint: disable=too-few-public-methods
     """Class definition to use as Mixin for form definitions."""
 
     tenant_group = MultiObjectVar(model=TenantGroup, required=False)
