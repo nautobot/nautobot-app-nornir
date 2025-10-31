@@ -2678,7 +2678,7 @@ sso = ["social-auth-core[saml] (>=4.8.1,<4.9.0)"]
 type = "git"
 url = "https://github.com/nautobot/nautobot.git"
 reference = "next"
-resolved_reference = "d9fb139d53b15fe68e870309e09a0deb019d47e5"
+resolved_reference = "9110336e66d914483f0e61fcf78ef9defbfddabd"
 
 [[package]]
 name = "ncclient"
