@@ -10,11 +10,6 @@ This major release marks the compatibility of the App with Nautobot 3.0.0. Check
 - Added support for Python 3.13 and removed support for 3.9.
 - Updated UI framework to use latest Bootstrap 5.3.
 
-## [v3.0.0 (2025-11-14)](https://github.com/nautobot/nautobot-app-nornir/releases/tag/v3.0.0)
-
-### Housekeeping
-
-- Rebaked from the cookie `nautobot-app-v2.7.0`.
-- Rebaked from the cookie `nautobot-app-v2.7.1`.
+## [v3.0.0 (2025-11-17)](https://github.com/nautobot/nautobot-app-nornir/releases/tag/v3.0.0)
 
 ## [v3.0.0a1 (2025-10-31)](https://github.com/nautobot/nautobot-app-nornir/releases/tag/v3.0.0a1)
