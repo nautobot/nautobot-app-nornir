@@ -10,6 +10,8 @@ This major release marks the compatibility of the Nautobot Plugin Nornir App wit
 - Added support for Python 3.13 and removed support for 3.9.
 - Updated UI framework to use latest Bootstrap 5.3.
 
+We will continue to support the previous major release for users of Nautobot LTM 2.4 only with critical bug and security fixes as per the [Software Lifecycle Policy](https://networktocode.com/company/legal/software-lifecycle-policy/).
+
 ## [v3.0.0 (2025-11-17)](https://github.com/nautobot/nautobot-app-nornir/releases/tag/v3.0.0)
 
 ### Changed
