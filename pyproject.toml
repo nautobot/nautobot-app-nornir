@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "nautobot-plugin-nornir"
-version = "3.0.0a2"
+version = "3.0.0"
 description = "Nautobot App that provides a shim layer to simplify using Nornir within other Nautobot Apps and Nautobot Jobs"
 authors = ["Network to Code, LLC <info@networktocode.com>"]
 license = "Apache-2.0"
@@ -33,9 +33,8 @@ include = [
 [tool.poetry.dependencies]
 python = ">=3.10,<3.14"
 # Used for local development
-nautobot = ">=3.0.0a2,<3.0.0rc99"  # TODO: Change to '>=3.0.0,<4.0.0' for the release
-nornir-nautobot = ">=3.6.0a1,<3.6.0rc99"  # TODO: Change to '>=3.6.0,<4.0.0' for the release
-netutils = ">=1.6.0"
+nautobot = ">=3.0.0,<4.0.0"
+nornir-nautobot = ">=4.0.0,<5.0.0"
 
 [tool.poetry.group.dev.dependencies]
 coverage = "*"
@@ -166,7 +165,7 @@ build-backend = "poetry.core.masonry.api"
 [tool.towncrier]
 package = "nautobot_plugin_nornir"
 directory = "changes"
-filename = "docs/admin/release_notes/version_X.Y.md"
+filename = "docs/admin/release_notes/version_3.0.md"
 template = "development/towncrier_template.j2"
 start_string = "<!-- towncrier release notes start -->"
 issue_format = "[#{issue}](https://github.com/nautobot/nautobot-app-nornir/issues/{issue})"

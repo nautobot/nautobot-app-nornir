@@ -1,19 +1,20 @@
-
 # v3.0 Release Notes
 
 This document describes all new features and changes in the release. The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## Release Overview
 
-- Added support for Python 3.13.
-- Dropped support for Python 3.9.
+This major release marks the compatibility of the Nautobot Plugin Nornir App with Nautobot 3.0.0. Check out the [full details](https://docs.nautobot.com/projects/core/en/stable/release-notes/version-3.0/) of the changes included in this new major release of Nautobot. Highlights:
+
+- Minimum Nautobot version supported is 3.0.
+- Added support for Python 3.13 and removed support for 3.9.
+- Updated UI framework to use latest Bootstrap 5.3.
+
+## [v3.0.0 (2025-11-17)](https://github.com/nautobot/nautobot-app-nornir/releases/tag/v3.0.0)
+
+### Changed
+
+- Minimum Nautobot version supported is 3.0.
+- Added support for Python 3.13 and removed support for 3.9.
 
 ## [v3.0.0a1 (2025-10-31)](https://github.com/nautobot/nautobot-app-nornir/releases/tag/v3.0.0a1)
-
-### Added
-
-- Added support for Python 3.13.
-
-### Removed
-
-- Dropped support for Python 3.9.
