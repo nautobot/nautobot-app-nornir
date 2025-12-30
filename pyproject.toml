@@ -34,7 +34,10 @@ include = [
 python = ">=3.10,<3.14"
 # Used for local development
 nautobot = ">=3.0.0,<4.0.0"
+<<<<<<< HEAD
 nornir-nautobot = ">=4.0.0,<5.0.0"
+=======
+>>>>>>> 4aa111f (Cookie updated targeting develop by NetworkToCode Cookie Drift Manager Tool)
 
 [tool.poetry.group.dev.dependencies]
 coverage = "*"
