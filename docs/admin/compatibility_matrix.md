@@ -4,7 +4,6 @@ While that last supported version will not be strictly enforced--via the max_ver
 
 # Compatibility Matrix
 
-<<<<<<< HEAD
 | Nautobot Plugin Nornir Version | Nautobot First Support Version | Nautobot Last Support Version |
 | ------------------------------ | ------------------------------ | ----------------------------- |
 | 0.9.X                          | 1.0.0                          | 1.2.99                        |
@@ -15,11 +14,3 @@ While that last supported version will not be strictly enforced--via the max_ver
 | 2.3.X                          | 2.4.2                          | 2.99.99                       |
 | 2.4.X                          | 2.4.20                         | 2.99.99                       |
 | 3.0.X                          | 3.0.0                          | 2.99.99                       |
-=======
-!!! warning "Developer Note - Remove Me!"
-    Explain how the release models of the app and of Nautobot work together, how releases are supported, how features and older releases are deprecated etc.
-
-| Nautobot Nornir Plugin Version | Nautobot First Support Version | Nautobot Last Support Version |
-| ------------- | -------------------- | ------------- |
-| 1.0.X         | 3.0.0                | 2.99.99        |
->>>>>>> 4aa111f (Cookie updated targeting develop by NetworkToCode Cookie Drift Manager Tool)
