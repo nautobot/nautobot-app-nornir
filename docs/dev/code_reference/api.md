@@ -1,5 +1,3 @@
 # Nautobot Nornir Plugin API Package
-
-::: nautobot_plugin_nornir.api
-    options:
-        show_submodules: True
+!!! warning "Developer Note - Remove Me!"
+    This app does not expose a REST API (no model was defined).
