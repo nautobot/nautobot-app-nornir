@@ -7,7 +7,6 @@ This document provides an overview of the App including critical information and
 
 ## Description
 
-<<<<<<< HEAD
 A plugin for [Nautobot](https://github.com/nautobot/nautobot), that intends to be a small shim layer between [nornir-nautobot](https://github.com/nautobot/nornir-nautobot) and other plugins. The primary abilities that the plugin provides is a native Nornir ORM based inventory and a credential manager.
 
 ![Architecture Overview](../images/architecture-overview.png)
@@ -15,10 +14,6 @@ A plugin for [Nautobot](https://github.com/nautobot/nautobot), that intends to b
 As of the writing of this readme, the only plugin leveraging this plugin is the [golden-config](https://github.com/nautobot/nautobot-plugin-golden-config). However, future plugins are planned, such as the "network importer".
 
 That being said, there is currently little reason to install this plugin by itself, without an enabler, which can be seen represented as the white rectangles inside the yellow rectangle in the diagram above. An enabler could be a Plugin, Job, or another piece of code like a Chatops command.
-=======
-![Main Page](../media/ss_main_page_light.png#only-light)
-![Main Page](../media/ss_main_page_dark.png#only-dark)
->>>>>>> 33f2f17 (Cookie updated targeting develop by NetworkToCode Cookie Drift Manager Tool)
 
 ## Audience (User Personas) - Who should use this App?
 
