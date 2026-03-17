@@ -4,12 +4,11 @@ This document describes all new features and changes in the release. The format 
 
 ## Release Overview
 
-- Major features or milestones
-- Changes to compatibility with Nautobot and/or other apps, libraries etc.
+- Added Python 3.14 support.
 
 <!-- towncrier release notes start -->
 
-## [v3.1.0 (2026-03-16)](https://github.com/nautobot/nautobot-app-nornir/releases/tag/v3.1.0)
+## [v3.1.1 (2026-03-16)](https://github.com/nautobot/nautobot-app-nornir/releases/tag/v3.1.1)
 
 ### Documentation
 
@@ -19,3 +18,7 @@ This document describes all new features and changes in the release. The format 
 
 - Rebaked from the cookie `nautobot-app-v3.0.0`.
 - Rebaked from the cookie `nautobot-app-v3.1.2`.
+
+## v3.1.0
+
+v3.1.0 was released incorrectly, resulting in no change from v2.3.0.  This has been yanked from GitHub and PyPI.
