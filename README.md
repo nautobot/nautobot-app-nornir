@@ -25,7 +25,7 @@ That being said, there is currently little reason to install this plugin by itse
 
 As previously mentioned, the plugin is mostly a shim layer, here is an example of how Nautobot Golden Config uses a Nornir Job.
 
-![Backup Job](https://raw.githubusercontent.com/nautobot/nautobot-plugin-nornir/develop/docs/images/nornir-backup-job.png)
+![Backup Job](https://raw.githubusercontent.com/nautobot/nautobot-plugin-nornir/develop/docs/images/ss_nornir-backup-job_dark.png)
 
 ## Try it out!
 
