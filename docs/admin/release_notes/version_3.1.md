@@ -8,6 +8,12 @@ This document describes all new features and changes in the release. The format 
 
 <!-- towncrier release notes start -->
 
+## [v3.1.2 (2026-04-10)](https://github.com/nautobot/nautobot-app-nornir/releases/tag/v3.1.2)
+
+### Housekeeping
+
+- Rebaked from the cookie `nautobot-app-v3.1.3`.
+
 ## [v3.1.1 (2026-03-16)](https://github.com/nautobot/nautobot-app-nornir/releases/tag/v3.1.1)
 
 ### Documentation
