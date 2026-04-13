@@ -4,7 +4,7 @@ This document describes all new features and changes in the release. The format 
 
 ## Release Overview
 
-- Updates to nornir-nautobot that includes get_facts
+- Updates nornir-nautobot to a version that includes get_facts.
 
 <!-- towncrier release notes start -->
 
