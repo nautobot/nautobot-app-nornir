@@ -1,0 +1,1 @@
+Fixed `close_threaded_db_connections` decorator silently discarding the return value of the wrapped function.

@@ -13,8 +13,7 @@ def close_threaded_db_connections(func):
     def inner(*args, **kwargs):
         """Inner function."""
         try:
-            func(*args, **kwargs)
-
+            return func(*args, **kwargs)
         finally:
             # Only clear DB connections if plays are threaded
             if RUNNER_SETTINGS.get("plugin") == "threaded":
