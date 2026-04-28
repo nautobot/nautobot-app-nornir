@@ -1,0 +1,1 @@
+Added `@functools.wraps(func)` to the `close_threaded_db_connections` decorator to preserve the metadata of the wrapped function.
