@@ -8,6 +8,16 @@ This document describes all new features and changes in the release. The format 
 
 <!-- towncrier release notes start -->
 
+## [v3.2.1 (2026-04-29)](https://github.com/nautobot/nautobot-app-nornir/releases/tag/v3.2.1)
+
+### Added
+
+- Added `@functools.wraps(func)` to the `close_threaded_db_connections` decorator to preserve the metadata of the wrapped function.
+
+### Fixed
+
+- [#245](https://github.com/nautobot/nautobot-app-nornir/issues/245) - Fixed `close_threaded_db_connections` decorator silently discarding the return value of the wrapped function.
+
 ## [v3.2.0 (2026-04-13)](https://github.com/nautobot/nautobot-app-nornir/releases/tag/v3.2.0)
 
 ### Dependencies
