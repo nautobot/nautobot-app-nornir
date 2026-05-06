@@ -54,9 +54,9 @@ _metadata:
 nautobot_plugin_nornir:
   connection_options:
     napalm:
-    extras:
+      extras:
         optional_args:
-        global_delay_factor: 5
+          global_delay_factor: 5
 ```
 
 ## Inventory Groupings
