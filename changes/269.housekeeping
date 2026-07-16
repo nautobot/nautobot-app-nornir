@@ -1,1 +1,0 @@
-Fixed the `invoke djlint` task failing when the project ships no Django templates to lint.
