@@ -8,6 +8,16 @@ This document describes all new features and changes in the release. The format 
 
 <!-- towncrier release notes start -->
 
+## [v3.2.2 (2026-07-17)](https://github.com/nautobot/nautobot-app-nornir/releases/tag/v3.2.2)
+
+### Fixed
+
+- [#267](https://github.com/nautobot/nautobot-app-nornir/issues/267) - Fixed YAML indentation in the Device Type Config Context example in the inventory documentation.
+
+### Dependencies
+
+- [#269](https://github.com/nautobot/nautobot-app-nornir/issues/269) - Changed the minimum required `nornir-nautobot` version to 4.3.0.
+
 ## [v3.2.1 (2026-04-29)](https://github.com/nautobot/nautobot-app-nornir/releases/tag/v3.2.1)
 
 ### Added
