@@ -867,9 +867,12 @@ def djlint(context, target=None):
     command = "djlint --lint "
     command += " ".join(target)
 
-    exit_code = 0 if run_command(context, command, warn=True) else 1
-    if exit_code != 0:
-        raise Exit(code=exit_code)
+    result = run_command(context, command, warn=True)
+    # djlint exits non-zero with "No files to check!" when there are no templates to lint.
+    # This project may legitimately ship no Django templates, so treat that case as a pass.
+    if result.ok or "No files to check!" in result.stdout:
+        return
+    raise Exit(code=1)
 
 
 @task(
