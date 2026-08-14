@@ -8,6 +8,16 @@ This document describes all new features and changes in the release. The format 
 
 <!-- towncrier release notes start -->
 
+## [v3.2.3 (2026-08-14)](https://github.com/nautobot/nautobot-app-nornir/releases/tag/v3.2.3)
+
+### Dependencies
+
+- [#274](https://github.com/nautobot/nautobot-app-nornir/issues/274) - Changed the minimum version of nornir-nautobot to 4.4.0.
+
+### Housekeeping
+
+- Rebaked from the cookie `nautobot-app-v3.1.4`.
+
 ## [v3.2.2 (2026-07-17)](https://github.com/nautobot/nautobot-app-nornir/releases/tag/v3.2.2)
 
 ### Fixed
