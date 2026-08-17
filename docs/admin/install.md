@@ -29,15 +29,17 @@ To ensure Nautobot Plugin Nornir is automatically re-installed during future upg
 # echo nautobot-plugin-nornir >> local_requirements.txt
 ```
 
-Once installed, the app needs to be enabled in your Nautobot configuration. The following block of code below shows the additional configuration required to be added to your `nautobot_config.py` file:
-
-- Append `"nautobot_plugin_nornir"` to the `PLUGINS` list.
-- Append the `"nautobot_plugin_nornir"` dictionary to the `PLUGINS_CONFIG` dictionary and override any defaults.
+Once installed, the app needs to be enabled in your Nautobot configuration. Append `"nautobot_plugin_nornir"` to the `PLUGINS` list in your `nautobot_config.py` file:
 
 ```python
 # In your nautobot_config.py
 PLUGINS = ["nautobot_plugin_nornir"]
+```
 
+The app ships working defaults, so a `"nautobot_plugin_nornir"` entry in `PLUGINS_CONFIG` is optional. Add the entry only to override a default. The block below shows the settings that most deployments change:
+
+```python
+# In your nautobot_config.py
 PLUGINS_CONFIG = {
     "nautobot_plugin_nornir": {
         "use_config_context": {"secrets": False, "connection_options": True},
@@ -54,18 +56,12 @@ PLUGINS_CONFIG = {
                 },
             },
         },
-        "nornir_settings": {
-            "credentials": "nautobot_plugin_nornir.plugins.credentials.env_vars.CredentialsEnvVars",
-            "runner": {
-                "plugin": "threaded",
-                "options": {
-                    "num_workers": 20,
-                },
-            },
-        },
     }
 }
 ```
+
+!!! warning
+    Nautobot applies each default only when the top-level key is absent. It does not merge nested keys. If you override `nornir_settings`, restate every key you want, including `inventory`, `credentials`, and `runner`. A `nornir_settings` dictionary that contains only `credentials` discards the `inventory` and `runner` defaults.
 
 ## App Configuration
 
@@ -73,7 +69,7 @@ The plugin behavior can be controlled with the following list of settings.
 
 | Key                    | Example | Default | Description |
 | ---------------------- | ------- | ------- | ----------- |
-| nornir_settings        | {"nornir_settings": { "credentials": "cred_path"}} | N/A | The expected configuration paramters that Nornir uses, see Nornir documentation. |
+| nornir_settings        | {"nornir_settings": { "credentials": "cred_path"}} | {"inventory": "nautobot_plugin_nornir.plugins.inventory.nautobot_orm.NautobotORMInventory", "credentials": "nautobot_plugin_nornir.plugins.credentials.env_vars.CredentialsEnvVars", "runner": {"plugin": "threaded", "options": {"num_workers": 20}}} | The expected configuration paramters that Nornir uses, see Nornir documentation. |
 | username               | ntc | N/A | The username when leveraging the `CredentialsSettingsVars` credential provider. |
 | password               | password123 | N/A | The password when leveraging the `CredentialsSettingsVars` credential provider. |
 | secret                 | password123 | N/A | The secret password when leveraging the `CredentialsSettingsVars` credential provider.|

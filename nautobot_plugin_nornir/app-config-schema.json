@@ -1,1 +1,91 @@
-true
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://raw.githubusercontent.com/nautobot/nautobot-app-nornir/develop/nautobot_plugin_nornir/app-config-schema.json",
+    "$comment": "TBD: Update $id, replace `develop` with the future release tag",
+    "type": "object",
+    "properties": {
+        "nornir_settings": {
+            "type": "object",
+            "properties": {
+                "inventory": {
+                    "type": "string",
+                    "default": "nautobot_plugin_nornir.plugins.inventory.nautobot_orm.NautobotORMInventory"
+                },
+                "credentials": {
+                    "type": "string",
+                    "default": "nautobot_plugin_nornir.plugins.credentials.env_vars.CredentialsEnvVars"
+                },
+                "inventory_params": {
+                    "type": "object"
+                },
+                "runner": {
+                    "type": "object",
+                    "properties": {
+                        "plugin": {
+                            "type": "string",
+                            "default": "threaded"
+                        },
+                        "options": {
+                            "type": "object",
+                            "properties": {
+                                "num_workers": {
+                                    "type": "integer",
+                                    "default": 20
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "additionalProperties": false
+        },
+        "use_config_context": {
+            "type": "object",
+            "properties": {
+                "secrets": {
+                    "type": "boolean",
+                    "default": false
+                },
+                "connection_options": {
+                    "type": "boolean",
+                    "default": false
+                }
+            },
+            "additionalProperties": false
+        },
+        "connection_options": {
+            "$comment": "Keyed by Nornir connection plugin name. The contents are passed to the plugin, so they are not constrained here.",
+            "type": "object",
+            "additionalProperties": {
+                "type": "object"
+            }
+        },
+        "allowed_location_types": {
+            "type": "array",
+            "items": {
+                "type": "string"
+            },
+            "default": []
+        },
+        "denied_location_types": {
+            "type": "array",
+            "items": {
+                "type": "string"
+            },
+            "default": []
+        },
+        "username": {
+            "$comment": "Only used by the CredentialsSettingsVars credential provider.",
+            "type": "string"
+        },
+        "password": {
+            "$comment": "Only used by the CredentialsSettingsVars credential provider.",
+            "type": "string"
+        },
+        "secret": {
+            "$comment": "Only used by the CredentialsSettingsVars credential provider.",
+            "type": "string"
+        }
+    },
+    "additionalProperties": false
+}

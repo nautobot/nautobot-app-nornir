@@ -22,7 +22,16 @@ class NautobotPluginNornirConfig(NautobotAppConfig):
     )
     base_url = "plugin-nornir"
     required_settings = []
-    default_settings = {}
+    default_settings = {
+        "nornir_settings": {
+            "inventory": "nautobot_plugin_nornir.plugins.inventory.nautobot_orm.NautobotORMInventory",
+            "credentials": "nautobot_plugin_nornir.plugins.credentials.env_vars.CredentialsEnvVars",
+            "runner": {
+                "plugin": "threaded",
+                "options": {"num_workers": 20},
+            },
+        },
+    }
     docs_view_name = "plugins:nautobot_plugin_nornir:docs"
     searchable_models = []
 

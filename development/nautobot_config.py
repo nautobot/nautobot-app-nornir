@@ -125,10 +125,11 @@ PLUGINS = ["nautobot_plugin_nornir"]
 # Apps configuration settings. These settings are used by various Apps that the user may have installed.
 # Each key in the dictionary is the name of an installed App and its value is a dictionary of settings.
 PLUGINS_CONFIG = {
+    # `nornir_settings` is intentionally omitted so the development environment exercises the
+    # defaults the App declares in `default_settings`.
     "nautobot_plugin_nornir": {
-        "allowed_location_types": [],
-        "denied_location_types": [],
         "use_config_context": {"secrets": False, "connection_options": True},
+        # Optionally set global connection options.
         "connection_options": {
             "napalm": {
                 "extras": {
@@ -138,15 +139,6 @@ PLUGINS_CONFIG = {
             "netmiko": {
                 "extras": {
                     "global_delay_factor": 1,
-                },
-            },
-        },
-        "nornir_settings": {
-            "credentials": "nautobot_plugin_nornir.plugins.credentials.env_vars.CredentialsEnvVars",
-            "runner": {
-                "plugin": "threaded",
-                "options": {
-                    "num_workers": 20,
                 },
             },
         },
