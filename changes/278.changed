@@ -1,0 +1,1 @@
+Added default `nornir_settings` to the App configuration, so `PLUGINS_CONFIG` no longer requires a `nautobot_plugin_nornir` entry. The default runner plugin is now `threaded`, which enables idle database connection cleanup for deployments that supplied no configuration.
