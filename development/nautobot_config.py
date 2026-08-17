@@ -125,11 +125,13 @@ PLUGINS = ["nautobot_plugin_nornir"]
 # Apps configuration settings. These settings are used by various Apps that the user may have installed.
 # Each key in the dictionary is the name of an installed App and its value is a dictionary of settings.
 PLUGINS_CONFIG = {
-    # `nornir_settings` is intentionally omitted so the development environment exercises the
-    # defaults the App declares in `default_settings`.
     "nautobot_plugin_nornir": {
+        # `nornir_settings` is intentionally omitted so the development environment exercises the
+        # defaults the App declares in `default_settings`. Every other supported key is listed,
+        # because `invoke generate-app-config-schema` infers the schema from this dictionary.
+        "allowed_location_types": [],
+        "denied_location_types": [],
         "use_config_context": {"secrets": False, "connection_options": True},
-        # Optionally set global connection options.
         "connection_options": {
             "napalm": {
                 "extras": {

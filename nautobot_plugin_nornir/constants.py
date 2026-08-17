@@ -2,11 +2,10 @@
 
 from django.conf import settings
 
-PLUGIN_CFG = settings.PLUGINS_CONFIG.get("nautobot_plugin_nornir", {})
+from nautobot_plugin_nornir.defaults import merge_nornir_settings
 
-# The defaults for `nornir_settings` are declared as `default_settings` on the app config, which
-# Nautobot merges into `PLUGINS_CONFIG` before this module is imported.
-NORNIR_SETTINGS = PLUGIN_CFG.get("nornir_settings", {})
+PLUGIN_CFG = settings.PLUGINS_CONFIG.get("nautobot_plugin_nornir", {})
+NORNIR_SETTINGS = merge_nornir_settings(PLUGIN_CFG.get("nornir_settings"))
 
 CONNECTION_SECRETS_PATHS = {
     "netmiko": "netmiko.extras.secret",
