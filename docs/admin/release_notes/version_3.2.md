@@ -8,6 +8,16 @@ This document describes all new features and changes in the release. The format 
 
 <!-- towncrier release notes start -->
 
+## [v3.2.4 (2026-08-19)](https://github.com/nautobot/nautobot-app-nornir/releases/tag/v3.2.4)
+
+### Changed
+
+- [#278](https://github.com/nautobot/nautobot-app-nornir/issues/278) - Added default `nornir_settings` to the App configuration, so `PLUGINS_CONFIG` no longer requires a `nautobot_plugin_nornir` entry. A `nornir_settings` dictionary is now merged over the defaults, so it only needs the keys you want to change.
+
+### Fixed
+
+- [#278](https://github.com/nautobot/nautobot-app-nornir/issues/278) - Fixed idle database connection cleanup never running for deployments that supplied no `nornir_settings`. The previous fallback omitted the runner plugin, so the threaded check in `close_threaded_db_connections` was always false.
+
 ## [v3.2.3 (2026-08-14)](https://github.com/nautobot/nautobot-app-nornir/releases/tag/v3.2.3)
 
 ### Dependencies
