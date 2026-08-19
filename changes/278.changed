@@ -1,0 +1,1 @@
+Added default `nornir_settings` to the App configuration, so `PLUGINS_CONFIG` no longer requires a `nautobot_plugin_nornir` entry. A `nornir_settings` dictionary is now merged over the defaults, so it only needs the keys you want to change.

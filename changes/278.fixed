@@ -1,0 +1,1 @@
+Fixed idle database connection cleanup never running for deployments that supplied no `nornir_settings`. The previous fallback omitted the runner plugin, so the threaded check in `close_threaded_db_connections` was always false.
