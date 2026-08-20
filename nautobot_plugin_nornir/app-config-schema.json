@@ -1,1 +1,101 @@
-true
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://raw.githubusercontent.com/nautobot/nautobot-app-nornir/develop/nautobot_plugin_nornir/app-config-schema.json",
+    "$comment": "TBD: Update $id, replace `develop` with the future release tag. This file is hand-maintained: `invoke generate-app-config-schema` infers properties from the development `PLUGINS_CONFIG`, so it drops every key that config does not set. Merge its output into this file rather than replacing it.",
+    "type": "object",
+    "properties": {
+        "nornir_settings": {
+            "description": "Configuration parameters that Nornir itself consumes. See the Nornir documentation.",
+            "type": "object",
+            "properties": {
+                "inventory": {
+                    "description": "Dotted path to the Nornir inventory plugin class.",
+                    "type": "string",
+                    "default": "nautobot_plugin_nornir.plugins.inventory.nautobot_orm.NautobotORMInventory"
+                },
+                "credentials": {
+                    "description": "Dotted path to the credential provider class.",
+                    "type": "string",
+                    "default": "nautobot_plugin_nornir.plugins.credentials.env_vars.CredentialsEnvVars"
+                },
+                "inventory_params": {
+                    "description": "Extra parameters passed to the credential provider by the inventory.",
+                    "type": "object"
+                },
+                "runner": {
+                    "description": "Nornir runner plugin and its options. The `threaded` plugin enables idle database connection cleanup.",
+                    "type": "object",
+                    "properties": {
+                        "plugin": {
+                            "type": "string",
+                            "default": "threaded"
+                        },
+                        "options": {
+                            "type": "object",
+                            "properties": {
+                                "num_workers": {
+                                    "type": "integer",
+                                    "default": 20
+                                }
+                            },
+                            "additionalProperties": false
+                        }
+                    },
+                    "additionalProperties": false
+                }
+            },
+            "additionalProperties": false
+        },
+        "use_config_context": {
+            "description": "Whether to pull Secret Access Type and/or Connection Options from config context.",
+            "type": "object",
+            "properties": {
+                "secrets": {
+                    "type": "boolean",
+                    "default": false
+                },
+                "connection_options": {
+                    "type": "boolean",
+                    "default": false
+                }
+            },
+            "additionalProperties": false
+        },
+        "connection_options": {
+            "description": "Nornir connection options applied globally to all connections, keyed by Nornir connection plugin name. The contents are passed to the plugin, so they are not constrained here.",
+            "type": "object",
+            "additionalProperties": {
+                "type": "object"
+            }
+        },
+        "allowed_location_types": {
+            "description": "Location types to group automatically. An empty list allows all types.",
+            "type": "array",
+            "items": {
+                "type": "string"
+            },
+            "default": []
+        },
+        "denied_location_types": {
+            "description": "Location types to exclude from automatic grouping.",
+            "type": "array",
+            "items": {
+                "type": "string"
+            },
+            "default": []
+        },
+        "username": {
+            "description": "Username for the CredentialsSettingsVars credential provider.",
+            "type": "string"
+        },
+        "password": {
+            "description": "Password for the CredentialsSettingsVars credential provider.",
+            "type": "string"
+        },
+        "secret": {
+            "description": "Secret (enable) password for the CredentialsSettingsVars credential provider.",
+            "type": "string"
+        }
+    },
+    "additionalProperties": false
+}
