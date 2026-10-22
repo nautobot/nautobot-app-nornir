@@ -23,6 +23,16 @@ The app is available as a Python package via PyPI and can be installed with `pip
 pip install nautobot-plugin-nornir
 ```
 
+Option 2: Install with optional dependencies. If you're using Scrapli in Nautobot Golden Config or other Nautobot Jobs you'll need to add the optional dependency.
+
+```bash
+pip install "nautobot-plugin-nornir[scrapli]"
+
+or
+
+pip install "nornir-nautobot[scrapli]"
+```
+
 To ensure Nautobot Plugin Nornir is automatically re-installed during future upgrades, create a file named `local_requirements.txt` (if not already existing) in the Nautobot root directory (alongside `requirements.txt`) and list the `nautobot-plugin-nornir` package:
 
 ```no-highlight

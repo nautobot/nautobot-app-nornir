@@ -32,7 +32,7 @@ def _enrich_object_schema(schema, defaults, required):
 def _main():
     with Path("pyproject.toml").open("rb") as f:
         pyproject = tomllib.load(f)
-    url = urlparse(pyproject["tool"]["poetry"]["repository"])
+    url = urlparse(pyproject["project"]["urls"]["Repository"])
     _, owner, repository = url.path.split("/")
     package_name = pyproject["tool"]["poetry"]["packages"][0]["include"]
     app_config = settings.PLUGINS_CONFIG[package_name]  # type: ignore
