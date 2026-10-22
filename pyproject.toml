@@ -25,7 +25,6 @@ dependencies = [
 
 [project.optional-dependencies]
 scrapli = ["nornir-nautobot[scrapli]>=5.0.0,<6.0.0"]
-all = ["scrapli"]
 
 [project.urls]
 Homepage = "https://github.com/nautobot/nautobot-app-nornir"

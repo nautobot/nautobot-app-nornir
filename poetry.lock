@@ -6234,7 +6234,7 @@ description = "Fast, flexible, sync/async, Python 3.7+ screen scraping client sp
 optional = true
 python-versions = ">=3.9"
 groups = ["main"]
-markers = "extra == \"scrapli\" or extra == \"all\""
+markers = "extra == \"scrapli\""
 files = [
     {file = "scrapli-2026.2.20-py3-none-any.whl", hash = "sha256:abbe6f0d70e9b59166e590a74335781e4b5987a488403e08110ce75321a255af"},
     {file = "scrapli-2026.2.20.tar.gz", hash = "sha256:b6f8492110601c11ca8394d8540814464bb97681b87e92b30bb6853b5213558a"},
@@ -7268,10 +7268,9 @@ multidict = ">=4.0"
 propcache = ">=0.2.1"
 
 [extras]
-all = ["scrapli"]
 scrapli = ["nornir-nautobot"]
 
 [metadata]
 lock-version = "2.1"
 python-versions = ">=3.10,<3.15"
-content-hash = "29eacca0aa7da8c37de40d1bb89403b4b410ec5f3a8bde5a61d2d39617f290bb"
+content-hash = "d0d9332a89959cd7d32eddadf7c5332dce16ba89eca787cacd99931a7fca4f77"
