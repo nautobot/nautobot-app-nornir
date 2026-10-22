@@ -1,0 +1,1 @@
+Migrated `pyproject.toml` to the Poetry v2 / PEP 621 `[project]` table syntax.
