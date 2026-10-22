@@ -66,7 +66,7 @@ RUN if [ -z "${CI+x}" ]; then \
     poetry add --lock git+https://github.com/nautobot/nautobot.git#${NAUTOBOT_VER} --python ${PYTHON_VER}; fi
 
 # Install the app
-RUN poetry install --extras all --with dev
+RUN poetry install --all-extras --with dev
 
 COPY development/nautobot_config.py ${NAUTOBOT_ROOT}/nautobot_config.py
 # !!! USE CAUTION WHEN MODIFYING LINES ABOVE
