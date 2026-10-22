@@ -1,6 +1,6 @@
 [project]
 name = "nautobot-plugin-nornir"
-version = "3.3.0"
+version = "3.3.1a0"
 description = "Nautobot App that provides a shim layer to simplify using Nornir within other Nautobot Apps and Nautobot Jobs"
 authors = [{ name = "Network to Code, LLC", email = "info@networktocode.com" }]
 license = "Apache-2.0"
