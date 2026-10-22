@@ -4,8 +4,8 @@ This document describes all new features and changes in the release. The format 
 
 ## Release Overview
 
-- Major features or milestones
-- Changes to compatibility with Nautobot and/or other apps, libraries etc.
+- Add support for nornir-nautobot 5.0.0 major release.
+- Supports the change to nornir-nautobot making Scrapli dependencies optional. This requires Scrapli users of nornir-nautobot to install with "scrapli" extras; e.g. `pip install "nautobot-plugin-nornir[scrapli]"`.
 
 <!-- towncrier release notes start -->
 
