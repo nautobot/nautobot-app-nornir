@@ -112,6 +112,7 @@ nav:
       - Using the App: "user/app_use_cases.md"
       - Credentials: "user/app_feature_credentials.md"
       - Inventory: "user/app_feature_inventory.md"
+      - Job Logging: "user/app_feature_logging.md"
       - Frequently Asked Questions: "user/faq.md"
       - External Interactions: "user/external_interactions.md"
   - Administrator Guide:
@@ -151,4 +152,5 @@ nav:
           - Package: "dev/code_reference/package.md"
           - Nornir Credentials: "dev/code_reference/credentials.md"
           - Nornir Inventory: "dev/code_reference/inventory.md"
+          - Logger: "dev/code_reference/logger.md"
   - Nautobot Docs Home ↗︎: "https://docs.nautobot.com"
