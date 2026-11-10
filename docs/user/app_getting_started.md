@@ -13,3 +13,7 @@ The plugin allows you to integrate via a variety of methods to define your crede
 ## Inventory
 
 The plugin allows you integrate Nornir with inventory, for details on what the options, see the [feature overview](./app_feature_inventory.md).
+
+## Job Logging
+
+The plugin provides a logger for Nornir plays and a mixin that only records debug messages when a Job's `debug` input is enabled, for details see the [feature overview](./app_feature_logging.md).
