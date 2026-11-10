@@ -1,2 +1,0 @@
-Fixed `NornirLogger` recording debug messages in the Job Result when its log level was above `DEBUG`.
-Fixed `NornirLogger` dropping the `object` and `grouping` values passed in `extra`.
