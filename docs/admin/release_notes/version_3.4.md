@@ -4,8 +4,7 @@ This document describes all new features and changes in the release. The format 
 
 ## Release Overview
 
-- Major features or milestones
-- Changes to compatibility with Nautobot and/or other apps, libraries etc.
+- Added `DebugLoggingMixin` to help downstream Jobs only log debug messages when the `debug` option is enabled
 
 <!-- towncrier release notes start -->
 
