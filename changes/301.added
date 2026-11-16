@@ -1,0 +1,1 @@
+Added support for %-style formatting arguments to `NornirLogger`, formatted only when the message is logged.

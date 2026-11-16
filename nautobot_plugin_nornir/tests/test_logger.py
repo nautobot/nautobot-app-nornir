@@ -38,6 +38,23 @@ class NornirLoggerTests(TestCase):
             "warning message", level_choice="warning", obj=device, grouping="Backup"
         )
 
+    def test_args_are_formatted_like_standard_logging(self):
+        logger = NornirLogger(self.job_result, logging.INFO)
+
+        logger.info("Device %s has %d interfaces (100%% up)", "router1", 4, extra={"grouping": "Inventory"})
+
+        self.job_result.log.assert_called_once_with(
+            "Device router1 has 4 interfaces (100% up)", level_choice="info", obj=None, grouping="Inventory"
+        )
+
+    def test_args_are_not_formatted_below_log_level(self):
+        logger = NornirLogger(self.job_result, logging.INFO)
+        unformattable = mock.MagicMock(__str__=mock.MagicMock(side_effect=AssertionError("formatted")))
+
+        logger.debug("Result: %s", unformattable)
+
+        self.job_result.log.assert_not_called()
+
 
 class _BaseJob:
     """Stand-in for `nautobot.apps.jobs.Job` lifecycle hooks."""
@@ -81,3 +98,16 @@ class DebugLoggingMixinTests(TestCase):
         job.before_start("task-id", (), {})
 
         self.assertEqual(self.logger.level, logging.INFO)
+
+    def test_level_is_restored_on_original_logger_when_job_logger_is_replaced(self):
+        replacement = logging.getLogger("nautobot_plugin_nornir.tests.debug_logging_mixin.replacement")
+        self.addCleanup(replacement.setLevel, logging.NOTSET)
+        replacement.setLevel(logging.WARNING)
+        job = _DebugJob(self.logger)
+
+        job.before_start("task-id", (), {"debug": False})
+        job.logger = replacement
+        job.after_return("SUCCESS", None, "task-id", (), {"debug": False}, None)
+
+        self.assertEqual(self.logger.level, logging.NOTSET)
+        self.assertEqual(replacement.level, logging.WARNING)

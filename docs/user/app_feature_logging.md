@@ -11,6 +11,14 @@ Messages below the level passed to `NornirLogger` are dropped, for both the cons
 !!! warning
     `logging.NOTSET` (`0`) does not mean "log everything". The logger then uses the root logger's level, which is often `WARNING`, so `info` messages would be dropped too. Use `logging.INFO` when debug is off.
 
+As with a standard Python logger, pass values as arguments rather than formatting them into the message yourself. The message is only formatted when it will be logged, so a disabled `debug` call costs almost nothing even when its values are large:
+
+```python
+logger.debug("Result of %s on %s: %s", command, host, result)
+```
+
+`extra` must be passed by keyword, as with a standard Python logger, since other positional arguments are formatting values.
+
 The optional `extra` argument links an entry to an object and places it in a group on the Job Result:
 
 ```python
