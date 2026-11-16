@@ -1,0 +1,1 @@
+Fixed `DebugLoggingMixin` restoring the log level on the wrong logger when a job replaced `self.logger` while running.
